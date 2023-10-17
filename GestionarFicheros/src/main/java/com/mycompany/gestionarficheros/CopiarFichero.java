@@ -15,11 +15,11 @@ import java.nio.file.Paths;
  */
 public class CopiarFichero {
     /**
-     * Método que copiará un fichero
+     * Método que copiará un archivo
      * 
-     * @param origen lugar donde se encuentra el fichero a copiar
-     * @param nombre nombre del fichero a copiar
-     * @param destino lugar donde se copiará el fichero
+     * @param origen lugar donde se encuentra el archivo a copiar
+     * @param nombre nombre del archivo a copiar
+     * @param destino lugar donde se copiará el archivo
      * @throws IOException 
      */
     public static void copiar(String origen, String nombre, String destino) throws IOException{
