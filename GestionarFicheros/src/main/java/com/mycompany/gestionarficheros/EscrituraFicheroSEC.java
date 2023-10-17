@@ -7,6 +7,7 @@ package com.mycompany.gestionarficheros;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -30,12 +31,20 @@ public class EscrituraFicheroSEC {
      * @param precio precio
      * @param nombre nombre del plato
      */
-    public static void EscrituraSEC(Date fecha, int puntuacion, String lugar, double precio, String nombre) {
+    public static void EscrituraSEC(Calendar fecha, int puntuacion, String lugar, double precio, String nombre) {
         try (RandomAccessFile fo = new RandomAccessFile(new File(".//Comidas.dat"), "rw")) {
+            
+            if (fo.length() > 0) {
+                // If the file is not empty, move the file pointer to the end
+                fo.seek(fo.length());
+            }
             
             StringBuffer buffer=null;
             
-            //fo.writeDate(fecha);
+            //escritura de la fecha (en numeros)
+            fo.writeInt(fecha.DATE);  //dia
+            fo.writeInt(fecha.MONTH); //mes
+            fo.writeInt(fecha.YEAR); //año
             
             fo.writeInt(puntuacion);//puntuacion
             
@@ -47,7 +56,7 @@ public class EscrituraFicheroSEC {
             fo.writeDouble(precio);//salario
 
             buffer = new StringBuffer(nombre); //nombre
-            buffer.setLength(10);
+            buffer.setLength(20);
             fo.writeChars(buffer.toString());
             buffer=null;
             
