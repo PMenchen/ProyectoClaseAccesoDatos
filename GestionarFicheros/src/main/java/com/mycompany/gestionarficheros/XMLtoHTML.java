@@ -26,7 +26,7 @@ public class XMLtoHTML {
         String estilo = ".\\recursos\\plantillaXLS.xsl";
         String datosPlatos = ".\\recursos\\datos.xml";
         
-        File html = new File(".\\pruebas\\index.html");
+        File html = new File(".\\recursos\\index.html");
         
         try {
             
