@@ -1,4 +1,7 @@
-com\mycompany\gestionarficheros\CrearFichero.class
 com\mycompany\gestionarficheros\MoverFichero.class
+com\mycompany\gestionarficheros\XMLtoHTML.class
+com\mycompany\gestionarficheros\CrearFichero.class
+com\mycompany\gestionarficheros\LecturaSecuencial.class
+com\mycompany\gestionarficheros\BorrarFichero.class
 com\mycompany\gestionarficheros\GestionarFicheros.class
 com\mycompany\gestionarficheros\CopiarFichero.class

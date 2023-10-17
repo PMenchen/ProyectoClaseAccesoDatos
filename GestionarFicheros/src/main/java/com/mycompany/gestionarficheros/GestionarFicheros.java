@@ -18,5 +18,7 @@ public class GestionarFicheros {
         //CrearFichero.crear(".", "TRABAJO.txt");
         //CopiarFichero.copiar(".", "TRABAJO.txt", "C://Users//b15-08m//Desktop//Prueba");
         //MoverFichero.copiar(".", "TRABAJO.txt", "C://Users//b15-08m//Desktop//Prueba");
+        //BorrarFichero.borrar(".", "TRABAJO.txt");
+        //LecturaSecuencial.leerSecuencial(".", "TRABAJO.txt");
     }
 }

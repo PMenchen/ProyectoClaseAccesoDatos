@@ -15,11 +15,11 @@ import java.nio.file.Paths;
  */
 public class MoverFichero {
     /**
-     * Método para mover un fichero
+     * Método para mover un archivo
      * 
-     * @param origen lugar donde se encuentra el fichero a mover
-     * @param nombre nombre del fichero a mover
-     * @param destino lugar donde se moverá el fichero
+     * @param origen lugar donde se encuentra el archivo a mover
+     * @param nombre nombre del archivo a mover
+     * @param destino lugar donde se moverá el archivo
      * @throws IOException 
      */
     public static void copiar(String origen, String nombre, String destino) throws IOException{

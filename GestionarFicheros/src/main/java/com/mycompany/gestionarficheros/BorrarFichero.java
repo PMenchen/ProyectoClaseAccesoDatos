@@ -4,32 +4,28 @@
  */
 package com.mycompany.gestionarficheros;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  *
  * @author b15-08m
  */
-public class CrearFichero {
+public class BorrarFichero {
     /**
-     * Método que creara un archivo
+     * Método para borrar un fichero
      * 
-     * @param ruta lugar donde se creará el archivo
+     * @param ruta lugar donde se encuentra el archivo a borrar
      * @param nombre nombre del archivo
      */
-    public static void crear(String ruta, String nombre){
-       
+    public static void borrar(String ruta, String nombre){
+        Path rutaP=Paths.get(ruta+"//"+nombre);
         try{
-            File fichero=new File(ruta+"//"+nombre);
-            
-            if(fichero.createNewFile()){
-                System.out.println("[TEXTO DEFECTO]");
-            }
+            Files.delete(rutaP);
         }catch(IOException ioe){
             System.out.println("ERROR E/S");
         }
-       
-       
     }
 }
