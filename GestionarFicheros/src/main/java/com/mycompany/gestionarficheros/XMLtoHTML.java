@@ -14,7 +14,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 /**
- *
+ * Conversion de XML a HTML
  * @author b15-21m
  */
 public class XMLtoHTML {
