@@ -20,5 +20,6 @@ public class GestionarFicheros {
         //MoverFichero.copiar(".", "TRABAJO.txt", "C://Users//b15-08m//Desktop//Prueba");
         //BorrarFichero.borrar(".", "TRABAJO.txt");
         //LecturaSecuencial.leerSecuencial(".", "TRABAJO.txt");
+        new Menu();
     }
 }
