@@ -38,16 +38,14 @@ public class Menu extends javax.swing.JFrame {
 
     private void cambiarContenido(String elegido) {
         jContenido.removeAll();
-        JLabel label1 = crearLabel("", 20, 250, 200, 30);
-        jContenido.add(label1);
+        JLabel labelAux = crearLabel("", 20, 250, 200, 30);
+        jContenido.add(labelAux);
 
         switch (elegido) {
             case "Añadir":
-
-            case "Editar":
                 //PRIMERA FILA
                 //FECHA
-                JLabel labelFecha = crearLabel("Indique la fecha de su visita", 20, 20, 200, 30);
+                JLabel labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
                 jContenido.add(labelFecha);
                 JDateChooser dateChooserFecha = new JDateChooser();
                 dateChooserFecha.setBounds(20, 50, 200, 30);
@@ -82,24 +80,99 @@ public class Menu extends javax.swing.JFrame {
                 jContenido.add(textFieldCalificacion);
 
                 //BOTON
-                Button btnVisualizar = new Button("Visualizar");
-                btnVisualizar.setBounds(300, 210, 100, 30);
-                jContenido.add(btnVisualizar);
+                Button btnAnadir = new Button("Añadir");
+                btnAnadir.setBounds(300, 210, 100, 30);
+                jContenido.add(btnAnadir);
 
-                btnVisualizar.addActionListener(new ActionListener() {
+                btnAnadir.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
                                 && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
-                            label1.setText("TODO NICE");
+                            labelAux.setText("TODO NICE");
                         } else {
-                            label1.setText("Precio o calificación incorrecta");
+                            labelAux.setText("Precio o calificación incorrecta");
+                        }
+                    }
+                });
+                break;
+            case "Editar":
+                //PRIMERA FILA
+                //FECHA
+                labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
+                jContenido.add(labelFecha);
+                dateChooserFecha = new JDateChooser();
+                dateChooserFecha.setBounds(20, 50, 200, 30);
+                jContenido.add(dateChooserFecha);
+
+                //LUGAR
+                labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia", 300, 20, 300, 30);
+                jContenido.add(labelLugar);
+                textFieldLugar = new JTextField();
+                textFieldLugar.setBounds(300, 50, 200, 30);
+                jContenido.add(textFieldLugar);
+                //SEGUNDA FILA
+                //NOMBRE
+                labelNombre = crearLabel("Indique el nombre el plato", 20, 100, 200, 30);
+                jContenido.add(labelNombre);
+                textFieldNombre = new JTextField();
+                textFieldNombre.setBounds(20, 130, 200, 30);
+                jContenido.add(textFieldNombre);
+
+                //PRECIO
+                labelPrecio = crearLabel("Indique el precio del plato", 300, 100, 300, 30);
+                jContenido.add(labelPrecio);
+                textFieldPrecio = new JTextField();
+                textFieldPrecio.setBounds(300, 130, 100, 30);
+                jContenido.add(textFieldPrecio);
+                //TERCERA FILA
+                //CALIFICACION
+                labelCalificacion = crearLabel("Indique la calificación sobre 5 que le da al plato", 20, 180, 300, 30);
+                jContenido.add(labelCalificacion);
+                textFieldCalificacion = new JTextField();
+                textFieldCalificacion.setBounds(20, 210, 50, 30);
+                jContenido.add(textFieldCalificacion);
+
+                //BOTON
+                Button btnEditar = new Button("Editar");
+                btnEditar.setBounds(300, 210, 100, 30);
+                jContenido.add(btnEditar);
+
+                btnEditar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
+                                && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
+                            labelAux.setText("TODO NICE");
+                        } else {
+                            labelAux.setText("Precio o calificación incorrecta");
                         }
                     }
                 });
                 break;
 
             case "Eliminar":
-                //label1.setText("El");
+                labelFecha = crearLabel("Indique la fecha de la visita a eliminar", 20, 20, 200, 30);
+                jContenido.add(labelFecha);
+                dateChooserFecha = new JDateChooser();
+                dateChooserFecha.setBounds(20, 50, 200, 30);
+                jContenido.add(dateChooserFecha);
+
+                //LUGAR
+                labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia a eliminar", 300, 20, 300, 30);
+                jContenido.add(labelLugar);
+                textFieldLugar = new JTextField();
+                textFieldLugar.setBounds(300, 50, 200, 30);
+                jContenido.add(textFieldLugar);
+                //SEGUNDA FILA
+                //NOMBRE
+                labelNombre = crearLabel("Indique el nombre el plato a eliminar", 20, 100, 200, 30);
+                jContenido.add(labelNombre);
+                textFieldNombre = new JTextField();
+                textFieldNombre.setBounds(20, 130, 200, 30);
+                jContenido.add(textFieldNombre);
+                //BOTON
+                Button btnEliminar = new Button("Eliminar");
+                btnEliminar.setBounds(300, 130, 100, 30);
+                jContenido.add(btnEliminar);
                 break;
 
             default:
