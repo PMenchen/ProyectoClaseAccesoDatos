@@ -30,9 +30,10 @@ public class EscrituraFicheroSEC {
      * @param lugar lugar (restaurante) en donde se ha comido
      * @param precio precio
      * @param nombre nombre del plato
+     * @param ruta fragmento de la ruta que no cambia para pruebas
      */
-    public static void EscrituraSEC(Calendar fecha, int puntuacion, String lugar, double precio, String nombre) {
-        try (RandomAccessFile fo = new RandomAccessFile(new File(".//Comidas.dat"), "rw")) {
+    public static void EscrituraSEC(/*Calendar fecha, */int puntuacion, String lugar, double precio, String nombre, String ruta) {
+        try (RandomAccessFile fo = new RandomAccessFile(new File(ruta + "comidas.dat"), "rw")) {
             
             if (fo.length() > 0) {
                 // If the file is not empty, move the file pointer to the end
@@ -40,25 +41,27 @@ public class EscrituraFicheroSEC {
             }
             
             StringBuffer buffer=null;
-            
+            /*
             //escritura de la fecha (en numeros)
             fo.writeInt(fecha.DATE);  //dia
             fo.writeInt(fecha.MONTH); //mes
-            fo.writeInt(fecha.YEAR); //año
+            fo.writeInt(fecha.YEAR); //año*/
             
-            fo.writeInt(puntuacion);//puntuacion
+            buffer = new StringBuffer(nombre); //nombre
+            buffer.setLength(40);
+            fo.writeChars(buffer.toString());
+            buffer=null;
             
             buffer = new StringBuffer(lugar); //lugar
-            buffer.setLength(10);
+            buffer.setLength(20);
             fo.writeChars(buffer.toString());
             buffer=null;
 
             fo.writeDouble(precio);//salario
+            
+            fo.writeInt(puntuacion);//puntuacion
+            
 
-            buffer = new StringBuffer(nombre); //nombre
-            buffer.setLength(20);
-            fo.writeChars(buffer.toString());
-            buffer=null;
             
             fo.close();
             

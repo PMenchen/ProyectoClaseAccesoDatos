@@ -8,5 +8,7 @@ com\mycompany\gestionarficheros\GestionarFicheros.class
 com\mycompany\gestionarficheros\XMLtoHTML.class
 com\mycompany\gestionarficheros\EscrituraFicheroSEC.class
 com\mycompany\gestionarficheros\LecturaSecuencial.class
+com\mycompany\gestionarficheros\LeerBinario_CrearXML.class
 com\mycompany\gestionarficheros\Menu.class
+com\mycompany\gestionarficheros\pruebas.class
 vista\Menu$1.class

@@ -56,30 +56,30 @@ public class LeerBinario_CrearXML {
     }
     
     static void TransformarBinToNodo(String ruta, Document d){
-        int id; String nombre; String lugar; double puntuacion; double precio; //fecha
+        int id; String nombre; String lugar; int puntuacion; double precio; //fecha
         try (RandomAccessFile fichero = new RandomAccessFile(ruta,"r")){
-            byte[] b = new byte[20];
+            byte[] b = new byte[40];
             while(fichero.getFilePointer() < fichero.length()){
                 Element e = CrearNodo("Plato", d);
                 
                 id = fichero.readInt();
                 
                 fichero.read(b);
-                nombre = new String(b, "UTF-16");
-                lugar = new String(b, "UTF-16");
-                puntuacion = fichero.readDouble();
+                nombre = new String(b, "UTF-8");
+                lugar = new String(b, "UTF-8");
+                puntuacion = fichero.readInt();
                 precio = fichero.readDouble();
                 
                 AddNodo("id", String.valueOf(id), e, d);
-                AddNodo("nombre", nombre, e, d);
-                AddNodo("lugar", lugar, e, d);
-                AddNodo("puntuacion", String.valueOf(puntuacion), e, d);
-                AddNodo("precio", String.valueOf(precio), e, d);
+                AddNodo("nombre", nombre.trim(), e, d);
+                AddNodo("lugar", lugar.trim(), e, d);
+                AddNodo("precio", String.valueOf(precio).trim(), e, d);
+                AddNodo("puntuacion", String.valueOf(puntuacion).trim(), e, d);
                 
                 
             }
         }catch(IOException ex){
-                System.out.println("Error e/s");
+                System.out.println(ex);
         }
     }
     
@@ -99,10 +99,10 @@ public class LeerBinario_CrearXML {
     
     
     
-    public static void main (String[] args){
+    public static void crearXML (String r){
         try {
-            String origen = ".\\recursos\\comidas.dat";
-            String ruta = ".\\recursos\\datos.xml";
+            String origen = r + "comidas.dat";
+            String ruta = r + "datos.xml";
             
             String value = "Platos";
             Document document = InitBuilder(value);
