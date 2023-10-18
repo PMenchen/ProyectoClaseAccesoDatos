@@ -4,7 +4,10 @@
  */
 package vista;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -16,81 +19,108 @@ import javax.swing.event.ListSelectionListener;
  */
 public class Menu extends javax.swing.JFrame {
 
-    private void cambiarContenido(String elegido){
+    private static boolean esNumero(String texto) {
+        try {
+            Double.parseDouble(texto);
+            return true;
+        } catch (NumberFormatException nme) {
+            return false;
+        }
+    }
+
+    private JLabel crearLabel(String texto, int x, int y, int width, int height) {
+
+        JLabel label = new JLabel(texto);
+        label.setBounds(x, y, width, height);
+
+        return label;
+    }
+
+    private void cambiarContenido(String elegido) {
         jContenido.removeAll();
-        
-        switch(elegido){
+        JLabel label1 = crearLabel("", 20, 250, 200, 30);
+        jContenido.add(label1);
+
+        switch (elegido) {
             case "Añadir":
-                
+
             case "Editar":
                 //PRIMERA FILA
-                    //FECHA
-                JLabel labelFecha=new JLabel("Indique la fecha de su visita:");
-                labelFecha.setBounds(20, 20, 200, 30);
+                //FECHA
+                JLabel labelFecha = crearLabel("Indique la fecha de su visita", 20, 20, 200, 30);
                 jContenido.add(labelFecha);
-                JTextField textFieldFecha=new JTextField();
-                textFieldFecha.setBounds(20, 50, 200, 30);
-                jContenido.add(textFieldFecha);
-                
-                    //LUGAR
-                JLabel labelLugar=new JLabel("Indique el lugar dónde tuvo la experiencia:");
-                labelLugar.setBounds(300, 20, 300, 30);
+                JDateChooser dateChooserFecha = new JDateChooser();
+                dateChooserFecha.setBounds(20, 50, 200, 30);
+                jContenido.add(dateChooserFecha);
+
+                //LUGAR
+                JLabel labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia", 300, 20, 300, 30);
                 jContenido.add(labelLugar);
-                JTextField textFieldLugar=new JTextField();
+                JTextField textFieldLugar = new JTextField();
                 textFieldLugar.setBounds(300, 50, 200, 30);
                 jContenido.add(textFieldLugar);
                 //SEGUNDA FILA
-                    //NOMBRE
-                JLabel labelNombre=new JLabel("Indique el nombre el plato:");
-                labelNombre.setBounds(20, 100, 200, 30);
+                //NOMBRE
+                JLabel labelNombre = crearLabel("Indique el nombre el plato", 20, 100, 200, 30);
                 jContenido.add(labelNombre);
-                JTextField textFieldNombre=new JTextField();
+                JTextField textFieldNombre = new JTextField();
                 textFieldNombre.setBounds(20, 130, 200, 30);
                 jContenido.add(textFieldNombre);
-                
-                    //PRECIO
-                JLabel labelPrecio=new JLabel("Indique el precio del plato:");
-                labelPrecio.setBounds(300, 100, 300, 30);
+
+                //PRECIO
+                JLabel labelPrecio = crearLabel("Indique el precio del plato", 300, 100, 300, 30);
                 jContenido.add(labelPrecio);
-                JTextField textFieldPrecio=new JTextField();
+                JTextField textFieldPrecio = new JTextField();
                 textFieldPrecio.setBounds(300, 130, 100, 30);
                 jContenido.add(textFieldPrecio);
                 //TERCERA FILA
-                    //CALIFICACION
-                JLabel labelCalificacion=new JLabel("Indique la calificación sobre 5 que le da al plato:");
-                labelCalificacion.setBounds(20, 180, 300, 30);
+                //CALIFICACION
+                JLabel labelCalificacion = crearLabel("Indique la calificación sobre 5 que le da al plato", 20, 180, 300, 30);
                 jContenido.add(labelCalificacion);
-                JTextField textFieldCalificacion=new JTextField();
+                JTextField textFieldCalificacion = new JTextField();
                 textFieldCalificacion.setBounds(20, 210, 50, 30);
                 jContenido.add(textFieldCalificacion);
-                    
-                    //BOTON
-                Button btnVisualizar=new Button("Visualizar");
+
+                //BOTON
+                Button btnVisualizar = new Button("Visualizar");
                 btnVisualizar.setBounds(300, 210, 100, 30);
                 jContenido.add(btnVisualizar);
+
+                btnVisualizar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
+                                && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
+                            label1.setText("TODO NICE");
+                        } else {
+                            label1.setText("Precio o calificación incorrecta");
+                        }
+                    }
+                });
                 break;
+
             case "Eliminar":
                 //label1.setText("El");
                 break;
+
             default:
                 //label1.setText("V");
                 break;
         }
-        
+
         jContenido.revalidate();
         jContenido.repaint();
     }
-    
+
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
-        jListOpciones.addListSelectionListener(new ListSelectionListener(){
+        jListOpciones.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting()){
-                    String elegido=jListOpciones.getSelectedValue();
+                if (!e.getValueIsAdjusting()) {
+                    String elegido = jListOpciones.getSelectedValue();
                     cambiarContenido(elegido);
                 }
             }
