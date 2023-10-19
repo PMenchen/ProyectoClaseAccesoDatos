@@ -9,8 +9,8 @@ vista\Menu.class
 vista\Menu$7.class
 vista\Menu$8.class
 com\mycompany\gestionarficheros\BorrarFichero.class
-com\mycompany\gestionarficheros\GestionarFicheros.class
 com\mycompany\gestionarficheros\CopiarFichero.class
+com\mycompany\gestionarficheros\GestionarFicheros.class
 vista\Menu$3.class
 vista\Menu$6.class
 com\mycompany\gestionarficheros\XMLtoHTML.class
