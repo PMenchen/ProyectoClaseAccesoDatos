@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,7 +28,7 @@ import javax.swing.event.ListSelectionListener;
  */
 public class Menu extends javax.swing.JFrame {
 
-    private void botonAnadir(JLabel labelAux){
+    private void botonAnadir(JLabel labelAux) {
         //PRIMERA FILA
         //FECHA
         JLabel labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
@@ -72,21 +73,21 @@ public class Menu extends javax.swing.JFrame {
         btnAnadir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
-                        && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
-                    labelAux.setText("TODO NICE");
-                    
+                        && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5) {
+                    labelAux.setText("Se añadió con éxito");
+
                     double precio = Double.valueOf(textFieldPrecio.getText());
                     double calificacion = Double.valueOf(textFieldCalificacion.getText());
                     String nombrePlato = textFieldNombre.getText();
                     String lugar = textFieldLugar.getText();
-                    
+
                     //
                     Calendar calendar = Calendar.getInstance();
                     Date fechaSeleccionada = dateChooserFecha.getDate();
                     calendar.setTime(fechaSeleccionada);
-                    
+
                     GestorArchivos.crear(".", "Comidas.bin");
-                    File fich=new File("Comidas.bin");
+                    File fich = new File("Comidas.bin");
                     GestorArchivos.escrituraSEC(fich, calendar, calificacion, lugar, precio, nombrePlato);
                     GestorArchivos.leerSecuencialBin(".", "Comidas.bin");
                 } else {
@@ -95,19 +96,34 @@ public class Menu extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void botonEditar(JLabel labelAux){
+
+    private void botonEditar(JLabel labelAux) {
         //PRIMERA FILA
         JLabel labelFecha = crearLabel("Indique el año de la visita a modificar", 20, 20, 300, 30);
         jContenido.add(labelFecha);
-        
+
         JTextField textFieldFecha = new JTextField();
         textFieldFecha.setBounds(20, 50, 200, 30);
         jContenido.add(textFieldFecha);
         JComboBox comboBoxFecha = new JComboBox();
-        
-        comboBoxFecha.setBounds(20, 100, 200, 30);
+
+        Button btnConectar = new Button("Conectar");
+        btnConectar.setBounds(300, 50, 200, 30);
+        jContenido.add(btnConectar);
+
+        comboBoxFecha.setBounds(20, 100, 400, 30);
         jContenido.add(comboBoxFecha);
+
+        btnConectar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
+                comboBoxFecha.removeAllItems();
+
+                for (String i : info) {
+                    comboBoxFecha.addItem(i);
+                }
+            }
+        });
 
         //BOTON
         Button btnEditar = new Button("Editar");
@@ -120,43 +136,48 @@ public class Menu extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void botonEliminar(JLabel labelAux){
-        //PRIMERA FILA
-        //FECHA
-        JLabel labelFecha = crearLabel("Indique la fecha de la visita a eliminar", 20, 20, 300, 30);
-        jContenido.add(labelFecha);
-        JDateChooser dateChooserFecha = new JDateChooser();
-        dateChooserFecha.setBounds(20, 50, 200, 30);
-        jContenido.add(dateChooserFecha);
 
-        //LUGAR
-        JLabel labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia a eliminar", 300, 20, 400, 30);
-        jContenido.add(labelLugar);
-        JTextField textFieldLugar = new JTextField();
-        textFieldLugar.setBounds(300, 50, 200, 30);
-        jContenido.add(textFieldLugar);
-        //SEGUNDA FILA
-        //NOMBRE
-        JLabel labelNombre = crearLabel("Indique el nombre el plato a eliminar", 20, 100, 300, 30);
-        jContenido.add(labelNombre);
-        JTextField textFieldNombre = new JTextField();
-        textFieldNombre.setBounds(20, 130, 200, 30);
-        jContenido.add(textFieldNombre);
+    private void botonEliminar(JLabel labelAux) {
+        //PRIMERA FILA
+        JLabel labelFecha = crearLabel("Indique el año de la visita a eliminar", 20, 20, 300, 30);
+        jContenido.add(labelFecha);
+
+        JTextField textFieldFecha = new JTextField();
+        textFieldFecha.setBounds(20, 50, 200, 30);
+        jContenido.add(textFieldFecha);
+        JComboBox comboBoxFecha = new JComboBox();
+
+        Button btnConectar = new Button("Conectar");
+        btnConectar.setBounds(300, 50, 200, 30);
+        jContenido.add(btnConectar);
+
+        comboBoxFecha.setBounds(20, 100, 400, 30);
+        jContenido.add(comboBoxFecha);
+
+        btnConectar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
+                comboBoxFecha.removeAllItems();
+
+                for (String i : info) {
+                    comboBoxFecha.addItem(i);
+                }
+            }
+        });
 
         //BOTON
         Button btnEliminar = new Button("Eliminar");
-        btnEliminar.setBounds(300, 130, 100, 30);
+        btnEliminar.setBounds(300, 210, 100, 30);
         jContenido.add(btnEliminar);
 
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                labelAux.setText("Borrado");
+
             }
         });
     }
-    
-    private void botonVisualizar(JLabel labelAux){
+
+    private void botonVisualizar(JLabel labelAux) {
         //PRIMERA FILA
         //FECHA
         JLabel labelFecha = crearLabel("Si desea visualizar un año en especifico introduzcalo y pulse el botón", 20, 20, 400, 30);
@@ -168,7 +189,7 @@ public class Menu extends javax.swing.JFrame {
         Button btnVisualizarFecha = new Button("Visualizar un año");
         btnVisualizarFecha.setBounds(300, 50, 200, 30);
         jContenido.add(btnVisualizarFecha);
-        
+
         //SEGUNDA FILA
         //NOMBRE
         JLabel labelTodo = crearLabel("Si quiere visualizar todo pulse el siguiente botón", 20, 100, 300, 30);
@@ -180,20 +201,20 @@ public class Menu extends javax.swing.JFrame {
 
         btnVisualizarFecha.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (esNumero(textFieldFecha.getText())){
-                    labelAux.setText("Datos del año "+textFieldFecha.getText());
+                if (esNumero(textFieldFecha.getText())) {
+                    labelAux.setText("Datos del año " + textFieldFecha.getText());
                 }
             }
         });
-        
+
         btnVisualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 labelAux.setText("Datos de todo lo almacenado");
             }
         });
     }
-    
-    private void botonCopia(JLabel labelAux){
+
+    private void botonCopia(JLabel labelAux) {
         //PRIMERA FILA
         //ORIGEN
         JLabel labelOrigen = crearLabel("Seleccione el archivo del que desea hacer la copia de seguridad", 20, 20, 400, 30);
@@ -203,17 +224,17 @@ public class Menu extends javax.swing.JFrame {
         jContenido.add(btnOrigen);
         JFileChooser origen = new JFileChooser();
         JTextField textFieldOrigen = new JTextField();
-        
+
         origen.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         btnOrigen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int val=origen.showOpenDialog(null);
-                if(val==JFileChooser.APPROVE_OPTION){
+                int val = origen.showOpenDialog(null);
+                if (val == JFileChooser.APPROVE_OPTION) {
                     textFieldOrigen.setText(origen.getSelectedFile().getAbsolutePath());
                 }
             }
         });
-        
+
         //SEGUNDA FILA
         //DESTINO
         JLabel labelDestino = crearLabel("Seleccione la carpeta de la copia de seguridad", 20, 100, 300, 30);
@@ -223,36 +244,34 @@ public class Menu extends javax.swing.JFrame {
         jContenido.add(btnDestino);
         JFileChooser destino = new JFileChooser();
         JTextField textFieldDestino = new JTextField();
-        
+
         destino.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         btnDestino.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int val=destino.showOpenDialog(null);
-                if(val==JFileChooser.APPROVE_OPTION){
+                int val = destino.showOpenDialog(null);
+                if (val == JFileChooser.APPROVE_OPTION) {
                     textFieldDestino.setText(destino.getSelectedFile().getAbsolutePath());
                 }
             }
         });
-        
-        
+
         //TERCERA FILA
         Button btnCopiar = new Button("Copia de seguridad");
         btnCopiar.setBounds(20, 180, 300, 30);
         jContenido.add(btnCopiar);
         btnCopiar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(textFieldOrigen.getText()==null && textFieldDestino.getText()==null){
+                if (textFieldOrigen.getText() == null && textFieldDestino.getText() == null) {
                     labelAux.setText("Indique primero el archivo a copiar y el destino");
-                }else{
+                } else {
                     System.out.println("OK");
                     GestorArchivos.copiar(textFieldOrigen.getText(), textFieldDestino.getText());
                 }
             }
         });
-        
-        
+
     }
-    
+
     private static boolean esNumero(String texto) {
         try {
             Double.parseDouble(texto);
@@ -279,7 +298,7 @@ public class Menu extends javax.swing.JFrame {
             case "Añadir":
                 botonAnadir(labelAux);
                 break;
-                
+
             case "Editar":
                 botonEditar(labelAux);
                 break;
