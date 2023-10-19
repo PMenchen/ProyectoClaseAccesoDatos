@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  */
 public class GestorArchivos {
 
-    static int id = 0;
+    static int id = setIndice();
 
     /**
      * Método que creara un archivo
