@@ -4,7 +4,9 @@
  */
 package com.mycompany.gestionarficheros;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Calendar;
@@ -15,6 +17,7 @@ import java.util.Date;
  * @author b15-19m
  */
 public class EscrituraFicheroSEC {
+    static int id=0;
     
     public static void main (String[] args) {
         
@@ -31,36 +34,36 @@ public class EscrituraFicheroSEC {
      * @param precio precio
      * @param nombre nombre del plato
      */
-    public static void EscrituraSEC(Calendar fecha, int puntuacion, String lugar, double precio, String nombre) {
-        try (RandomAccessFile fo = new RandomAccessFile(new File(".//Comidas.dat"), "rw")) {
+    public static void escrituraSEC(File fich, /*Calendar fecha,*/ int puntuacion, String lugar, double precio, String nombre) {
+        try (FileOutputStream fos = new FileOutputStream(fich, true);
+                DataOutputStream dos = new DataOutputStream(fos)) {
             
-            if (fo.length() > 0) {
-                // If the file is not empty, move the file pointer to the end
-                fo.seek(fo.length());
-            }
-            
-            StringBuffer buffer=null;
+            StringBuffer buffer;
+            dos.writeInt(id);//indice
+            id++;
             
             //escritura de la fecha (en numeros)
-            fo.writeInt(fecha.DATE);  //dia
+            /*fo.writeInt(fecha.DATE);  //dia
             fo.writeInt(fecha.MONTH); //mes
             fo.writeInt(fecha.YEAR); //año
+            */
             
-            fo.writeInt(puntuacion);//puntuacion
+            dos.writeInt(puntuacion);//puntuacion
             
             buffer = new StringBuffer(lugar); //lugar
             buffer.setLength(10);
-            fo.writeChars(buffer.toString());
+            dos.writeChars(buffer.toString());
             buffer=null;
 
-            fo.writeDouble(precio);//salario
+            dos.writeDouble(precio);//salario
 
             buffer = new StringBuffer(nombre); //nombre
             buffer.setLength(20);
-            fo.writeChars(buffer.toString());
+            dos.writeChars(buffer.toString());
             buffer=null;
             
-            fo.close();
+            fos.close();
+            dos.close();
             
         } catch (IOException ioe) {
             System.out.println(ioe);
