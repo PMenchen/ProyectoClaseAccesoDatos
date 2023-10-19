@@ -50,6 +50,7 @@ public class pruebas {
         EscrituraFicheroBinario.EscrituraSEC(5, "Gondola", 10.7, "Carbonara", ruta);
         
         LeerBinario_CrearXML.crearXML(ruta);
+        XMLtoHTML.convert(ruta);
     }
     
 }

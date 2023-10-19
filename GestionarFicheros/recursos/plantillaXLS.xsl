@@ -3,12 +3,19 @@
  <xsl:template match='/'>
    <html><xsl:apply-templates /></html>
  </xsl:template>
- <xsl:template match='Departamentos'>
+ <xsl:template match='Platos'>
     <head><title>LISTADO DE PLATOS</title></head>
-    <body> 
-    <h1>LISTA DE Platos</h1>
-    <table border='1'>
-    <tr><th align="center">Nº de Departamento</th><th align="center">Nombre</th><th align="center">Localidad</th></tr>
+    <body style="background-color: black; text-align: center;"> 
+    <h1 style="color: white;">LISTA DE PLATOS</h1>
+    <table border="1" cellspacing="10" style="margin: 0 auto; background-color: white; width: 80%;">
+    <!-- <tr><th align="center">Nombre del plato</th><th align="center">Lugar</th><th align="center">Precio</th><th align="center">Puntuacion</th></tr> -->
+        <tr>
+            <th>Nombre</th>
+            <th>Lugar</th>
+            <th>Precio</th>
+            <th>Puntuación</th>
+        </tr>
+        
       <xsl:apply-templates select='Plato' />
     </table>
     </body>
@@ -16,7 +23,7 @@
  <xsl:template match='Plato'>
    <tr><xsl:apply-templates /></tr>
  </xsl:template>
- <xsl:template match='id|nombre|localidad'>
+ <xsl:template match='nombre|lugar|precio|puntuacion'>
    <td align="center"><xsl:apply-templates /></td>
  </xsl:template>
 </xsl:stylesheet>
