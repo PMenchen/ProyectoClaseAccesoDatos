@@ -4,17 +4,24 @@
  */
 package com.mycompany.recuerdosgastronomicos;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Calendar;
+import java.io.IOException;
 
 /**
  *
  * @author b15-19m
+ * @author b15-08m
+ * @author b15-21m
  */
 public class GestorArchivos {
     /**
@@ -71,47 +78,87 @@ public class GestorArchivos {
     }
 
     /**
-     * Crea un fichero.dat "Comidas" en donde se guarda:
+     * Método que Escribirá en un archivo guardando:
      * Fecha, puntuacion, lugar, precio, nombre
      * En ese orden
      * 
-     * @param fecha fecha en la que se ha comido el plato
+     * @param fich Fichero en el que se escribirá
+     * //@param fecha fecha en la que se ha comido el plato
      * @param puntuacion puntuacion/estrellas dadas al plato
      * @param lugar lugar (restaurante) en donde se ha comido
      * @param precio precio
      * @param nombre nombre del plato
      */
-    public static void EscrituraSEC(Calendar fecha, int puntuacion, String lugar, double precio, String nombre) {
-        try (RandomAccessFile fo = new RandomAccessFile(new File(".//Comidas.dat"), "rw")) {
+    public static void escrituraSEC(File fich, /*Calendar fecha,*/ int puntuacion, String lugar, double precio, String nombre) {
+        try (FileOutputStream fos = new FileOutputStream(fich, true);
+                DataOutputStream dos = new DataOutputStream(fos)) {
             
-            if (fo.length() > 0) {
-                // If the file is not empty, move the file pointer to the end
-                fo.seek(fo.length());
-            }
-            
-            StringBuffer buffer=null;
+            StringBuffer buffer;
             
             //escritura de la fecha (en numeros)
-            fo.writeInt(fecha.DATE);  //dia
+            /*fo.writeInt(fecha.DATE);  //dia
             fo.writeInt(fecha.MONTH); //mes
             fo.writeInt(fecha.YEAR); //año
+            */
             
-            fo.writeInt(puntuacion);//puntuacion
+            dos.writeInt(puntuacion);//puntuacion
             
             buffer = new StringBuffer(lugar); //lugar
             buffer.setLength(10);
-            fo.writeChars(buffer.toString());
+            dos.writeChars(buffer.toString());
             buffer=null;
 
-            fo.writeDouble(precio);//salario
+            dos.writeDouble(precio);//salario
 
             buffer = new StringBuffer(nombre); //nombre
             buffer.setLength(20);
-            fo.writeChars(buffer.toString());
+            dos.writeChars(buffer.toString());
             buffer=null;
             
-            fo.close();
+            fos.close();
+            dos.close();
             
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+    }
+    
+    /**
+     * Método para leer de manera secuencial un archivo (txt)
+     * 
+     * @param ruta lugar donde se encuentra el archivo a leer
+     * @param nombre nombre del archivo
+     */
+    public static void leerSecuencial(String ruta, String nombre){
+        File fichero=new File(ruta+"//"+nombre);
+        try{
+            FileReader lector = new FileReader(fichero);
+            BufferedReader br = new BufferedReader(lector);
+            
+            String linea;
+            while((linea=br.readLine())!=null){
+                System.out.println(linea);
+            }
+            
+            br.close();
+            lector.close();
+        }catch(FileNotFoundException fnfe){
+            System.out.println("NO se encontró el fichero");
+        } catch (IOException iex) {
+            System.out.println("ERROR E/S");
+        }
+    }
+    
+    public static void leerSecuencialBin(String ruta, String nombre) {
+        File fichero = new File (ruta+"//"+nombre);
+        try (DataInputStream dis = new DataInputStream(new FileInputStream(fichero))) {
+            
+            
+            System.out.println(dis.readInt());
+            
+            
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(fnfe);
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
