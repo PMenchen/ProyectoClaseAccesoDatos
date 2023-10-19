@@ -11,6 +11,7 @@ vista\Menu$6.class
 com\mycompany\gestionarficheros\pruebas.class
 vista\Menu$1.class
 vista\CopiarFichero.class
+com\mycompany\gestionarficheros\EscrituraFicheroBinario.class
 com\mycompany\gestionarficheros\MoverFichero.class
 vista\Menu$10.class
 com\mycompany\gestionarficheros\CrearFichero.class
