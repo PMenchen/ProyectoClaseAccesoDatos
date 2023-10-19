@@ -28,7 +28,7 @@ import javax.swing.event.ListSelectionListener;
  */
 public class Menu extends javax.swing.JFrame {
 
-    private void botonAnadir(JLabel labelAux) {
+    private void botonAnadir(JLabel labelAux, boolean editar, int id) {
         //PRIMERA FILA
         //FECHA
         JLabel labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
@@ -70,7 +70,32 @@ public class Menu extends javax.swing.JFrame {
         btnAnadir.setBounds(300, 210, 100, 30);
         jContenido.add(btnAnadir);
 
-        btnAnadir.addActionListener(new ActionListener() {
+        if(editar){
+            btnAnadir.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
+                        && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5) {
+                        labelAux.setText("Modificado con éxito");
+                    
+                        double precio = Double.valueOf(textFieldPrecio.getText());
+                        double calificacion = Double.valueOf(textFieldCalificacion.getText());
+                        String nombrePlato = textFieldNombre.getText();
+                        String lugar = textFieldLugar.getText();
+
+                        //
+                        Calendar calendar = Calendar.getInstance();
+                        Date fechaSeleccionada = dateChooserFecha.getDate();
+                        calendar.setTime(fechaSeleccionada);
+            
+                        GestorArchivos.modificar(id, calendar, lugar, nombrePlato, precio, calificacion);
+                    } else {
+                        labelAux.setText("Precio o calificación incorrecta");
+                    }
+                }
+            });
+            
+        }else{
+            btnAnadir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
                         && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5) {
@@ -95,6 +120,7 @@ public class Menu extends javax.swing.JFrame {
                 }
             }
         });
+        }
     }
 
     private void botonEditar(JLabel labelAux) {
@@ -132,7 +158,9 @@ public class Menu extends javax.swing.JFrame {
 
         btnEditar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cambiarContenido("Añadir");
+                String info=(String)comboBoxFecha.getSelectedItem();
+                String[] id=info.split(" ");
+                cambiarContenido("Añadir", true, Integer.valueOf(id[0]));
             }
         });
     }
@@ -172,7 +200,11 @@ public class Menu extends javax.swing.JFrame {
 
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                String info=(String)comboBoxFecha.getSelectedItem();
+                String[] id=info.split(" ");
+                if(GestorArchivos.eliminarRA(Integer.valueOf(id[0]))){
+                    labelAux.setText("Borrado con éxito");
+                }
             }
         });
     }
@@ -289,14 +321,14 @@ public class Menu extends javax.swing.JFrame {
         return label;
     }
 
-    private void cambiarContenido(String elegido) {
+    private void cambiarContenido(String elegido, boolean elegir, int id) {
         jContenido.removeAll();
         JLabel labelAux = crearLabel("", 20, 250, 300, 30);
         jContenido.add(labelAux);
 
         switch (elegido) {
             case "Añadir":
-                botonAnadir(labelAux);
+                botonAnadir(labelAux, elegir, id);
                 break;
 
             case "Editar":
@@ -329,7 +361,7 @@ public class Menu extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     String elegido = jListOpciones.getSelectedValue();
-                    cambiarContenido(elegido);
+                    cambiarContenido(elegido, false, 0);
                 }
             }
         });

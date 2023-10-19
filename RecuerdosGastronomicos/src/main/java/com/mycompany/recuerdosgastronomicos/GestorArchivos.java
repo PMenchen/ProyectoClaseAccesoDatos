@@ -226,7 +226,7 @@ public class GestorArchivos {
                 System.out.print(" ");
                 System.out.print("mes:" + mes);
                 System.out.print(" ");
-                System.out.print("anio: " + anio);
+                System.out.print("año: " + anio);
                 System.out.print(" ");
                 System.out.print("punt: " + puntuacion);
                 System.out.print(" ");
@@ -314,8 +314,57 @@ public class GestorArchivos {
                 System.out.println(e);
             }
         } else {
-            indice = 0;
+            indice = 1;
         }
         return indice;
+    }
+    
+    public static void escibirCadena(RandomAccessFile random, String texto){
+        try{
+            StringBuffer buffer = new StringBuffer(texto);
+            buffer = new StringBuffer(texto);
+            buffer.setLength(10);
+            random.writeChars(buffer.toString());
+        }catch (IOException ioe) {
+            System.out.println("ERROR E/S");
+        }
+    }
+    
+    public static void modificar(int id, Calendar calendar, String lugar, String nombre, double precio, double calificacion){
+        try {
+            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
+            int posicion=(id-1)*32;
+            
+            random.seek(posicion);
+            
+            random.skipBytes(4);
+            
+            random.writeInt(calendar.get(Calendar.DAY_OF_MONTH));  //dia
+            random.writeInt(calendar.get(Calendar.MONTH) + 1); //mes-1
+            random.writeInt(calendar.get(Calendar.YEAR));//año
+            random.writeDouble(calificacion);
+            escibirCadena(random, lugar);
+            random.writeDouble(precio);
+            escibirCadena(random, nombre);
+                
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("No se encontró el fichero");
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+    }
+    
+    public static boolean eliminarRA(int id){
+        int posicion=((id-1)*32);
+        
+        try {
+            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
+            random.seek(posicion);
+            random.writeInt(-1);
+            
+            return true;
+        } catch (IOException ioe) {
+            return false;
+        }
     }
 }
