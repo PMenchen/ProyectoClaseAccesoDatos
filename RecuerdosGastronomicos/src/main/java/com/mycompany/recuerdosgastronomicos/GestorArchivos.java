@@ -21,8 +21,6 @@ import java.io.RandomAccessFile;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -246,6 +244,12 @@ public class GestorArchivos {
         }
     }
 
+    /**
+     * Método que recuperará una serie de registros según una fecha
+     * 
+     * @param fechaBuscada fecha que debe coincidir para poder recuperarlos
+     * @return ArrayList con los registros
+     */
     public static ArrayList<String> recuperar(int fechaBuscada) {
         ArrayList<String> platos = new ArrayList<>();
         try {
@@ -267,7 +271,7 @@ public class GestorArchivos {
                     nombrePlato += archivo.readChar();
                 }
 
-                if (anio == fechaBuscada) {
+                if (anio == fechaBuscada && indice>0) {
                     String info = indice + " " + dia + "/" + mes + "/" + anio + " " + puntuacion + " " + lugar + " " + " " + nombrePlato + " " + precio + "€";
                     platos.add(info);
                 }
@@ -281,6 +285,79 @@ public class GestorArchivos {
         return platos;
     }
 
+    /**
+     * Método que escribirá una cadena usando el RandomAccessFile
+     * 
+     * @param random RandomAccessFile
+     * @param texto cadena que debe escribir
+     */
+    public static void escibirCadena(RandomAccessFile random, String texto){
+        try{
+            StringBuffer buffer = new StringBuffer(texto);
+            buffer = new StringBuffer(texto);
+            buffer.setLength(10);
+            random.writeChars(buffer.toString());
+        }catch (IOException ioe) {
+            System.out.println("ERROR E/S");
+        }
+    }
+    
+    /**
+     * Método para modificar un registro en concreto
+     * 
+     * @param id id del registro a modificar
+     * @param calendar fecha cuando se probó el plato
+     * @param lugar lugar donde se probó
+     * @param nombre nombre del plato
+     * @param precio precio del plato
+     * @param calificacion calificacion dada
+     */
+    public static void modificar(int id, Calendar calendar, String lugar, String nombre, double precio, double calificacion){
+        try {
+            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
+            int posicion=(id-1)*32;
+            
+            random.seek(posicion);
+            
+            random.skipBytes(4);
+            
+            random.writeInt(calendar.get(Calendar.DAY_OF_MONTH));  //dia
+            random.writeInt(calendar.get(Calendar.MONTH) + 1); //mes-1
+            random.writeInt(calendar.get(Calendar.YEAR));//año
+            random.writeDouble(calificacion);
+            escibirCadena(random, lugar);
+            random.writeDouble(precio);
+            escibirCadena(random, nombre);
+                
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("No se encontró el fichero");
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+    }
+    
+    /**
+     * Método para eliminar un registro en concreto
+     * 
+     * @param id id del registro a eliminar
+     * @return devuelve un boolean para comprobar que se hizo sin problema
+     */
+    public static boolean eliminarRA(int id){
+        int posicion=((id-1)*32);
+        
+        try {
+            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
+            random.seek(posicion);
+            random.writeInt(-1);
+            
+            random.getFD().sync();
+            random.close();
+            return true;
+        } catch (IOException ioe) {
+            return false;
+        }
+    }
+    
     /**
      * Método para actualiza el índice de las comidas al agregarlas
      *
@@ -317,54 +394,5 @@ public class GestorArchivos {
             indice = 1;
         }
         return indice;
-    }
-    
-    public static void escibirCadena(RandomAccessFile random, String texto){
-        try{
-            StringBuffer buffer = new StringBuffer(texto);
-            buffer = new StringBuffer(texto);
-            buffer.setLength(10);
-            random.writeChars(buffer.toString());
-        }catch (IOException ioe) {
-            System.out.println("ERROR E/S");
-        }
-    }
-    
-    public static void modificar(int id, Calendar calendar, String lugar, String nombre, double precio, double calificacion){
-        try {
-            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
-            int posicion=(id-1)*32;
-            
-            random.seek(posicion);
-            
-            random.skipBytes(4);
-            
-            random.writeInt(calendar.get(Calendar.DAY_OF_MONTH));  //dia
-            random.writeInt(calendar.get(Calendar.MONTH) + 1); //mes-1
-            random.writeInt(calendar.get(Calendar.YEAR));//año
-            random.writeDouble(calificacion);
-            escibirCadena(random, lugar);
-            random.writeDouble(precio);
-            escibirCadena(random, nombre);
-                
-        } catch (FileNotFoundException fnfe) {
-            System.out.println("No se encontró el fichero");
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        }
-    }
-    
-    public static boolean eliminarRA(int id){
-        int posicion=((id-1)*32);
-        
-        try {
-            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
-            random.seek(posicion);
-            random.writeInt(-1);
-            
-            return true;
-        } catch (IOException ioe) {
-            return false;
-        }
     }
 }

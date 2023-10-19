@@ -28,6 +28,13 @@ import javax.swing.event.ListSelectionListener;
  */
 public class Menu extends javax.swing.JFrame {
 
+    /**
+     * Método que crea lo necesario al darle a la opcion Añadir
+     * 
+     * @param labelAux una etiqueta auxiliar para indicar si el boton funcionó
+     * @param editar boolean para indicar si lo llaman desde Editar o no
+     * @param id indice para modificar un registro si el boolean es true
+     */
     private void botonAnadir(JLabel labelAux, boolean editar, int id) {
         //PRIMERA FILA
         //FECHA
@@ -123,6 +130,11 @@ public class Menu extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que crea lo necesario al darle a la opcion Editar
+     * 
+     * @param labelAux una etiqueta auxiliar para indicar si el boton funcionó
+     */
     private void botonEditar(JLabel labelAux) {
         //PRIMERA FILA
         JLabel labelFecha = crearLabel("Indique el año de la visita a modificar", 20, 20, 300, 30);
@@ -165,6 +177,11 @@ public class Menu extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Método que crea lo necesario al darle a la opcion Eliminar
+     * 
+     * @param labelAux una etiqueta auxiliar para indicar si el boton funcionó
+     */
     private void botonEliminar(JLabel labelAux) {
         //PRIMERA FILA
         JLabel labelFecha = crearLabel("Indique el año de la visita a eliminar", 20, 20, 300, 30);
@@ -209,6 +226,11 @@ public class Menu extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Método que crea lo necesario al darle a la opcion Visualizar
+     * 
+     * @param labelAux una etiqueta auxiliar para indicar si el boton funcionó
+     */
     private void botonVisualizar(JLabel labelAux) {
         //PRIMERA FILA
         //FECHA
@@ -246,6 +268,11 @@ public class Menu extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Método que crea lo necesario al darle a la opcion Copia
+     * 
+     * @param labelAux una etiqueta auxiliar para indicar si el boton funcionó
+     */
     private void botonCopia(JLabel labelAux) {
         //PRIMERA FILA
         //ORIGEN
@@ -296,7 +323,6 @@ public class Menu extends javax.swing.JFrame {
                 if (textFieldOrigen.getText() == null && textFieldDestino.getText() == null) {
                     labelAux.setText("Indique primero el archivo a copiar y el destino");
                 } else {
-                    System.out.println("OK");
                     GestorArchivos.copiar(textFieldOrigen.getText(), textFieldDestino.getText());
                 }
             }
@@ -304,6 +330,12 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Método que comprueba si el parametro introducido es un Double
+     * 
+     * @param texto numero a comprobar
+     * @return true si sí es un double y false si no lo es
+     */
     private static boolean esNumero(String texto) {
         try {
             Double.parseDouble(texto);
@@ -313,6 +345,16 @@ public class Menu extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método para crear etiquetas
+     * 
+     * @param texto texto que pondrá en la etiqueta
+     * @param x posición x
+     * @param y posición y
+     * @param width ancho de la etiqueta
+     * @param height alto de la etiqueta
+     * @return la etiqueta creada
+     */
     private JLabel crearLabel(String texto, int x, int y, int width, int height) {
 
         JLabel label = new JLabel(texto);
@@ -321,6 +363,13 @@ public class Menu extends javax.swing.JFrame {
         return label;
     }
 
+    /**
+     * Método que a través de un switch nos llevará a los métodos creados para mostrar las diferentes opciones
+     * 
+     * @param elegido que opción se debe crear
+     * @param elegir boolean para comprobar si viene de Editar
+     * @param id indice para modificar un registro si el boolean es true
+     */
     private void cambiarContenido(String elegido, boolean elegir, int id) {
         jContenido.removeAll();
         JLabel labelAux = crearLabel("", 20, 250, 300, 30);
