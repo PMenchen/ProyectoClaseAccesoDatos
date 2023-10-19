@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -78,11 +80,15 @@ public class Menu extends javax.swing.JFrame {
                     String nombrePlato = textFieldNombre.getText();
                     String lugar = textFieldLugar.getText();
                     
-                    
+                    //
+                    Calendar calendar = Calendar.getInstance();
+                    Date fechaSeleccionada = dateChooserFecha.getDate();
+                    calendar.setTime(fechaSeleccionada);
                     
                     GestorArchivos.crear(".", "Comidas.bin");
-                    File fich=new File("Comidas.dat");
-                    GestorArchivos.escrituraSEC(fich, calificacion, lugar, precio, nombrePlato);
+                    File fich=new File("Comidas.bin");
+                    GestorArchivos.escrituraSEC(fich, calendar, calificacion, lugar, precio, nombrePlato);
+                    GestorArchivos.leerSecuencialBin(".", "Comidas.bin");
                 } else {
                     labelAux.setText("Precio o calificación incorrecta");
                 }

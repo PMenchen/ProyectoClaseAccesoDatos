@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.nio.file.StandardCopyOption;
+import java.util.Calendar;
 
 /**
  *
@@ -39,7 +40,7 @@ public class GestorArchivos {
             File fichero=new File(ruta+"//"+nombre);
             
             if(fichero.createNewFile()){
-                System.out.println("[TEXTO DEFECTO]");
+                System.out.println("Fichero ya existente");
             }
         }catch(IOException ioe){
             System.out.println("ERROR E/S");
@@ -118,7 +119,7 @@ public class GestorArchivos {
      * @param precio precio
      * @param nombre nombre del plato
      */
-    public static void escrituraSEC(File fich, /*Calendar fecha,*/ double puntuacion, String lugar, double precio, String nombre) {
+    public static void escrituraSEC(File fich, Calendar calendar, double puntuacion, String lugar, double precio, String nombre) {
         try (FileOutputStream fos = new FileOutputStream(fich, true);
                 DataOutputStream dos = new DataOutputStream(fos)) {
             
@@ -127,10 +128,9 @@ public class GestorArchivos {
             id++;
             
             //escritura de la fecha (en numeros)
-            /*fo.writeInt(fecha.DATE);  //dia
-            fo.writeInt(fecha.MONTH); //mes
-            fo.writeInt(fecha.YEAR); //año
-            */
+            dos.writeInt(calendar.get(Calendar.DAY_OF_MONTH));  //dia
+            dos.writeInt(calendar.get(Calendar.MONTH)+1); //mes-1
+            dos.writeInt(calendar.get(Calendar.YEAR));//año
             
             dos.writeDouble(puntuacion);//puntuacion
             
@@ -191,16 +191,21 @@ public class GestorArchivos {
         try (FileInputStream fis = new FileInputStream(fichero);
                 DataInputStream dis = new DataInputStream(fis)) {
             
-            
             int indice;
-            int puntuacion;
+            int dia;
+            int mes;
+            int anio;
+            double puntuacion;
             String lugar;
             double precio;
             String nombrePlato;
             
                 while (fis.available() > 0) {
                     indice = dis.readInt();
-                    puntuacion = dis.readInt();
+                    dia = dis.readInt();
+                    mes = dis.readInt();
+                    anio = dis.readInt();
+                    puntuacion = dis.readDouble();
                     lugar = "";
                     for (int i=0; i<10; i++) {
                         lugar += dis.readChar();
@@ -211,15 +216,21 @@ public class GestorArchivos {
                         nombrePlato += dis.readChar();
                     }
 
-                    System.out.print(indice);
+                    System.out.print("Indice: "+ indice);
                     System.out.print(" ");
-                    System.out.print(puntuacion);
+                    System.out.print("dia: "+dia);
                     System.out.print(" ");
-                    System.out.print(lugar);
+                    System.out.print("mes:"+mes);
                     System.out.print(" ");
-                    System.out.print(precio);
+                    System.out.print("anio: "+anio);
                     System.out.print(" ");
-                    System.out.print(nombrePlato);
+                    System.out.print("punt: "+puntuacion);
+                    System.out.print(" ");
+                    System.out.print("lugar: "+lugar);
+                    System.out.print(" ");
+                    System.out.print("precio: "+precio);
+                    System.out.print(" ");
+                    System.out.print("nombre:" +nombrePlato);
                     System.out.println();
                 }
             fis.close();
