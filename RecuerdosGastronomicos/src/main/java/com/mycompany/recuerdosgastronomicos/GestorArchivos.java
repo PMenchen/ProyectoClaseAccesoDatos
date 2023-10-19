@@ -24,6 +24,8 @@ import java.io.IOException;
  * @author b15-21m
  */
 public class GestorArchivos {
+    static int id=0;
+    
     /**
      * Método que creara un archivo
      * 
@@ -94,6 +96,8 @@ public class GestorArchivos {
                 DataOutputStream dos = new DataOutputStream(fos)) {
             
             StringBuffer buffer;
+            dos.writeInt(id);//indice
+            id++;
             
             //escritura de la fecha (en numeros)
             /*fo.writeInt(fecha.DATE);  //dia
@@ -149,18 +153,54 @@ public class GestorArchivos {
         }
     }
     
-    public static void leerSecuencialBin(String ruta, String nombre) {
-        File fichero = new File (ruta+"//"+nombre);
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(fichero))) {
+    /**
+     * Método para leer de manera secuencial un archivo (binario)
+     * 
+     * @param ruta lugar donde se encuentra el archivo a leer
+     * @param nombre nombre del archivo
+     */
+    public static void leerSecuencialBin(String ruta, String nombre){
+        File fichero=new File(ruta+"//"+nombre);
+        try (FileInputStream fis = new FileInputStream(fichero);
+                DataInputStream dis = new DataInputStream(fis)) {
             
             
-            System.out.println(dis.readInt());
+            int indice;
+            int puntuacion;
+            String lugar;
+            double precio;
+            String nombrePlato;
             
-            
-        } catch (FileNotFoundException fnfe) {
-            System.out.println(fnfe);
-        } catch (IOException ioe) {
-            System.out.println(ioe);
+                while (fis.available() > 0) {
+                    indice = dis.readInt();
+                    puntuacion = dis.readInt();
+                    lugar = "";
+                    for (int i=0; i<10; i++) {
+                        lugar += dis.readChar();
+                    }
+                    precio = dis.readDouble();
+                    nombrePlato = "";
+                    for (int i=0; i<20; i++) {
+                        nombrePlato += dis.readChar();
+                    }
+
+                    System.out.print(indice);
+                    System.out.print(" ");
+                    System.out.print(puntuacion);
+                    System.out.print(" ");
+                    System.out.print(lugar);
+                    System.out.print(" ");
+                    System.out.print(precio);
+                    System.out.print(" ");
+                    System.out.print(nombrePlato);
+                    System.out.println();
+                }
+            fis.close();
+            dis.close();
+        }catch(FileNotFoundException fnfe){
+            System.out.println("NO se encontró el fichero");
+        } catch (IOException iex) {
+            System.out.println("Lectura terminada...");
         }
     }
 

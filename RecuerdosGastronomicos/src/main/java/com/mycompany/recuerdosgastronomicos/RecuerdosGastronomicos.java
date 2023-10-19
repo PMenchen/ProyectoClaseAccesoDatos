@@ -17,11 +17,13 @@ public class RecuerdosGastronomicos {
         String ruta = ".";
         String nombreFich = "Comidas.dat";
         
+        GestorArchivos.borrar(ruta, nombreFich);
         GestorArchivos.crear(ruta, nombreFich);
+        
+        
         
         File fich=new File(nombreFich);
         
-        GestorArchivos.escrituraSEC(fich, 0, ruta, 0, nombreFich);
-        GestorArchivos.leerSecuencial(ruta, "texto.txt");
+        
     }
 }
