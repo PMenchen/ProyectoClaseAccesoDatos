@@ -4,16 +4,16 @@
    <html><xsl:apply-templates /></html>
  </xsl:template>
  <xsl:template match='Departamentos'>
-    <head><title>LISTADO DE DEPARTAMENTOS</title></head>
+    <head><title>LISTADO DE PLATOS</title></head>
     <body> 
-    <h1>LISTA DE DEPARTAMENTOS</h1>
+    <h1>LISTA DE Platos</h1>
     <table border='1'>
     <tr><th align="center">Nº de Departamento</th><th align="center">Nombre</th><th align="center">Localidad</th></tr>
-      <xsl:apply-templates select='Departamento' />
+      <xsl:apply-templates select='Plato' />
     </table>
     </body>
  </xsl:template>
- <xsl:template match='Departamento'>
+ <xsl:template match='Plato'>
    <tr><xsl:apply-templates /></tr>
  </xsl:template>
  <xsl:template match='id|nombre|localidad'>

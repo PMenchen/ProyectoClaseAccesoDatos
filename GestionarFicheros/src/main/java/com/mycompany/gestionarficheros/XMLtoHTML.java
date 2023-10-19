@@ -18,15 +18,15 @@ import javax.xml.transform.stream.StreamSource;
  * @author b15-21m
  */
 public class XMLtoHTML {
-    public static void main(String[] args){
+    public static void convert(String ruta){
         
         /*String estilo = ".\\recursos\\alumnosPlantilla.xsl";
         String datosAlumnos = ".\\recursos\\alumnos.xml";*/
         
-        String estilo = ".\\recursos\\plantillaXLS.xsl";
-        String datosPlatos = ".\\recursos\\datos.xml";
+        String estilo = ruta + "plantillaXLS.xsl";
+        String datosPlatos = ruta + "datos.xml";
         
-        File html = new File(".\\recursos\\index.html");
+        File html = new File(ruta + "index.html");
         
         try {
             
@@ -34,7 +34,6 @@ public class XMLtoHTML {
             FileOutputStream fos = new FileOutputStream(html);
             Source estilos = new StreamSource(estilo); //fuente XSL 
             Source datos = new StreamSource(datosPlatos); //fuente XML
-            //Source datos = new StreamSource(datosAlumnos); //fuente XML
             
             Result result = new StreamResult(fos);
             
