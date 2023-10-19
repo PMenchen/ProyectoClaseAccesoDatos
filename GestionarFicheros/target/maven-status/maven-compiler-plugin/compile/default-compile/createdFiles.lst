@@ -1,3 +1,4 @@
+com\mycompany\gestionarficheros\EscrituraFicheroBinario.class
 com\mycompany\gestionarficheros\MoverFichero.class
 vista\Menu$2.class
 com\mycompany\gestionarficheros\CrearFichero.class
@@ -6,7 +7,6 @@ com\mycompany\gestionarficheros\BorrarFichero.class
 com\mycompany\gestionarficheros\CopiarFichero.class
 com\mycompany\gestionarficheros\GestionarFicheros.class
 com\mycompany\gestionarficheros\XMLtoHTML.class
-com\mycompany\gestionarficheros\EscrituraFicheroSEC.class
 com\mycompany\gestionarficheros\LecturaSecuencial.class
 com\mycompany\gestionarficheros\LeerBinario_CrearXML.class
 com\mycompany\gestionarficheros\Menu.class

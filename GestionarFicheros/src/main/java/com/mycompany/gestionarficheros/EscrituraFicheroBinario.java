@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author b15-19m
  */
-public class EscrituraFicheroSEC {
+public class EscrituraFicheroBinario {
     
     public static void main (String[] args) {
         

@@ -67,12 +67,10 @@ public class LeerBinario_CrearXML {
                 nombre = new String(b, "UTF-16");
                 fichero.read(b);
                 lugar = new String(b, "UTF-16");
-                /*nombre = fichero.readUTF();
-                lugar = fichero.readUTF();*/
                 
                 precio = fichero.readDouble();
                 puntuacion = fichero.readInt();
-                System.out.println("Nombre: " + nombre.trim() + "\tLugar: " + lugar.trim() + "\tPrecio: " + String.valueOf(precio).trim() + "\tpuntuacion: " + String.valueOf(puntuacion).trim());
+                //System.out.println("Nombre: " + nombre.trim() + "\tLugar: " + lugar.trim() + "\tPrecio: " + String.valueOf(precio).trim() + "\tpuntuacion: " + String.valueOf(puntuacion).trim());
                                 
                 //AddNodo("id", String.valueOf(id), e, d);
                 AddNodo("nombre", nombre, e, d);

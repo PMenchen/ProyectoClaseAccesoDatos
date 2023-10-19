@@ -43,11 +43,11 @@ public class pruebas {
         Double[] precios = {10.7,12.3,15.8,20.4,17.0};
         
                 
-        EscrituraFicheroSEC.EscrituraSEC(2, "Speaker", 17.0, "Paella", ruta);
-        EscrituraFicheroSEC.EscrituraSEC(4, "Taberna", 15.8, "Gachas", ruta);
-        EscrituraFicheroSEC.EscrituraSEC(3, "Venecia", 12.3, "Risotto", ruta);
-        EscrituraFicheroSEC.EscrituraSEC(1, "Bananas", 20.4, "Pisto", ruta);
-        EscrituraFicheroSEC.EscrituraSEC(5, "Gondola", 10.7, "Carbonara", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(2, "Speaker", 17.0, "Paella", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(4, "Taberna", 15.8, "Gachas", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(3, "Venecia", 12.3, "Risotto", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(1, "Bananas", 20.4, "Pisto", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(5, "Gondola", 10.7, "Carbonara", ruta);
         
         LeerBinario_CrearXML.crearXML(ruta);
     }
