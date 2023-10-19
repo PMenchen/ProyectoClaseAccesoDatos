@@ -40,28 +40,14 @@ public class pruebas {
         
         String[] nombresPlatos = {"Carbonara", "Pisto", "Paella", "Gachas", "Risotto", "Puchero"};
         String[] lugares = {"Taberna", "Venecia", "Gondola", "Speaker", "Bananas"};
+        Double[] precios = {10.7,12.3,15.8,20.4,17.0};
         
-        int indicePlatos; int indiceLugares; int n = 1;
-        String plato;
-        String lugar;
-        double precio;
-        int puntuacion;
-        Calendar fecha;
-        //SimpleDateFormat sdf;
-        
-        while (!(n==5)) {            
-            indicePlatos = randomElemArray(0, nombresPlatos.length -1);
-            indiceLugares = randomElemArray(0, lugares.length -1);
-            plato = nombresPlatos[indicePlatos];
-            lugar = lugares[indiceLugares];
-            precio = randomDouble(10, 20);
-            puntuacion = randomInt(0, 5);
-            fecha = new GregorianCalendar(randomInt(2000, 2023), randomInt(0, 11), randomInt(1, 30));
-            
-            EscrituraFicheroSEC.EscrituraSEC(/*fecha,*/ puntuacion, lugar, precio, plato, ruta);
-            
-            n++;
-        }
+                
+        EscrituraFicheroSEC.EscrituraSEC(2, "Speaker", 17.0, "Paella", ruta);
+        EscrituraFicheroSEC.EscrituraSEC(4, "Taberna", 15.8, "Gachas", ruta);
+        EscrituraFicheroSEC.EscrituraSEC(3, "Venecia", 12.3, "Risotto", ruta);
+        EscrituraFicheroSEC.EscrituraSEC(1, "Bananas", 20.4, "Pisto", ruta);
+        EscrituraFicheroSEC.EscrituraSEC(5, "Gondola", 10.7, "Carbonara", ruta);
         
         LeerBinario_CrearXML.crearXML(ruta);
     }

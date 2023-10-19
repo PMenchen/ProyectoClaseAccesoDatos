@@ -29,7 +29,7 @@ import org.w3c.dom.Text;
  */
 public class LeerBinario_CrearXML {
     static Document InitBuilder(String name) throws ParserConfigurationException{
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         DOMImplementation implementation = builder.getDOMImplementation();
         
@@ -46,9 +46,9 @@ public class LeerBinario_CrearXML {
         return raiz;
     }
     
-    static void AddNodo(String datoEmple, String valor, Element raiz, Document document){
+    static void AddNodo(String datoPlato, String valor, Element raiz, Document document){
 
-        Element elem = document.createElement(datoEmple); //creamos el hijo
+        Element elem = document.createElement(datoPlato); //creamos el hijo
         Text text = document.createTextNode(valor.trim()); //damos valor
         elem.appendChild(text); //pegamos el valor al elemento
         raiz.appendChild(elem); //pegamos el elemento hijo a la raiz
@@ -56,31 +56,39 @@ public class LeerBinario_CrearXML {
     }
     
     static void TransformarBinToNodo(String ruta, Document d){
-        int id; String nombre; String lugar; int puntuacion; double precio; //fecha
+        String nombre; String lugar; int puntuacion; double precio; //fecha int id; 
         try (RandomAccessFile fichero = new RandomAccessFile(ruta,"r")){
             byte[] b = new byte[40];
             while(fichero.getFilePointer() < fichero.length()){
                 Element e = CrearNodo("Plato", d);
                 
-                id = fichero.readInt();
-                
+                //id = fichero.readInt();
                 fichero.read(b);
-                nombre = new String(b, "UTF-8");
-                lugar = new String(b, "UTF-8");
-                puntuacion = fichero.readInt();
+                nombre = new String(b, "UTF-16");
+                fichero.read(b);
+                lugar = new String(b, "UTF-16");
+                /*nombre = fichero.readUTF();
+                lugar = fichero.readUTF();*/
+                
                 precio = fichero.readDouble();
-                
-                AddNodo("id", String.valueOf(id), e, d);
-                AddNodo("nombre", nombre.trim(), e, d);
-                AddNodo("lugar", lugar.trim(), e, d);
-                AddNodo("precio", String.valueOf(precio).trim(), e, d);
-                AddNodo("puntuacion", String.valueOf(puntuacion).trim(), e, d);
-                
-                
+                puntuacion = fichero.readInt();
+                System.out.println("Nombre: " + nombre.trim() + "\tLugar: " + lugar.trim() + "\tPrecio: " + String.valueOf(precio).trim() + "\tpuntuacion: " + String.valueOf(puntuacion).trim());
+                                
+                //AddNodo("id", String.valueOf(id), e, d);
+                AddNodo("nombre", nombre, e, d);
+                AddNodo("lugar", lugar, e, d);
+                AddNodo("precio", String.valueOf(precio), e, d);
+                AddNodo("puntuacion", String.valueOf(puntuacion), e, d);
             }
+            fichero.close();
         }catch(IOException ex){
-                System.out.println(ex);
+                System.out.println(ex.getMessage());
+                System.out.println(ex.getCause());
+                ex.printStackTrace();
+                
         }
+        
+        
     }
     
     static void EscribirConsola(Document document) throws TransformerConfigurationException, TransformerException{
@@ -101,7 +109,7 @@ public class LeerBinario_CrearXML {
     
     public static void crearXML (String r){
         try {
-            String origen = r + "comidas.dat";
+            String origen = r + "comidas.bin";
             String ruta = r + "datos.xml";
             
             String value = "Platos";
@@ -111,12 +119,15 @@ public class LeerBinario_CrearXML {
             TransformarBinToNodo(origen, document/*, nodo*/);
             
             EscribirArchivo(document, ruta);
-            EscribirConsola(document);
+            //EscribirConsola(document);
             
             
             
         } catch (Exception e) {
             System.out.println(e);
+            e.getMessage();
+            System.out.println(e.getCause());
+            e.printStackTrace();
         }
     }
 }

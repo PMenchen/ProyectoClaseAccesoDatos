@@ -33,7 +33,7 @@ public class EscrituraFicheroSEC {
      * @param ruta fragmento de la ruta que no cambia para pruebas
      */
     public static void EscrituraSEC(/*Calendar fecha, */int puntuacion, String lugar, double precio, String nombre, String ruta) {
-        try (RandomAccessFile fo = new RandomAccessFile(new File(ruta + "comidas.dat"), "rw")) {
+        try (RandomAccessFile fo = new RandomAccessFile(new File(ruta + "comidas.bin"), "rw")) {
             
             if (fo.length() > 0) {
                 // If the file is not empty, move the file pointer to the end
@@ -41,14 +41,14 @@ public class EscrituraFicheroSEC {
             }
             
             StringBuffer buffer=null;
-            /*
-            //escritura de la fecha (en numeros)
+            
+            /*//escritura de la fecha (en numeros)
             fo.writeInt(fecha.DATE);  //dia
             fo.writeInt(fecha.MONTH); //mes
             fo.writeInt(fecha.YEAR); //año*/
             
             buffer = new StringBuffer(nombre); //nombre
-            buffer.setLength(40);
+            buffer.setLength(20);
             fo.writeChars(buffer.toString());
             buffer=null;
             
@@ -57,11 +57,9 @@ public class EscrituraFicheroSEC {
             fo.writeChars(buffer.toString());
             buffer=null;
 
-            fo.writeDouble(precio);//salario
+            fo.writeDouble(precio);//precio
             
             fo.writeInt(puntuacion);//puntuacion
-            
-
             
             fo.close();
             
@@ -69,6 +67,7 @@ public class EscrituraFicheroSEC {
             System.out.println(ioe);
         }
     }
+    
     
 }
 
