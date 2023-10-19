@@ -13,17 +13,10 @@ import java.io.File;
 public class RecuerdosGastronomicos {
 
     public static void main(String[] args) {
-        
-        String ruta = ".";
-        String nombreFich = "Comidas.dat";
-        
-        GestorArchivos.borrar(ruta, nombreFich);
-        GestorArchivos.crear(ruta, nombreFich);
-        
-        
-        
-        File fich=new File(nombreFich);
-        
-        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Menu().setVisible(true);
+            }
+        });
     }
 }
