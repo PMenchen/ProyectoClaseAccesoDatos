@@ -8,6 +8,10 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -19,6 +23,231 @@ import javax.swing.event.ListSelectionListener;
  */
 public class Menu extends javax.swing.JFrame {
 
+    private void botonAnadir(JLabel labelAux){
+        //PRIMERA FILA
+        //FECHA
+        JLabel labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
+        jContenido.add(labelFecha);
+        JDateChooser dateChooserFecha = new JDateChooser();
+        dateChooserFecha.setBounds(20, 50, 200, 30);
+        jContenido.add(dateChooserFecha);
+
+        //LUGAR
+        JLabel labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia", 300, 20, 300, 30);
+        jContenido.add(labelLugar);
+        JTextField textFieldLugar = new JTextField();
+        textFieldLugar.setBounds(300, 50, 200, 30);
+        jContenido.add(textFieldLugar);
+        //SEGUNDA FILA
+        //NOMBRE
+        JLabel labelNombre = crearLabel("Indique el nombre el plato", 20, 100, 200, 30);
+        jContenido.add(labelNombre);
+        JTextField textFieldNombre = new JTextField();
+        textFieldNombre.setBounds(20, 130, 200, 30);
+        jContenido.add(textFieldNombre);
+
+        //PRECIO
+        JLabel labelPrecio = crearLabel("Indique el precio del plato", 300, 100, 300, 30);
+        jContenido.add(labelPrecio);
+        JTextField textFieldPrecio = new JTextField();
+        textFieldPrecio.setBounds(300, 130, 100, 30);
+        jContenido.add(textFieldPrecio);
+        //TERCERA FILA
+        //CALIFICACION
+        JLabel labelCalificacion = crearLabel("Indique la calificación sobre 5 que le da al plato", 20, 180, 300, 30);
+        jContenido.add(labelCalificacion);
+        JTextField textFieldCalificacion = new JTextField();
+        textFieldCalificacion.setBounds(20, 210, 50, 30);
+        jContenido.add(textFieldCalificacion);
+
+        //BOTON
+        Button btnAnadir = new Button("Añadir");
+        btnAnadir.setBounds(300, 210, 100, 30);
+        jContenido.add(btnAnadir);
+
+        btnAnadir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
+                        && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
+                    labelAux.setText("TODO NICE");
+                } else {
+                    labelAux.setText("Precio o calificación incorrecta");
+                }
+            }
+        });
+    }
+    
+    private void botonEditar(JLabel labelAux){
+        //PRIMERA FILA
+        //FECHA
+        JLabel labelFecha = crearLabel("Indique la fecha de la visita a modificar", 20, 20, 300, 30);
+        jContenido.add(labelFecha);
+        JDateChooser dateChooserFecha = new JDateChooser();
+        dateChooserFecha.setBounds(20, 50, 200, 30);
+        jContenido.add(dateChooserFecha);
+
+        //LUGAR
+        JLabel labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia a modificar", 300, 20, 400, 30);
+        jContenido.add(labelLugar);
+        JTextField textFieldLugar = new JTextField();
+        textFieldLugar.setBounds(300, 50, 200, 30);
+        jContenido.add(textFieldLugar);
+        //SEGUNDA FILA
+        //NOMBRE
+        JLabel labelNombre = crearLabel("Indique el nombre el plato a modificar", 20, 100, 300, 30);
+        jContenido.add(labelNombre);
+        JTextField textFieldNombre = new JTextField();
+        textFieldNombre.setBounds(20, 130, 200, 30);
+        jContenido.add(textFieldNombre);
+
+        //BOTON
+        Button btnEditar = new Button("Editar");
+        btnEditar.setBounds(300, 210, 100, 30);
+        jContenido.add(btnEditar);
+
+        btnEditar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cambiarContenido("Añadir");
+            }
+        });
+    }
+    
+    private void botonEliminar(JLabel labelAux){
+        //PRIMERA FILA
+        //FECHA
+        JLabel labelFecha = crearLabel("Indique la fecha de la visita a eliminar", 20, 20, 300, 30);
+        jContenido.add(labelFecha);
+        JDateChooser dateChooserFecha = new JDateChooser();
+        dateChooserFecha.setBounds(20, 50, 200, 30);
+        jContenido.add(dateChooserFecha);
+
+        //LUGAR
+        JLabel labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia a eliminar", 300, 20, 400, 30);
+        jContenido.add(labelLugar);
+        JTextField textFieldLugar = new JTextField();
+        textFieldLugar.setBounds(300, 50, 200, 30);
+        jContenido.add(textFieldLugar);
+        //SEGUNDA FILA
+        //NOMBRE
+        JLabel labelNombre = crearLabel("Indique el nombre el plato a eliminar", 20, 100, 300, 30);
+        jContenido.add(labelNombre);
+        JTextField textFieldNombre = new JTextField();
+        textFieldNombre.setBounds(20, 130, 200, 30);
+        jContenido.add(textFieldNombre);
+
+        //BOTON
+        Button btnEliminar = new Button("Eliminar");
+        btnEliminar.setBounds(300, 130, 100, 30);
+        jContenido.add(btnEliminar);
+
+        btnEliminar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                labelAux.setText("Borrado");
+            }
+        });
+    }
+    
+    private void botonVisualizar(JLabel labelAux){
+        //PRIMERA FILA
+        //FECHA
+        JLabel labelFecha = crearLabel("Si desea visualizar un año en especifico introduzcalo y pulse el botón", 20, 20, 400, 30);
+        jContenido.add(labelFecha);
+        JTextField textFieldFecha = new JTextField();
+        textFieldFecha.setBounds(20, 50, 200, 30);
+        jContenido.add(textFieldFecha);
+        //BOTON POR AÑO
+        Button btnVisualizarFecha = new Button("Visualizar un año");
+        btnVisualizarFecha.setBounds(300, 50, 200, 30);
+        jContenido.add(btnVisualizarFecha);
+        
+        //SEGUNDA FILA
+        //NOMBRE
+        JLabel labelTodo = crearLabel("Si quiere visualizar todo pulse el siguiente botón", 20, 100, 300, 30);
+        jContenido.add(labelTodo);;
+        //BOTON
+        Button btnVisualizar = new Button("Visualizar todo");
+        btnVisualizar.setBounds(20, 130, 200, 30);
+        jContenido.add(btnVisualizar);
+
+        btnVisualizarFecha.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (esNumero(textFieldFecha.getText())){
+                    labelAux.setText("Datos del año "+textFieldFecha.getText());
+                }
+            }
+        });
+        
+        btnVisualizar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                labelAux.setText("Datos de todo lo almacenado");
+            }
+        });
+    }
+    
+    private void botonCopia(JLabel labelAux){
+        //PRIMERA FILA
+        //ORIGEN
+        JLabel labelOrigen = crearLabel("Seleccione el archivo del que desea hacer la copia de seguridad", 20, 20, 400, 30);
+        jContenido.add(labelOrigen);
+        Button btnOrigen = new Button("Archivo");
+        btnOrigen.setBounds(20, 50, 200, 30);
+        jContenido.add(btnOrigen);
+        JFileChooser origen = new JFileChooser();
+        JTextField textFieldOrigen = new JTextField();
+        
+        origen.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        btnOrigen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int val=origen.showOpenDialog(null);
+                if(val==JFileChooser.APPROVE_OPTION){
+                    textFieldOrigen.setText(origen.getSelectedFile().getAbsolutePath());
+                }
+            }
+        });
+        
+        //SEGUNDA FILA
+        //DESTINO
+        JLabel labelDestino = crearLabel("Seleccione la carpeta de la copia de seguridad", 20, 100, 300, 30);
+        jContenido.add(labelDestino);
+        Button btnDestino = new Button("Carpeta");
+        btnDestino.setBounds(20, 130, 200, 30);
+        jContenido.add(btnDestino);
+        JFileChooser destino = new JFileChooser();
+        JTextField textFieldDestino = new JTextField();
+        
+        destino.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        btnDestino.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int val=destino.showOpenDialog(null);
+                if(val==JFileChooser.APPROVE_OPTION){
+                    textFieldDestino.setText(destino.getSelectedFile().getAbsolutePath());
+                }
+            }
+        });
+        
+        
+        //TERCERA FILA
+        Button btnCopiar = new Button("Copia de seguridad");
+        btnCopiar.setBounds(20, 180, 300, 30);
+        jContenido.add(btnCopiar);
+        btnCopiar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(textFieldOrigen.getText()==null && textFieldDestino.getText()==null){
+                    labelAux.setText("Indique primero el archivo a copiar y el destino");
+                }else{
+                    System.out.println("OK");
+                    try {
+                        CopiarFichero.copiar(textFieldOrigen.getText(), textFieldDestino.getText());
+                    } catch (IOException ex) {
+                        System.out.println("NOSE");
+                    }
+                }
+            }
+        });
+        
+        
+    }
+    
     private static boolean esNumero(String texto) {
         try {
             Double.parseDouble(texto);
@@ -38,145 +267,27 @@ public class Menu extends javax.swing.JFrame {
 
     private void cambiarContenido(String elegido) {
         jContenido.removeAll();
-        JLabel labelAux = crearLabel("", 20, 250, 200, 30);
+        JLabel labelAux = crearLabel("", 20, 250, 300, 30);
         jContenido.add(labelAux);
 
         switch (elegido) {
             case "Añadir":
-                //PRIMERA FILA
-                //FECHA
-                JLabel labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
-                jContenido.add(labelFecha);
-                JDateChooser dateChooserFecha = new JDateChooser();
-                dateChooserFecha.setBounds(20, 50, 200, 30);
-                jContenido.add(dateChooserFecha);
-
-                //LUGAR
-                JLabel labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia", 300, 20, 300, 30);
-                jContenido.add(labelLugar);
-                JTextField textFieldLugar = new JTextField();
-                textFieldLugar.setBounds(300, 50, 200, 30);
-                jContenido.add(textFieldLugar);
-                //SEGUNDA FILA
-                //NOMBRE
-                JLabel labelNombre = crearLabel("Indique el nombre el plato", 20, 100, 200, 30);
-                jContenido.add(labelNombre);
-                JTextField textFieldNombre = new JTextField();
-                textFieldNombre.setBounds(20, 130, 200, 30);
-                jContenido.add(textFieldNombre);
-
-                //PRECIO
-                JLabel labelPrecio = crearLabel("Indique el precio del plato", 300, 100, 300, 30);
-                jContenido.add(labelPrecio);
-                JTextField textFieldPrecio = new JTextField();
-                textFieldPrecio.setBounds(300, 130, 100, 30);
-                jContenido.add(textFieldPrecio);
-                //TERCERA FILA
-                //CALIFICACION
-                JLabel labelCalificacion = crearLabel("Indique la calificación sobre 5 que le da al plato", 20, 180, 300, 30);
-                jContenido.add(labelCalificacion);
-                JTextField textFieldCalificacion = new JTextField();
-                textFieldCalificacion.setBounds(20, 210, 50, 30);
-                jContenido.add(textFieldCalificacion);
-
-                //BOTON
-                Button btnAnadir = new Button("Añadir");
-                btnAnadir.setBounds(300, 210, 100, 30);
-                jContenido.add(btnAnadir);
-
-                btnAnadir.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
-                                && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
-                            labelAux.setText("TODO NICE");
-                        } else {
-                            labelAux.setText("Precio o calificación incorrecta");
-                        }
-                    }
-                });
+                botonAnadir(labelAux);
                 break;
+                
             case "Editar":
-                //PRIMERA FILA
-                //FECHA
-                labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
-                jContenido.add(labelFecha);
-                dateChooserFecha = new JDateChooser();
-                dateChooserFecha.setBounds(20, 50, 200, 30);
-                jContenido.add(dateChooserFecha);
-
-                //LUGAR
-                labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia", 300, 20, 300, 30);
-                jContenido.add(labelLugar);
-                textFieldLugar = new JTextField();
-                textFieldLugar.setBounds(300, 50, 200, 30);
-                jContenido.add(textFieldLugar);
-                //SEGUNDA FILA
-                //NOMBRE
-                labelNombre = crearLabel("Indique el nombre el plato", 20, 100, 200, 30);
-                jContenido.add(labelNombre);
-                textFieldNombre = new JTextField();
-                textFieldNombre.setBounds(20, 130, 200, 30);
-                jContenido.add(textFieldNombre);
-
-                //PRECIO
-                labelPrecio = crearLabel("Indique el precio del plato", 300, 100, 300, 30);
-                jContenido.add(labelPrecio);
-                textFieldPrecio = new JTextField();
-                textFieldPrecio.setBounds(300, 130, 100, 30);
-                jContenido.add(textFieldPrecio);
-                //TERCERA FILA
-                //CALIFICACION
-                labelCalificacion = crearLabel("Indique la calificación sobre 5 que le da al plato", 20, 180, 300, 30);
-                jContenido.add(labelCalificacion);
-                textFieldCalificacion = new JTextField();
-                textFieldCalificacion.setBounds(20, 210, 50, 30);
-                jContenido.add(textFieldCalificacion);
-
-                //BOTON
-                Button btnEditar = new Button("Editar");
-                btnEditar.setBounds(300, 210, 100, 30);
-                jContenido.add(btnEditar);
-
-                btnEditar.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
-                                && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
-                            labelAux.setText("TODO NICE");
-                        } else {
-                            labelAux.setText("Precio o calificación incorrecta");
-                        }
-                    }
-                });
+                botonEditar(labelAux);
                 break;
 
             case "Eliminar":
-                labelFecha = crearLabel("Indique la fecha de la visita a eliminar", 20, 20, 200, 30);
-                jContenido.add(labelFecha);
-                dateChooserFecha = new JDateChooser();
-                dateChooserFecha.setBounds(20, 50, 200, 30);
-                jContenido.add(dateChooserFecha);
-
-                //LUGAR
-                labelLugar = crearLabel("Indique el lugar dónde tuvo la experiencia a eliminar", 300, 20, 300, 30);
-                jContenido.add(labelLugar);
-                textFieldLugar = new JTextField();
-                textFieldLugar.setBounds(300, 50, 200, 30);
-                jContenido.add(textFieldLugar);
-                //SEGUNDA FILA
-                //NOMBRE
-                labelNombre = crearLabel("Indique el nombre el plato a eliminar", 20, 100, 200, 30);
-                jContenido.add(labelNombre);
-                textFieldNombre = new JTextField();
-                textFieldNombre.setBounds(20, 130, 200, 30);
-                jContenido.add(textFieldNombre);
-                //BOTON
-                Button btnEliminar = new Button("Eliminar");
-                btnEliminar.setBounds(300, 130, 100, 30);
-                jContenido.add(btnEliminar);
+                botonEliminar(labelAux);
                 break;
 
+            case "Visualizar":
+                botonVisualizar(labelAux);
+                break;
             default:
-                //label1.setText("V");
+                botonCopia(labelAux);
                 break;
         }
 
@@ -230,7 +341,7 @@ public class Menu extends javax.swing.JFrame {
 
         jListOpciones.setBackground(new java.awt.Color(204, 204, 255));
         jListOpciones.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Añadir", "Editar", "Eliminar", "Visualizar" };
+            String[] strings = { "Añadir", "Editar", "Eliminar", "Visualizar", "Copia" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -299,30 +410,6 @@ public class Menu extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Menu().setVisible(true);
