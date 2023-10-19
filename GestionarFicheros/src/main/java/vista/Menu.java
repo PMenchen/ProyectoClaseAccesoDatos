@@ -236,11 +236,7 @@ public class Menu extends javax.swing.JFrame {
                     labelAux.setText("Indique primero el archivo a copiar y el destino");
                 }else{
                     System.out.println("OK");
-                    try {
-                        CopiarFichero.copiar(textFieldOrigen.getText(), textFieldDestino.getText());
-                    } catch (IOException ex) {
-                        System.out.println("NOSE");
-                    }
+                    CopiarFichero.copiar(textFieldOrigen.getText(), textFieldDestino.getText());
                 }
             }
         });
