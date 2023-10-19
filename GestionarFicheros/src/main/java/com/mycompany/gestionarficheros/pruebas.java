@@ -4,6 +4,9 @@
  */
 package com.mycompany.gestionarficheros;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -17,26 +20,36 @@ public class pruebas {
      */
     
     
+    final static String ruta = ".\\recursos\\";
+    
     public static int randomElemArray(int min, int max){
         
         return ThreadLocalRandom.current().nextInt(min, max + 1);
         
     }
     
+    public static int randomInt(int min, int max){
+        return ThreadLocalRandom.current().nextInt(min, max);
+    }
+    
+    public static double randomDouble(int min, int max){
+        return ThreadLocalRandom.current().nextDouble(min,max);
+    }
+    
     public static void main(String[] args) {
         
-        String[] nombresPlatos = {""};
-        String[] lugares = {""};
+        String[] nombresPlatos = {"Carbonara", "Pisto", "Paella", "Gachas", "Risotto", "Puchero"};
+        String[] lugares = {"Taberna", "Venecia", "Gondola", "Speaker", "Bananas"};
+        Double[] precios = {10.7,12.3,15.8,20.4,17.0};
         
-        int indicePlatos = randomElemArray(0, nombresPlatos.length -1);
-        int indiceLugares = randomElemArray(0, lugares.length -1);
-        String plato;
-        String lugar;
+                
+        EscrituraFicheroBinario.EscrituraSEC(2, "Speaker", 17.0, "Paella", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(4, "Taberna", 15.8, "Gachas", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(3, "Venecia", 12.3, "Risotto", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(1, "Bananas", 20.4, "Pisto", ruta);
+        EscrituraFicheroBinario.EscrituraSEC(5, "Gondola", 10.7, "Carbonara", ruta);
         
-        while (true) {            
-            plato = nombresPlatos[indicePlatos];
-            lugar = lugares[indiceLugares];
-        }
+        LeerBinario_CrearXML.crearXML(ruta);
     }
     
 }
