@@ -77,6 +77,8 @@ public class Menu extends javax.swing.JFrame {
                     String nombrePlato = textFieldNombre.getText();
                     String lugar = textFieldLugar.getText();
                     
+                    
+                    
                     GestorArchivos.crear(".", "Comidas.bin");
                     File fich=new File("Comidas.dat");
                     GestorArchivos.escrituraSEC(fich, calificacion, lugar, precio, nombrePlato);

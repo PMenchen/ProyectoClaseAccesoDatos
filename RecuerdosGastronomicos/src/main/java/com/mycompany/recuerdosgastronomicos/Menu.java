@@ -8,6 +8,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,6 +72,17 @@ public class Menu extends javax.swing.JFrame {
                 if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
                         && Double.parseDouble(textFieldCalificacion.getText())>=0 && Double.parseDouble(textFieldCalificacion.getText())<=5) {
                     labelAux.setText("TODO NICE");
+                    
+                    double precio = Double.valueOf(textFieldPrecio.getText());
+                    double calificacion = Double.valueOf(textFieldCalificacion.getText());
+                    String nombrePlato = textFieldNombre.getText();
+                    String lugar = textFieldLugar.getText();
+                    
+                    
+                    
+                    GestorArchivos.crear(".", "Comidas.bin");
+                    File fich=new File("Comidas.dat");
+                    GestorArchivos.escrituraSEC(fich, calificacion, lugar, precio, nombrePlato);
                 } else {
                     labelAux.setText("Precio o calificación incorrecta");
                 }

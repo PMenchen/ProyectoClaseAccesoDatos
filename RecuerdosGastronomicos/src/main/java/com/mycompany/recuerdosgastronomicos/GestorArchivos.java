@@ -118,7 +118,7 @@ public class GestorArchivos {
      * @param precio precio
      * @param nombre nombre del plato
      */
-    public static void escrituraSEC(File fich, /*Calendar fecha,*/ int puntuacion, String lugar, double precio, String nombre) {
+    public static void escrituraSEC(File fich, /*Calendar fecha,*/ double puntuacion, String lugar, double precio, String nombre) {
         try (FileOutputStream fos = new FileOutputStream(fich, true);
                 DataOutputStream dos = new DataOutputStream(fos)) {
             
@@ -132,7 +132,7 @@ public class GestorArchivos {
             fo.writeInt(fecha.YEAR); //año
             */
             
-            dos.writeInt(puntuacion);//puntuacion
+            dos.writeDouble(puntuacion);//puntuacion
             
             buffer = new StringBuffer(lugar); //lugar
             buffer.setLength(10);
