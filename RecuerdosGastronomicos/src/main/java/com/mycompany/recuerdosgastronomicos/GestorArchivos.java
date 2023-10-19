@@ -243,7 +243,62 @@ public class GestorArchivos {
             System.out.println("Lectura terminada...");
         }
     }
+    
+    /**
+     * Método para crear una copia de todas las comidas en un determinado año
+     * @param comidas ArrayList que contiene todas las comidas
+     */
+    public static void escrituraDatosRecuperadosBin(ArrayList<String> comidas) {
+        
+        if (!comidas.isEmpty()) {
+            
+            String[] linea=comidas.get(0).split("\\s+");
+            String[] fecha=linea[1].split("/");
+            String precio;
 
+            String fich="Registro_del_"+fecha[2];// creamos el fichero Registro_del_[año leido]
+            
+            try (FileOutputStream fos = new FileOutputStream(fich);
+                    DataOutputStream dos = new DataOutputStream(fos)) {
+                
+                StringBuffer buffer;
+                for (String comida : comidas) {
+                    linea=comida.split("\\s+");
+                    fecha=linea[1].split("/");
+                    
+                    dos.writeInt(Integer.parseInt(linea[0]));//id
+                    
+                    dos.writeInt(Integer.parseInt(fecha[0]));//fecha
+                    dos.writeInt(Integer.parseInt(fecha[1]));
+                    dos.writeInt(Integer.parseInt(fecha[2]));
+                    
+                    dos.writeDouble(Double.parseDouble(linea[2]));//puntuacion
+                    
+                    buffer = new StringBuffer(linea[3]); //lugar
+                    buffer.setLength(10);
+                    dos.writeChars(buffer.toString());
+                    buffer = null;
+                    
+                    precio=linea[5].substring(0, linea[5].length()-1);
+                    dos.writeDouble(Double.parseDouble(precio));//precio
+                    
+                    buffer = new StringBuffer(linea[4]); //comida
+                    buffer.setLength(20);
+                    dos.writeChars(buffer.toString());
+                    buffer = null;
+                    
+                }
+                
+                fos.close();
+                dos.close();
+
+            } catch (IOException ioe) {
+                System.out.println(ioe);
+            }
+        }
+        
+    }
+    
     /**
      * Método que recuperará una serie de registros según una fecha
      * 

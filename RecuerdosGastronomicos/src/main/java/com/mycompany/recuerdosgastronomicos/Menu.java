@@ -204,6 +204,8 @@ public class Menu extends javax.swing.JFrame {
                 ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
                 comboBoxFecha.removeAllItems();
 
+                System.out.println("Boton presionado");
+                GestorArchivos.escrituraDatosRecuperadosBin(info);
                 for (String i : info) {
                     comboBoxFecha.addItem(i);
                 }
