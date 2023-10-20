@@ -21,6 +21,8 @@ import java.io.RandomAccessFile;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -93,7 +95,7 @@ public class GestorArchivos {
      */
     public static void copiar(String origen, String destino) {
         File fileOrigen = new File(origen);
-        File fileDestino = new File(destino);
+        File fileDestino = new File(destino+"//"+fileOrigen.getName());
 
         copiarCarpeta(fileOrigen, fileDestino);
     }
@@ -104,28 +106,23 @@ public class GestorArchivos {
      * @param origen lugar donde se encuentra la carpeta a copiar
      * @param destino lugar donde se copiará el archivo
      */
-    private static void copiarCarpeta(File origen, File destino){ 
-        if(origen.isDirectory()){ 
-            if(!destino.exists()){ 
-                destino.mkdirs(); 
-            } 
-            String[] files=origen.list(); 
-            if(files!=null){ 
-                for(String file:files){ 
-                    File origenP=new File(origen, file); 
-                    File destinoP=new File(destino, file); 
-                    
-                    copiarCarpeta(origenP, destinoP); 
-                }
-            } 
-        }else{ 
-            try {  
-                Files.copy(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING); 
-            } catch (IOException ioe) { 
-                System.out.println(ioe); 
-            } 
-        }  
-    }         
+    public static void copiarCarpeta(File origen, File destino) {
+        if (origen.isDirectory()) {
+            if (!destino.exists()) {
+                destino.mkdir();
+            }
+            String[] elementos = origen.list();
+            for (String elemento : elementos) {
+                copiarCarpeta(new File(origen, elemento), new File(destino, elemento));
+            }
+        } else {
+            try {
+                Files.copy(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException ioex) {
+                System.out.println("ERROR E/S");
+            }
+        }
+    } 
 
     
     /**
@@ -136,7 +133,7 @@ public class GestorArchivos {
      */
     public static void mover(String origen, String destino) {
         File fileOrigen = new File(origen);
-        File fileDestino = new File(destino);
+        File fileDestino = new File(destino+"//"+fileOrigen.getName());
 
         moverCarpeta(fileOrigen, fileDestino);
     }
@@ -148,26 +145,21 @@ public class GestorArchivos {
      * @param destino lugar donde se moverá el archivo
      */
     private static void moverCarpeta(File origen, File destino) {
-        if(origen.isDirectory()){ 
-            if(!destino.exists()){ 
-                destino.mkdirs(); 
-            } 
-            String[] files=origen.list(); 
-            if(files!=null){ 
-                for(String file:files){ 
-                    File origenP=new File(origen, file); 
-                    File destinoP=new File(destino, file); 
-                    
-                    moverCarpeta(origenP, destinoP); 
-                }
-            } 
-        }else{ 
-            try {  
-                Files.move(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING); 
-            } catch (IOException ioe) { 
-                System.out.println(ioe); 
-            } 
-        }  
+        if (origen.isDirectory()) {
+            if (!destino.exists()) {
+                destino.mkdir();
+            }
+            String[] elementos = origen.list();
+            for (String elemento : elementos) {
+                moverCarpeta(new File(origen, elemento), new File(destino, elemento));
+            }
+        } else {
+            try {
+                Files.move(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException ioex) {
+                System.out.println("ERROR E/S");
+            }
+        }
     } 
 
     /**
