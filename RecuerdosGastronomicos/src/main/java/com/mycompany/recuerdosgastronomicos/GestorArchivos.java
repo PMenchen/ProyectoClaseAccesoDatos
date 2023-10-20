@@ -372,7 +372,7 @@ public class GestorArchivos {
     public static void modificar(int id, Calendar calendar, String lugar, String nombre, double precio, double calificacion){
         try {
             RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
-            int posicion=(id-1)*32;
+            int posicion=(id-1)*92;
             
             random.seek(posicion);
             
@@ -400,7 +400,7 @@ public class GestorArchivos {
      * @return devuelve un boolean para comprobar que se hizo sin problema
      */
     public static boolean eliminarRA(int id){
-        int posicion=((id-1)*32);
+        int posicion=((id-1)*92);
         
         try {
             RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");

@@ -206,9 +206,9 @@ public class Menu extends javax.swing.JFrame {
                 ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
                 comboBoxFecha.removeAllItems();
 
-                
+                GestorArchivos.leerSecuencialBin(".", "Comidas.bin");
                 GestorArchivos.escrituraDatosRecuperadosBin(info);
-                LeerBinario_CrearXML.crearXML(".//Registro_del_2023.bin");
+                //LeerBinario_CrearXML.crearXML(".\\Registro_del_2023.bin");
                 
                 for (String i : info) {
                     comboBoxFecha.addItem(i);
@@ -227,6 +227,8 @@ public class Menu extends javax.swing.JFrame {
                 String[] id=info.split(" ");
                 if(GestorArchivos.eliminarRA(Integer.valueOf(id[0]))){
                     labelAux.setText("Borrado con éxito");
+                    GestorArchivos.leerSecuencialBin(".", "Comidas.bin");//--prueba lee cada vez que se elimina
+                    comboBoxFecha.removeAllItems();//--prueba
                 }
             }
         });
