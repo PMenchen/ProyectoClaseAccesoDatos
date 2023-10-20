@@ -6,20 +6,15 @@ package com.mycompany.recuerdosgastronomicos;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Button;
-import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -75,12 +70,12 @@ public class Menu extends javax.swing.JFrame {
         jContenido.add(textFieldCalificacion);
 
         //BOTON
-        Button btnAnadir = new Button("Añadir");
-        btnAnadir.setBounds(300, 210, 100, 30);
-        jContenido.add(btnAnadir);
+        Button btnConfirmar = new Button("Confirmar");
+        btnConfirmar.setBounds(300, 210, 100, 30);
+        jContenido.add(btnConfirmar);
 
         if(editar){
-            btnAnadir.addActionListener(new ActionListener() {
+            btnConfirmar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
                         && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5) {
@@ -104,7 +99,7 @@ public class Menu extends javax.swing.JFrame {
             });
             
         }else{
-            btnAnadir.addActionListener(new ActionListener() {
+            btnConfirmar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
                         && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5) {
@@ -122,8 +117,10 @@ public class Menu extends javax.swing.JFrame {
 
                     GestorArchivos.crear(".", "Comidas.bin");
                     File fich = new File("Comidas.bin");
-                    GestorArchivos.escrituraSEC(fich, calendar, calificacion, lugar, precio, nombrePlato);
-                    GestorArchivos.leerSecuencialBin(".", "Comidas.bin");
+                    if (!GestorArchivos.sobreescribirBorrado(calendar, lugar, nombrePlato, precio, calificacion)) {
+                        GestorArchivos.escrituraSEC(fich, calendar, calificacion, lugar, precio, nombrePlato);
+                    }
+                    GestorArchivos.leerSecuencialBin(".","Comidas.bin");
                 } else {
                     labelAux.setText("Precio o calificación incorrecta");
                 }
@@ -285,18 +282,18 @@ public class Menu extends javax.swing.JFrame {
      * 
      * @param labelAux una etiqueta auxiliar para indicar si el boton funcionó
      */
-    private void botonCopia(JLabel labelAux) {
+    private void botonArchivo(JLabel labelAux) {
         //PRIMERA FILA
         //ORIGEN
-        JLabel labelOrigen = crearLabel("Seleccione el archivo del que desea hacer la copia de seguridad", 20, 20, 400, 30);
+        JLabel labelOrigen = crearLabel("Seleccione la carpeta donde se guarda Recuerdos Gastronómicos", 20, 20, 400, 30);
         jContenido.add(labelOrigen);
-        Button btnOrigen = new Button("Archivo");
+        Button btnOrigen = new Button("Buscar");
         btnOrigen.setBounds(20, 50, 200, 30);
         jContenido.add(btnOrigen);
         JFileChooser origen = new JFileChooser();
         JTextField textFieldOrigen = new JTextField();
 
-        origen.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        origen.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         btnOrigen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int val = origen.showOpenDialog(null);
@@ -308,9 +305,9 @@ public class Menu extends javax.swing.JFrame {
 
         //SEGUNDA FILA
         //DESTINO
-        JLabel labelDestino = crearLabel("Seleccione la carpeta de la copia de seguridad", 20, 100, 300, 30);
+        JLabel labelDestino = crearLabel("Seleccione la carpeta en la que acabará Recuerdos Gastronómicos", 20, 100, 400, 30);
         jContenido.add(labelDestino);
-        Button btnDestino = new Button("Carpeta");
+        Button btnDestino = new Button("Buscar");
         btnDestino.setBounds(20, 130, 200, 30);
         jContenido.add(btnDestino);
         JFileChooser destino = new JFileChooser();
@@ -328,7 +325,7 @@ public class Menu extends javax.swing.JFrame {
 
         //TERCERA FILA
         Button btnCopiar = new Button("Copia de seguridad");
-        btnCopiar.setBounds(20, 180, 300, 30);
+        btnCopiar.setBounds(20, 180, 200, 30);
         jContenido.add(btnCopiar);
         btnCopiar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -336,10 +333,38 @@ public class Menu extends javax.swing.JFrame {
                     labelAux.setText("Indique primero el archivo a copiar y el destino");
                 } else {
                     GestorArchivos.copiar(textFieldOrigen.getText(), textFieldDestino.getText());
+                    labelAux.setText("Copiada de seguridad creada con éxito");
                 }
             }
         });
-
+        
+        Button btnMover = new Button("Mover recuerdos");
+        btnMover.setBounds(20, 210, 200, 30);
+        jContenido.add(btnMover);
+        btnMover.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (textFieldOrigen.getText() == null && textFieldDestino.getText() == null) {
+                    labelAux.setText("Indique primero el archivo a mover y el destino");
+                } else {
+                    GestorArchivos.mover(textFieldOrigen.getText(), textFieldDestino.getText());
+                    labelAux.setText("Se ha movido sin problemas");
+                }
+            }
+        });
+        
+        Button btnBorrar = new Button("Borrar recuerdos");
+        btnBorrar.setBounds(20, 240, 200, 30);
+        jContenido.add(btnBorrar);
+        btnBorrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (textFieldOrigen.getText() == null) {
+                    labelAux.setText("Indique primero el archivo a borrar");
+                } else {
+                    GestorArchivos.borrar(textFieldOrigen.getText());
+                    labelAux.setText("Borrado exitoso");
+                }
+            }
+        });
     }
 
     /**
@@ -384,7 +409,7 @@ public class Menu extends javax.swing.JFrame {
      */
     private void cambiarContenido(String elegido, boolean elegir, int id) {
         jContenido.removeAll();
-        JLabel labelAux = crearLabel("", 20, 250, 300, 30);
+        JLabel labelAux = crearLabel("", 20, 300, 300, 30);
         jContenido.add(labelAux);
 
         switch (elegido) {
@@ -404,7 +429,7 @@ public class Menu extends javax.swing.JFrame {
                 botonVisualizar(labelAux);
                 break;
             default:
-                botonCopia(labelAux);
+                botonArchivo(labelAux);
                 break;
         }
 
@@ -458,7 +483,7 @@ public class Menu extends javax.swing.JFrame {
 
         jListOpciones.setBackground(new java.awt.Color(204, 204, 255));
         jListOpciones.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Añadir", "Editar", "Eliminar", "Visualizar", "Copia" };
+            String[] strings = { "Añadir", "Editar", "Eliminar", "Visualizar", "Archivo" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });

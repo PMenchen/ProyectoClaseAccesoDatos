@@ -9,14 +9,13 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.StandardCopyOption;
@@ -60,13 +59,30 @@ public class GestorArchivos {
      * @param ruta lugar donde se encuentra el archivo a borrar
      * @param nombre nombre del archivo
      */
-    public static void borrar(String ruta, String nombre) {
-        Path rutaP = Paths.get(ruta + "//" + nombre);
-        try {
-            Files.delete(rutaP);
-        } catch (IOException ioe) {
-            System.out.println("ERROR E/S");
+    public static void borrar(String ruta) {
+        File file = new File(ruta);
+        borrarCarpeta(file);
+    }
+    
+    /**
+     * Método recursivo para borrar todo lo que tiene una carpeta dentro de ella
+     * 
+     * @param fichero fichero a borrar
+     */
+    private static void borrarCarpeta(File fichero) {
+        if (fichero.isDirectory()) {
+            File[] archivos = fichero.listFiles();
+            if (archivos != null) {
+                for (File archivo : archivos) {
+                    if (archivo.isDirectory()) {
+                        borrarCarpeta(archivo);
+                    } else {
+                        archivo.delete();
+                    }
+                }
+            }
         }
+        fichero.delete();
     }
 
     /**
@@ -74,7 +90,6 @@ public class GestorArchivos {
      *
      * @param origen lugar donde se encuentra el archivo a copiar
      * @param destino lugar donde se copiará el archivo
-     * @throws IOException
      */
     public static void copiar(String origen, String destino) {
         File fileOrigen = new File(origen);
@@ -89,30 +104,71 @@ public class GestorArchivos {
      * @param origen lugar donde se encuentra la carpeta a copiar
      * @param destino lugar donde se copiará el archivo
      */
-    private static void copiarCarpeta(File origen, File destino) {
-        if (origen.isDirectory()) {
-            if (!destino.exists()) {
-                destino.mkdirs();
-            }
-            String[] files = origen.list();
-            if (files != null) {
-                for (String file : files) {
-                    File origenP = new File(origen, file);
-                    File destinoP = new File(destino, file);
-
-                    if (origenP.isDirectory()) {
-                        copiarCarpeta(origenP, destinoP);
-                    } else {
-                        try {
-                            Files.copy(origenP.toPath(), destinoP.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        } catch (IOException ioe) {
-                            System.out.println(ioe);
-                        }
-                    }
+    private static void copiarCarpeta(File origen, File destino){ 
+        if(origen.isDirectory()){ 
+            if(!destino.exists()){ 
+                destino.mkdirs(); 
+            } 
+            String[] files=origen.list(); 
+            if(files!=null){ 
+                for(String file:files){ 
+                    File origenP=new File(origen, file); 
+                    File destinoP=new File(destino, file); 
+                    
+                    copiarCarpeta(origenP, destinoP); 
                 }
-            }
-        }
+            } 
+        }else{ 
+            try {  
+                Files.copy(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING); 
+            } catch (IOException ioe) { 
+                System.out.println(ioe); 
+            } 
+        }  
+    }         
+
+    
+    /**
+     * Método que moverá un archivo
+     *
+     * @param origen lugar donde se encuentra el archivo a mover
+     * @param destino lugar donde se moverá el archivo
+     */
+    public static void mover(String origen, String destino) {
+        File fileOrigen = new File(origen);
+        File fileDestino = new File(destino);
+
+        moverCarpeta(fileOrigen, fileDestino);
     }
+
+    /**
+     *  Método recursivo para mover todo lo que tiene una carpeta dentro de ella
+     *
+     * @param origen lugar donde se encuentra la carpeta a mover
+     * @param destino lugar donde se moverá el archivo
+     */
+    private static void moverCarpeta(File origen, File destino) {
+        if(origen.isDirectory()){ 
+            if(!destino.exists()){ 
+                destino.mkdirs(); 
+            } 
+            String[] files=origen.list(); 
+            if(files!=null){ 
+                for(String file:files){ 
+                    File origenP=new File(origen, file); 
+                    File destinoP=new File(destino, file); 
+                    
+                    moverCarpeta(origenP, destinoP); 
+                }
+            } 
+        }else{ 
+            try {  
+                Files.move(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING); 
+            } catch (IOException ioe) { 
+                System.out.println(ioe); 
+            } 
+        }  
+    } 
 
     /**
      * Método que Escribirá en un archivo guardando: Fecha, puntuacion, lugar,
@@ -347,12 +403,13 @@ public class GestorArchivos {
      * 
      * @param random RandomAccessFile
      * @param texto cadena que debe escribir
+     * @param tamaño el tamaño de la cadena a escribir
      */
-    public static void escibirCadena(RandomAccessFile random, String texto){
+    public static void escibirCadena(RandomAccessFile random, String texto, int tamaño){
         try{
             StringBuffer buffer = new StringBuffer(texto);
             buffer = new StringBuffer(texto);
-            buffer.setLength(10);
+            buffer.setLength(tamaño);
             random.writeChars(buffer.toString());
         }catch (IOException ioe) {
             System.out.println("ERROR E/S");
@@ -382,9 +439,9 @@ public class GestorArchivos {
             random.writeInt(calendar.get(Calendar.MONTH) + 1); //mes-1
             random.writeInt(calendar.get(Calendar.YEAR));//año
             random.writeDouble(calificacion);
-            escibirCadena(random, lugar);
+            escibirCadena(random, lugar, 10);
             random.writeDouble(precio);
-            escibirCadena(random, nombre);
+            escibirCadena(random, nombre, 20);
                 
         } catch (FileNotFoundException fnfe) {
             System.out.println("No se encontró el fichero");
@@ -466,5 +523,46 @@ public class GestorArchivos {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error al abrir el archivo" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    /**
+     * Método que busca un registro borrado y sobreescribe sus valores
+     * 
+     * @return True si se ha sobreescrito un registro
+     *         False si no había registros para sobreescribir
+     */
+    public static boolean sobreescribirBorrado(Calendar calendar, String lugar, String nombre, double precio, double calificacion){
+        //int posicion=((id-1)*92);
+        int leido;
+        int posicion = 0;
+        int ident=1;
+        boolean sobreescrito=false;
+        try {
+            File fich=new File("Comidas.bin");
+            RandomAccessFile random = new RandomAccessFile(fich, "rw");
+            
+            while(!sobreescrito && posicion<fich.length()) {
+                random.seek(posicion);
+                leido=random.readInt();
+                if (leido == -1) {
+                    random.seek(posicion);//volvemos a la posicion del id para sobreescribir
+                    random.writeInt(ident);//sobreescribimos el id
+                    random.getFD().sync();
+                    modificar(ident, calendar, lugar, nombre, precio, calificacion);
+                    sobreescrito=true;
+                }
+                ident++;
+                posicion += 92;
+            }
+            
+            random.close();
+            System.out.println(sobreescrito);
+            return sobreescrito;
+        } catch (EOFException eofe) {
+            System.out.println("");
+        } catch (IOException ioe) {
+            System.out.println("");
+        }
+        return false;
     }
 }

@@ -111,7 +111,7 @@
                     <StringItem index="1" value="Editar"/>
                     <StringItem index="2" value="Eliminar"/>
                     <StringItem index="3" value="Visualizar"/>
-                    <StringItem index="4" value="Copia"/>
+                    <StringItem index="4" value="Archivo"/>
                   </StringArray>
                 </Property>
               </Properties>
