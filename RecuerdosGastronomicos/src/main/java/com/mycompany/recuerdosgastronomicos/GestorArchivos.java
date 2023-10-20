@@ -4,6 +4,7 @@
  */
 package com.mycompany.recuerdosgastronomicos;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -21,6 +22,7 @@ import java.io.RandomAccessFile;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -142,7 +144,7 @@ public class GestorArchivos {
             dos.writeChars(buffer.toString());
             buffer = null;
 
-            dos.writeDouble(precio);//salario
+            dos.writeDouble(precio);//precio
 
             buffer = new StringBuffer(nombre); //nombre
             buffer.setLength(20);
@@ -256,7 +258,7 @@ public class GestorArchivos {
             String[] fecha=linea[1].split("/");
             String precio;
 
-            String fich="Registro_del_"+fecha[2];// creamos el fichero Registro_del_[año leido]
+            String fich="Registro_del_"+fecha[2]+".bin";// creamos el fichero Registro_del_[año leido]
             
             try (FileOutputStream fos = new FileOutputStream(fich);
                     DataOutputStream dos = new DataOutputStream(fos)) {
@@ -449,5 +451,20 @@ public class GestorArchivos {
             indice = 1;
         }
         return indice;
+    }
+    
+    /**
+     * Método que abre un archivo especificado
+     * 
+     * @param ruta Ruta del archivo
+     * @param nombre Nombre del archivo
+     */
+    public static void abrirArchivo(String ruta, String nombre) {
+        try {
+            File fileToOpen = new File(ruta+ "//" +nombre); // Replace with the actual file path
+            Desktop.getDesktop().open(fileToOpen);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al abrir el archivo" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

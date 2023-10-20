@@ -56,16 +56,13 @@ public class LeerBinario_CrearXML {
     }
     
     static void TransformarBinToNodo(String ruta, Document d){
-        String nombre; String lugar; int puntuacion; double precio; int id; int dia; int mes; int anio; 
+        String nombre; String lugar; int puntuacion; double precio; //fecha int id; 
         try (RandomAccessFile fichero = new RandomAccessFile(ruta,"r")){
             byte[] b = new byte[40];
             while(fichero.getFilePointer() < fichero.length()){
                 Element e = CrearNodo("Plato", d);
                 
-                id = fichero.readInt();
-                dia = fichero.readInt();
-                mes = fichero.readInt();
-                anio = fichero.readInt();
+                //id = fichero.readInt();
                 fichero.read(b);
                 nombre = new String(b, "UTF-16");
                 fichero.read(b);
@@ -75,10 +72,7 @@ public class LeerBinario_CrearXML {
                 puntuacion = fichero.readInt();
                 //System.out.println("Nombre: " + nombre.trim() + "\tLugar: " + lugar.trim() + "\tPrecio: " + String.valueOf(precio).trim() + "\tpuntuacion: " + String.valueOf(puntuacion).trim());
                                 
-                AddNodo("id", String.valueOf(id), e, d);
-                AddNodo("dia", String.valueOf(dia), e, d);
-                AddNodo("mes", String.valueOf(mes), e, d);
-                AddNodo("año", String.valueOf(anio), e, d);
+                //AddNodo("id", String.valueOf(id), e, d);
                 AddNodo("nombre", nombre, e, d);
                 AddNodo("lugar", lugar, e, d);
                 AddNodo("precio", String.valueOf(precio), e, d);
@@ -113,7 +107,7 @@ public class LeerBinario_CrearXML {
     
     public static void crearXML (String r){
         try {
-            String origen = r + "Comidas.bin";
+            String origen = r + "comidas.bin";
             String ruta = r + "datos.xml";
             
             String value = "Platos";
@@ -134,5 +128,4 @@ public class LeerBinario_CrearXML {
             e.printStackTrace();
         }
     }
-
 }

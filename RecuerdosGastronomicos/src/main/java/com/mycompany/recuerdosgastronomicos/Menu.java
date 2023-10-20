@@ -6,6 +6,7 @@ package com.mycompany.recuerdosgastronomicos;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Button;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -204,8 +206,10 @@ public class Menu extends javax.swing.JFrame {
                 ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
                 comboBoxFecha.removeAllItems();
 
-                System.out.println("Boton presionado");
+                
                 GestorArchivos.escrituraDatosRecuperadosBin(info);
+                LeerBinario_CrearXML.crearXML(".//Registro_del_2023.bin");
+                
                 for (String i : info) {
                     comboBoxFecha.addItem(i);
                 }
@@ -259,6 +263,8 @@ public class Menu extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (esNumero(textFieldFecha.getText())) {
                     labelAux.setText("Datos del año " + textFieldFecha.getText());
+                    //abre archivo html (hay que especificar cual)
+                    GestorArchivos.abrirArchivo(".", "Comidas.bin");
                 }
             }
         });
@@ -266,6 +272,8 @@ public class Menu extends javax.swing.JFrame {
         btnVisualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 labelAux.setText("Datos de todo lo almacenado");
+                //abre archivo html
+                GestorArchivos.abrirArchivo(".", "Comidas.bin");
             }
         });
     }
