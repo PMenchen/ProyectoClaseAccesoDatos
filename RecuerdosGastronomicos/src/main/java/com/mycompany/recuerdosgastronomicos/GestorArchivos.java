@@ -21,8 +21,6 @@ import java.io.RandomAccessFile;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,7 +42,7 @@ public class GestorArchivos {
     public static void crear(String ruta, String nombre) {
 
         try {
-            File fichero = new File(ruta  + nombre);
+            File fichero = new File(ruta + nombre);
 
             if (fichero.createNewFile()) {
                 System.out.println("Fichero ya existente");
@@ -59,16 +57,15 @@ public class GestorArchivos {
      * Método para borrar un fichero
      *
      * @param ruta lugar donde se encuentra el archivo a borrar
-     * @param nombre nombre del archivo
      */
     public static void borrar(String ruta) {
         File file = new File(ruta);
         borrarCarpeta(file);
     }
-    
+
     /**
      * Método recursivo para borrar todo lo que tiene una carpeta dentro de ella
-     * 
+     *
      * @param fichero fichero a borrar
      */
     private static void borrarCarpeta(File fichero) {
@@ -95,7 +92,7 @@ public class GestorArchivos {
      */
     public static void copiar(String origen, String destino) {
         File fileOrigen = new File(origen);
-        File fileDestino = new File(destino+"//"+fileOrigen.getName());
+        File fileDestino = new File(destino + "//" + fileOrigen.getName());
 
         copiarCarpeta(fileOrigen, fileDestino);
     }
@@ -122,9 +119,8 @@ public class GestorArchivos {
                 System.out.println("ERROR E/S");
             }
         }
-    } 
+    }
 
-    
     /**
      * Método que moverá un archivo
      *
@@ -133,13 +129,13 @@ public class GestorArchivos {
      */
     public static void mover(String origen, String destino) {
         File fileOrigen = new File(origen);
-        File fileDestino = new File(destino+"//"+fileOrigen.getName());
+        File fileDestino = new File(destino + "//" + fileOrigen.getName());
 
         moverCarpeta(fileOrigen, fileDestino);
     }
 
     /**
-     *  Método recursivo para mover todo lo que tiene una carpeta dentro de ella
+     * Método recursivo para mover todo lo que tiene una carpeta dentro de ella
      *
      * @param origen lugar donde se encuentra la carpeta a mover
      * @param destino lugar donde se moverá el archivo
@@ -160,13 +156,13 @@ public class GestorArchivos {
                 System.out.println("ERROR E/S");
             }
         }
-    } 
+    }
 
     /**
      * Método que Escribirá en un archivo guardando: Fecha, puntuacion, lugar,
      * precio, nombre En ese orden
      *
-     * @param fich Fichero en el que se escribirá 
+     * @param fich Fichero en el que se escribirá
      * @param calendar fecha en la cual se ha comido el plato
      * @param puntuacion puntuacion/estrellas dadas al plato
      * @param lugar lugar (restaurante) en donde se ha comido
@@ -189,19 +185,18 @@ public class GestorArchivos {
             buffer.setLength(20);
             dos.writeChars(buffer.toString());
             buffer = null;
-            
+
             buffer = new StringBuffer(lugar); //lugar
             buffer.setLength(20);
             dos.writeChars(buffer.toString());
             buffer = null;
-            
+
             dos.writeDouble(precio);//precio
-            
+
             dos.writeDouble(puntuacion);//puntuacion
 
             fos.close();
             dos.close();
-
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
@@ -240,7 +235,7 @@ public class GestorArchivos {
      * @param nombre nombre del archivo
      */
     public static void leerSecuencialBin(String ruta, String nombre) {
-        File fichero = new File(ruta  + nombre);
+        File fichero = new File(ruta + nombre);
         try (FileInputStream fis = new FileInputStream(fichero); DataInputStream dis = new DataInputStream(fis)) {
 
             int indice;
@@ -294,65 +289,64 @@ public class GestorArchivos {
             System.out.println("Lectura terminada...");
         }
     }
-    
+
     /**
      * Método para crear una copia de todas las comidas en un determinado año
+     *
      * @param comidas ArrayList que contiene todas las comidas
      */
     public static void escrituraDatosRecuperadosBin(ArrayList<String> comidas) {
-        
+
         if (!comidas.isEmpty()) {
-            
-            String[] linea=comidas.get(0).split("\\s+");
-            String[] fecha=linea[1].split("/");
+
+            String[] linea = comidas.get(0).split("\\s+");
+            String[] fecha = linea[1].split("/");
             String precio;
 
-            String fich=".\\resources\\Registro_del_"+fecha[2]+".bin";// creamos el fichero Registro_del_[año leido]
-            
-            try (FileOutputStream fos = new FileOutputStream(fich);
-                    DataOutputStream dos = new DataOutputStream(fos)) {
-                
+            String fich = ".\\resources\\Registro_del_" + fecha[2] + ".bin";// creamos el fichero Registro_del_[año leido]
+
+            try (FileOutputStream fos = new FileOutputStream(fich); DataOutputStream dos = new DataOutputStream(fos)) {
+
                 StringBuffer buffer;
                 for (String comida : comidas) {
-                    linea=comida.split("\\s+");
-                    fecha=linea[1].split("/");
-                    
+                    linea = comida.split("\\s+");
+                    fecha = linea[1].split("/");
+
                     dos.writeInt(Integer.parseInt(linea[0]));//id
-                    
+
                     dos.writeInt(Integer.parseInt(fecha[0]));//fecha
                     dos.writeInt(Integer.parseInt(fecha[1]));
                     dos.writeInt(Integer.parseInt(fecha[2]));
-                    
+
                     buffer = new StringBuffer(linea[2]); //comida
                     buffer.setLength(20);
                     dos.writeChars(buffer.toString());
                     buffer = null;
-                    
+
                     buffer = new StringBuffer(linea[3]); //lugar
                     buffer.setLength(20);
                     dos.writeChars(buffer.toString());
                     buffer = null;
-                    
-                    precio=linea[4].substring(0, linea[4].length()-1);
+
+                    precio = linea[4].substring(0, linea[4].length() - 1);
                     dos.writeDouble(Double.parseDouble(precio));//precio
-                    
+
                     dos.writeDouble(Double.parseDouble(linea[5]));//puntuacion
-                    
+
                 }
-                
+
                 fos.close();
                 dos.close();
-
             } catch (IOException ioe) {
                 System.out.println(ioe);
             }
         }
-        
+
     }
-    
+
     /**
      * Método que recuperará una serie de registros según una fecha
-     * 
+     *
      * @param fechaBuscada fecha que debe coincidir para poder recuperarlos
      * @return ArrayList con los registros
      */
@@ -374,13 +368,12 @@ public class GestorArchivos {
                 for (int i = 0; i < 20; i++) {
                     lugar += archivo.readChar();
                 }
-                
+
                 double precio = archivo.readDouble();
                 double puntuacion = archivo.readDouble();
 
-                if (anio == fechaBuscada && indice>0) {
-                    //String info = indice + " " + dia + "/" + mes + "/" + anio + " " + puntuacion + " " + lugar + " " + " " + nombrePlato + " " + precio + "€";
-                    String info = indice + " " + dia + "/" + mes + "/" + anio + " " + nombrePlato + " " + lugar + " " +  " " + precio + "€" + " " + puntuacion;
+                if (anio == fechaBuscada && indice > 0) {
+                    String info = indice + " " + dia + "/" + mes + "/" + anio + " " + nombrePlato + " " + lugar + " " + " " + precio + "€" + " " + puntuacion;
                     platos.add(info);
                 }
             }
@@ -395,25 +388,25 @@ public class GestorArchivos {
 
     /**
      * Método que escribirá una cadena usando el RandomAccessFile
-     * 
+     *
      * @param random RandomAccessFile
      * @param texto cadena que debe escribir
      * @param tamaño el tamaño de la cadena a escribir
      */
-    public static void escibirCadena(RandomAccessFile random, String texto, int tamaño){
-        try{
+    public static void escibirCadena(RandomAccessFile random, String texto, int tamaño) {
+        try {
             StringBuffer buffer = new StringBuffer(texto);
             buffer = new StringBuffer(texto);
             buffer.setLength(tamaño);
             random.writeChars(buffer.toString());
-        }catch (IOException ioe) {
+        } catch (IOException ioe) {
             System.out.println("ERROR E/S");
         }
     }
-    
+
     /**
      * Método para modificar un registro en concreto
-     * 
+     *
      * @param id id del registro a modificar
      * @param calendar fecha cuando se probó el plato
      * @param lugar lugar donde se probó
@@ -421,15 +414,15 @@ public class GestorArchivos {
      * @param precio precio del plato
      * @param calificacion calificacion dada
      */
-public static void modificar(int id, Calendar calendar, String nombre, String lugar, double precio, double calificacion){
+    public static void modificar(int id, Calendar calendar, String nombre, String lugar, double precio, double calificacion) {
         try {
             RandomAccessFile random = new RandomAccessFile(".\\resources\\Comidas.bin", "rw");
-            int posicion=(id-1)*112;
-            
+            int posicion = (id - 1) * 112;
+
             random.seek(posicion);
-            
+
             random.skipBytes(4);
-            
+
             random.writeInt(calendar.get(Calendar.DAY_OF_MONTH));  //dia
             random.writeInt(calendar.get(Calendar.MONTH) + 1); //mes-1
             random.writeInt(calendar.get(Calendar.YEAR));//año
@@ -437,28 +430,28 @@ public static void modificar(int id, Calendar calendar, String nombre, String lu
             escibirCadena(random, lugar, 20);
             random.writeDouble(precio);
             random.writeDouble(calificacion);
-                
+
         } catch (FileNotFoundException fnfe) {
             System.out.println("No se encontró el fichero");
         } catch (IOException ioe) {
-            System.out.println(ioe);
+            System.out.println("ERROR E/S");
         }
     }
-    
+
     /**
      * Método para eliminar un registro en concreto
-     * 
+     *
      * @param id id del registro a eliminar
      * @return devuelve un boolean para comprobar que se hizo sin problema
      */
-    public static boolean eliminarRA(int id){
-        int posicion=((id-1)*112);
-        
+    public static boolean eliminarRA(int id) {
+        int posicion = ((id - 1) * 112);
+
         try {
             RandomAccessFile random = new RandomAccessFile(".\\resources\\Comidas.bin", "rw");
             random.seek(posicion);
             random.writeInt(-1);
-            
+
             random.getFD().sync();
             random.close();
             return true;
@@ -466,7 +459,7 @@ public static void modificar(int id, Calendar calendar, String nombre, String lu
             return false;
         }
     }
-    
+
     /**
      * Método para actualiza el índice de las comidas al agregarlas
      *
@@ -504,54 +497,52 @@ public static void modificar(int id, Calendar calendar, String nombre, String lu
         }
         return indice;
     }
-    
+
     /**
      * Método que abre un archivo especificado
-     * 
+     *
      * @param ruta Ruta del archivo
      * @param nombre Nombre del archivo
      */
     public static void abrirArchivo(String ruta, String nombre) {
         try {
-            File fileToOpen = new File(ruta +nombre); // Replace with the actual file path
+            File fileToOpen = new File(ruta + nombre); // Replace with the actual file path
             Desktop.getDesktop().open(fileToOpen);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir el archivo" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ioex) {
+            System.out.println("ERROR E/S");
         }
     }
-    
+
     /**
      * Método que busca un registro borrado y sobreescribe sus valores
-     * 
-     * @return True si se ha sobreescrito un registro
-     *         False si no había registros para sobreescribir
+     *
+     * @return True si se ha sobreescrito un registro False si no había
+     * registros para sobreescribir
      */
-    public static boolean sobreescribirBorrado(Calendar calendar, String lugar, String nombre, double precio, double calificacion){
-        //int posicion=((id-1)*112);
+    public static boolean sobreescribirBorrado(Calendar calendar, String lugar, String nombre, double precio, double calificacion) {
         int leido;
         int posicion = 0;
-        int ident=1;
-        boolean sobreescrito=false;
+        int ident = 1;
+        boolean sobreescrito = false;
         try {
-            File fich=new File(".\\resources\\Comidas.bin");
+            File fich = new File(".\\resources\\Comidas.bin");
             RandomAccessFile random = new RandomAccessFile(fich, "rw");
-            
-            while(!sobreescrito && posicion<fich.length()) {
+
+            while (!sobreescrito && posicion < fich.length()) {
                 random.seek(posicion);
-                leido=random.readInt();
+                leido = random.readInt();
                 if (leido == -1) {
                     random.seek(posicion);//volvemos a la posicion del id para sobreescribir
                     random.writeInt(ident);//sobreescribimos el id
                     random.getFD().sync();
                     modificar(ident, calendar, nombre, lugar, precio, calificacion);
-                    sobreescrito=true;
+                    sobreescrito = true;
                 }
                 ident++;
                 posicion += 112;
             }
-            
+
             random.close();
-            System.out.println(sobreescrito);
             return sobreescrito;
         } catch (EOFException eofe) {
             System.out.println("");
@@ -559,5 +550,62 @@ public static void modificar(int id, Calendar calendar, String nombre, String lu
             System.out.println("");
         }
         return false;
+    }
+
+    /**
+     * Método que encripta el archivo Comidas.bin
+     */
+    public static void encriptar() {
+        File archivoOrigen = new File(".\\resources\\Comidas.bin");
+        File archivoDestino = new File(".\\resources\\ComidasEncriptado.bin");
+
+        try {
+            FileInputStream lector = new FileInputStream(archivoOrigen);
+            DataInputStream dis = new DataInputStream(lector);
+
+            FileOutputStream escritor = new FileOutputStream(archivoDestino);
+            DataOutputStream dos = new DataOutputStream(escritor);
+
+            while (dis.available() > 0) {
+                dos.writeByte(dis.readByte() + 1);
+            }
+
+            dis.close();
+            dos.close();
+            lector.close();
+            escritor.close();
+        } catch (IOException ioe) {
+            System.out.println("ERROR E/S");
+        }
+
+    }
+
+    /**
+     * Método que desencripta el archivo
+     */
+    public static void desencriptar() {
+        File archivoOrigen = new File(".\\resources\\ComidasEncriptado.bin");
+        File archivoDestino = new File(".\\resources\\Comidas.bin");
+
+        try {
+            FileInputStream lector = new FileInputStream(archivoOrigen);
+            DataInputStream dis = new DataInputStream(lector);
+
+            FileOutputStream escritor = new FileOutputStream(archivoDestino);
+            DataOutputStream dos = new DataOutputStream(escritor);
+
+            while (dis.available() > 0) {
+                dos.writeByte(dis.readByte() - 1);
+            }
+
+            dis.close();
+            dos.close();
+            lector.close();
+            escritor.close();
+        } catch (IOException ioe) {
+            System.out.println("ERROR E/S");
+        }
+
+        borrar(archivoOrigen.getName());
     }
 }

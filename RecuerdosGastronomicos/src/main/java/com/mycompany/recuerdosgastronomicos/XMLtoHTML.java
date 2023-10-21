@@ -47,6 +47,5 @@ public class XMLtoHTML {
         } catch (Exception e) {
             System.out.println(e);
         }
-                
     }
 }
