@@ -107,7 +107,7 @@ public class LeerBinario_CrearXML {
     
     public static void crearXML (String r){
         try {
-            String origen = r + "comidas.bin";
+            String origen = r + "Comidas.bin";
             String ruta = r + "datos.xml";
             
             String value = "Platos";

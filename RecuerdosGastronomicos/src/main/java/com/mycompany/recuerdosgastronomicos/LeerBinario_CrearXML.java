@@ -55,24 +55,47 @@ public class LeerBinario_CrearXML {
 
     }
     
+     static void AddNodoFechaToNodo(String datoPlato, String valor1, String valor2, String valor3, Element raiz, Document document){
+        Element elem = document.createElement(datoPlato); //creamos el hijo
+        
+        AddNodo("dia", valor1, elem, document);
+        AddNodo("mes", valor2, elem, document);
+        AddNodo("año", valor3, elem, document);
+        
+        raiz.appendChild(elem); //pegamos el elemento hijo a la raiz
+        
+    }
+    
     static void TransformarBinToNodo(String ruta, Document d){
-        String nombre; String lugar; int puntuacion; double precio; //fecha int id; 
+        String nombre; String lugar; double puntuacion; double precio; int id; int day; int month; int year; String stringFecha;
+        
         try (RandomAccessFile fichero = new RandomAccessFile(ruta,"r")){
             byte[] b = new byte[40];
             while(fichero.getFilePointer() < fichero.length()){
                 Element e = CrearNodo("Plato", d);
                 
-                //id = fichero.readInt();
+                id = fichero.readInt();
+                
+                day = fichero.readInt();
+                month = fichero.readInt();
+                year = fichero.readInt();
+                
+                stringFecha = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+                
                 fichero.read(b);
                 nombre = new String(b, "UTF-16");
+                
                 fichero.read(b);
                 lugar = new String(b, "UTF-16");
                 
                 precio = fichero.readDouble();
-                puntuacion = fichero.readInt();
-                //System.out.println("Nombre: " + nombre.trim() + "\tLugar: " + lugar.trim() + "\tPrecio: " + String.valueOf(precio).trim() + "\tpuntuacion: " + String.valueOf(puntuacion).trim());
+                
+                puntuacion = fichero.readDouble();
                                 
-                //AddNodo("id", String.valueOf(id), e, d);
+                System.out.println("Fecha [dia: " + String.valueOf(day).trim() + " mes: "  + String.valueOf(month).trim() + " año: " + String.valueOf(year).trim() + "]\tNombre: " + nombre.trim() + "\tLugar: " + lugar.trim() + "\tPrecio: " + String.valueOf(precio).trim() + "\tpuntuacion: " + String.valueOf(puntuacion).trim());
+                
+                AddNodo("id", String.valueOf(id), e, d);
+                AddNodo("fecha", stringFecha, e, d);
                 AddNodo("nombre", nombre, e, d);
                 AddNodo("lugar", lugar, e, d);
                 AddNodo("precio", String.valueOf(precio), e, d);
@@ -105,20 +128,18 @@ public class LeerBinario_CrearXML {
     
     
     
-    public static void crearXML (String r){
+    public static void crearXML (String route, String file){
         try {
-            String origen = r + "comidas.bin";
-            String ruta = r + "datos.xml";
+            String origen = route + file;
+            String ruta = route + "datos.xml";
             
             String value = "Platos";
             Document document = InitBuilder(value);
             
             
-            TransformarBinToNodo(origen, document/*, nodo*/);
+            TransformarBinToNodo(origen, document);
             
-            EscribirArchivo(document, ruta);
-            //EscribirConsola(document);
-            
+            EscribirArchivo(document, ruta);            
             
             
         } catch (Exception e) {

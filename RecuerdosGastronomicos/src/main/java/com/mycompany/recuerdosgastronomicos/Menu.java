@@ -91,7 +91,7 @@ public class Menu extends javax.swing.JFrame {
                         Date fechaSeleccionada = dateChooserFecha.getDate();
                         calendar.setTime(fechaSeleccionada);
             
-                        GestorArchivos.modificar(id, calendar, lugar, nombrePlato, precio, calificacion);
+                        GestorArchivos.modificar(id, calendar, nombrePlato, lugar, precio, calificacion);
                     } else {
                         labelAux.setText("Precio o calificación incorrecta");
                     }
@@ -115,12 +115,12 @@ public class Menu extends javax.swing.JFrame {
                     Date fechaSeleccionada = dateChooserFecha.getDate();
                     calendar.setTime(fechaSeleccionada);
 
-                    GestorArchivos.crear(".", "Comidas.bin");
-                    File fich = new File("Comidas.bin");
+                    GestorArchivos.crear(".\\resources\\", "Comidas.bin");
+                    File fich = new File(".\\resources\\Comidas.bin");
                     if (!GestorArchivos.sobreescribirBorrado(calendar, lugar, nombrePlato, precio, calificacion)) {
                         GestorArchivos.escrituraSEC(fich, calendar, calificacion, lugar, precio, nombrePlato);
                     }
-                    GestorArchivos.leerSecuencialBin(".","Comidas.bin");
+                    GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
                 } else {
                     labelAux.setText("Precio o calificación incorrecta");
                 }
@@ -203,9 +203,9 @@ public class Menu extends javax.swing.JFrame {
                 ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
                 comboBoxFecha.removeAllItems();
 
-                GestorArchivos.leerSecuencialBin(".", "Comidas.bin");
+                GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
                 GestorArchivos.escrituraDatosRecuperadosBin(info);
-                //LeerBinario_CrearXML.crearXML(".\\Registro_del_2023.bin");
+                //LeerBinario_CrearXML.crearXML(".\\recursos\\", "Registro_del_2023.bin");
                 
                 for (String i : info) {
                     comboBoxFecha.addItem(i);
@@ -224,7 +224,7 @@ public class Menu extends javax.swing.JFrame {
                 String[] id=info.split(" ");
                 if(GestorArchivos.eliminarRA(Integer.valueOf(id[0]))){
                     labelAux.setText("Borrado con éxito");
-                    GestorArchivos.leerSecuencialBin(".", "Comidas.bin");//--prueba lee cada vez que se elimina
+                    GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");//--prueba lee cada vez que se elimina
                     comboBoxFecha.removeAllItems();//--prueba
                 }
             }
@@ -252,7 +252,7 @@ public class Menu extends javax.swing.JFrame {
         //SEGUNDA FILA
         //NOMBRE
         JLabel labelTodo = crearLabel("Si quiere visualizar todo pulse el siguiente botón", 20, 100, 300, 30);
-        jContenido.add(labelTodo);;
+        jContenido.add(labelTodo);
         //BOTON
         Button btnVisualizar = new Button("Visualizar todo");
         btnVisualizar.setBounds(20, 130, 200, 30);
@@ -263,7 +263,7 @@ public class Menu extends javax.swing.JFrame {
                 if (esNumero(textFieldFecha.getText())) {
                     labelAux.setText("Datos del año " + textFieldFecha.getText());
                     //abre archivo html (hay que especificar cual)
-                    GestorArchivos.abrirArchivo(".", "Comidas.bin");
+                    GestorArchivos.abrirArchivo(".\\resources\\", "Comidas.bin");
                 }
             }
         });
@@ -271,8 +271,9 @@ public class Menu extends javax.swing.JFrame {
         btnVisualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 labelAux.setText("Datos de todo lo almacenado");
-                //abre archivo html
-                GestorArchivos.abrirArchivo(".", "Comidas.bin");
+                LeerBinario_CrearXML.crearXML(".\\resources\\","Comidas.bin");
+                XMLtoHTML.convert(".\\resources\\");
+                GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
             }
         });
     }
@@ -283,23 +284,18 @@ public class Menu extends javax.swing.JFrame {
      * @param labelAux una etiqueta auxiliar para indicar si el boton funcionó
      */
     private void botonArchivo(JLabel labelAux) {
-        //PRIMERA FILA
+        
+         //PRIMERA FILA
         //ORIGEN
-        JLabel labelOrigen = crearLabel("Seleccione la carpeta donde se guarda Recuerdos Gastronómicos", 20, 20, 400, 30);
+        JLabel labelOrigen = crearLabel("Pulse para borrar Recuerdos Gastronómicos", 20, 20, 400, 30);
         jContenido.add(labelOrigen);
-        Button btnOrigen = new Button("Buscar");
-        btnOrigen.setBounds(20, 50, 200, 30);
-        jContenido.add(btnOrigen);
-        JFileChooser origen = new JFileChooser();
-        JTextField textFieldOrigen = new JTextField();
-
-        origen.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        btnOrigen.addActionListener(new ActionListener() {
+        Button btnBorrar = new Button("Borrar recuerdos");
+        btnBorrar.setBounds(20, 50, 200, 30);
+        jContenido.add(btnBorrar);
+        btnBorrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int val = origen.showOpenDialog(null);
-                if (val == JFileChooser.APPROVE_OPTION) {
-                    textFieldOrigen.setText(origen.getSelectedFile().getAbsolutePath());
-                }
+                GestorArchivos.borrar(".\\resources\\");
+                labelAux.setText("Borrado exitoso");
             }
         });
 
@@ -329,42 +325,28 @@ public class Menu extends javax.swing.JFrame {
         jContenido.add(btnCopiar);
         btnCopiar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (textFieldOrigen.getText() == null && textFieldDestino.getText() == null) {
-                    labelAux.setText("Indique primero el archivo a copiar y el destino");
+                if (textFieldDestino.getText() == null) {
+                    labelAux.setText("Indique primero el destino");
                 } else {
-                    GestorArchivos.copiar(textFieldOrigen.getText(), textFieldDestino.getText());
+                    GestorArchivos.copiar(".\\resources\\", textFieldDestino.getText());
                     labelAux.setText("Copiada de seguridad creada con éxito");
                 }
             }
         });
         
         Button btnMover = new Button("Mover recuerdos");
-        btnMover.setBounds(20, 210, 200, 30);
+        btnMover.setBounds(20,210,200,30);
         jContenido.add(btnMover);
         btnMover.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (textFieldOrigen.getText() == null && textFieldDestino.getText() == null) {
-                    labelAux.setText("Indique primero el archivo a mover y el destino");
+                if (textFieldDestino.getText() == null) {
+                    labelAux.setText("Indique primero el destino");
                 } else {
-                    GestorArchivos.mover(textFieldOrigen.getText(), textFieldDestino.getText());
+                    GestorArchivos.mover(".\\resources\\", textFieldDestino.getText());
                     labelAux.setText("Se ha movido sin problemas");
                 }
             }
-        });
-        
-        Button btnBorrar = new Button("Borrar recuerdos");
-        btnBorrar.setBounds(20, 240, 200, 30);
-        jContenido.add(btnBorrar);
-        btnBorrar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (textFieldOrigen.getText() == null) {
-                    labelAux.setText("Indique primero el archivo a borrar");
-                } else {
-                    GestorArchivos.borrar(textFieldOrigen.getText());
-                    labelAux.setText("Borrado exitoso");
-                }
-            }
-        });
+        });        
     }
 
     /**
