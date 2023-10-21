@@ -266,7 +266,17 @@ public class Menu extends javax.swing.JFrame {
                 if (esNumero(textFieldFecha.getText())) {
                     labelAux.setText("Datos del año " + textFieldFecha.getText());
                     //abre archivo html (hay que especificar cual)
-                    GestorArchivos.abrirArchivo(".\\resources\\", "Comidas.bin");
+                    
+                    ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
+                    String nombreBinFiltrado = "Registro_del_" + textFieldFecha.getText() + ".bin";
+                    System.out.println(nombreBinFiltrado);
+                    GestorArchivos.leerSecuencialBin(".\\resources\\", nombreBinFiltrado);
+                    GestorArchivos.escrituraDatosRecuperadosBin(info);
+                    
+                    LeerBinario_CrearXML.crearXML(".\\resources\\", nombreBinFiltrado);
+                    XMLtoHTML.convert(".\\resources\\");
+                    GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
+                    
                 }
             }
         });
