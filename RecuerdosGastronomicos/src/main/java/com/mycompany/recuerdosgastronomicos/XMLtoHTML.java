@@ -18,6 +18,11 @@ import javax.xml.transform.stream.StreamSource;
  * @author stacy
  */
 public class XMLtoHTML {
+    
+    /**
+     * Método para crear un HTML a partir de un XML
+     * @param ruta 
+     */
     public static void convert(String ruta){
         
         

@@ -28,6 +28,14 @@ import org.w3c.dom.Text;
  * @author stacy
  */
 public class LeerBinario_CrearXML {
+    
+    /**
+    * Inicializa un nuevo documento XML
+    *
+    * @param name El nombre del documento XML.
+    * @return Documento XML inicializado.
+    * @throws ParserConfigurationException Si ocurre un error durante la creación del documento.
+    */
     static Document InitBuilder(String name) throws ParserConfigurationException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -39,6 +47,12 @@ public class LeerBinario_CrearXML {
         return d;
     }
     
+    /**
+     * Método para crear un nodo principal
+     * @param value Valor del nombre
+     * @param document Documento XML en donde se insertará el nodo principal
+     * @return 
+     */
     static Element CrearNodo(String value, Document document){
         Element raiz= document.createElement(value);
         document.getDocumentElement().appendChild(raiz);
@@ -46,6 +60,13 @@ public class LeerBinario_CrearXML {
         return raiz;
     }
     
+    /**
+     * Método para añadir un nodo
+     * @param datoPlato
+     * @param valor
+     * @param raiz La raíz de la que crece el nodo
+     * @param document Documento XML
+     */
     static void AddNodo(String datoPlato, String valor, Element raiz, Document document){
 
         Element elem = document.createElement(datoPlato); //creamos el hijo
@@ -66,6 +87,11 @@ public class LeerBinario_CrearXML {
         
     }
     
+     /**
+      * Convierte registros en binario a un Nodo que se agregará a un XML
+      * @param ruta Del archivo binario
+      * @param d Documento
+      */
     static void TransformarBinToNodo(String ruta, Document d){
         String nombre; String lugar; double puntuacion; double precio; int id; int day; int month; int year; String stringFecha;
         
@@ -119,6 +145,13 @@ public class LeerBinario_CrearXML {
         transformer.transform(source,salida);
     }
     
+    /**
+    * Escribe el contenido de un documento XML en un archivo en la ruta especificada.
+    * @param document El documento XML
+    * @param ruta La ruta del archivo donde se guardará el contenido XML
+    * @throws TransformerConfigurationException Si ocurre un error de configuración en el transformador.
+    * @throws TransformerException Si ocurre un error durante la transformación y escritura del documento.
+    */
     static void EscribirArchivo(Document document, String ruta) throws TransformerConfigurationException, TransformerException{
         Source source = new DOMSource(document);
         Result salida = new StreamResult(new File(ruta));
@@ -127,7 +160,11 @@ public class LeerBinario_CrearXML {
     }
     
     
-    
+    /**
+     * 
+     * @param route Ruta del archivo
+     * @param file Nombre del archivo
+     */
     public static void crearXML (String route, String file){
         try {
             String origen = route + file;
