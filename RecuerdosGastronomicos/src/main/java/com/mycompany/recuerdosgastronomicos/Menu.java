@@ -78,7 +78,8 @@ public class Menu extends javax.swing.JFrame {
             btnConfirmar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
-                        && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5) {
+                        && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5
+                            && dateChooserFecha.getDate() != null) {
                         labelAux.setText("Modificado con éxito");
                     
                         double precio = Double.valueOf(textFieldPrecio.getText());
@@ -94,7 +95,7 @@ public class Menu extends javax.swing.JFrame {
                         GestorArchivos.modificar(id, calendar, nombrePlato, lugar, precio, calificacion);
                         GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
                     } else {
-                        labelAux.setText("Precio o calificación incorrecta");
+                        labelAux.setText("Precio, calificación o fecha incorrectos");
                     }
                 }
             });
@@ -103,7 +104,8 @@ public class Menu extends javax.swing.JFrame {
             btnConfirmar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
-                        && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5) {
+                        && Double.parseDouble(textFieldCalificacion.getText()) >= 0 && Double.parseDouble(textFieldCalificacion.getText()) <= 5
+                        && dateChooserFecha.getDate() != null) {
                     labelAux.setText("Se añadió con éxito");
 
                     double precio = Double.valueOf(textFieldPrecio.getText());
@@ -123,7 +125,7 @@ public class Menu extends javax.swing.JFrame {
                     }
                     GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
                 } else {
-                    labelAux.setText("Precio o calificación incorrecta");
+                    labelAux.setText("Precio, calificacion o fecha incorrectos");
                 }
             }
         });
