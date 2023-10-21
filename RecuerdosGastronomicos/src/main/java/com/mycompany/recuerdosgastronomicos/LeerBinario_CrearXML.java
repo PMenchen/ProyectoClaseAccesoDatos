@@ -97,8 +97,8 @@ public class LeerBinario_CrearXML {
                 AddNodo("id", String.valueOf(id), e, d);
                 AddNodo("fecha", stringFecha, e, d);
                 AddNodo("nombre", nombre, e, d);
-                AddNodo("lugar", lugar, e, d);
                 AddNodo("precio", String.valueOf(precio), e, d);
+                AddNodo("lugar", lugar, e, d);
                 AddNodo("puntuacion", String.valueOf(puntuacion), e, d);
             }
             fichero.close();
