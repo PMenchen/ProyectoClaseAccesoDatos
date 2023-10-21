@@ -83,8 +83,8 @@ public class Menu extends javax.swing.JFrame {
                     
                         double precio = Double.valueOf(textFieldPrecio.getText());
                         double calificacion = Double.valueOf(textFieldCalificacion.getText());
-                        String nombrePlato = textFieldNombre.getText();
-                        String lugar = textFieldLugar.getText();
+                        String nombrePlato = textFieldNombre.getText().replace(" ", "-");
+                        String lugar = textFieldLugar.getText().replace(" ", "-");
 
                         //
                         Calendar calendar = Calendar.getInstance();
@@ -108,8 +108,8 @@ public class Menu extends javax.swing.JFrame {
 
                     double precio = Double.valueOf(textFieldPrecio.getText());
                     double calificacion = Double.valueOf(textFieldCalificacion.getText());
-                    String nombrePlato = textFieldNombre.getText();
-                    String lugar = textFieldLugar.getText();
+                    String nombrePlato = textFieldNombre.getText().replace(" ", "-");
+                    String lugar = textFieldLugar.getText().replace(" ", "-");
 
                     //
                     Calendar calendar = Calendar.getInstance();
