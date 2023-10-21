@@ -185,19 +185,19 @@ public class GestorArchivos {
             dos.writeInt(calendar.get(Calendar.MONTH) + 1); //mes-1
             dos.writeInt(calendar.get(Calendar.YEAR));//año
 
-            dos.writeDouble(puntuacion);//puntuacion
-
-            buffer = new StringBuffer(lugar); //lugar
-            buffer.setLength(10);
-            dos.writeChars(buffer.toString());
-            buffer = null;
-
-            dos.writeDouble(precio);//precio
-
             buffer = new StringBuffer(nombre); //nombre
             buffer.setLength(20);
             dos.writeChars(buffer.toString());
             buffer = null;
+            
+            buffer = new StringBuffer(lugar); //lugar
+            buffer.setLength(20);
+            dos.writeChars(buffer.toString());
+            buffer = null;
+            
+            dos.writeDouble(precio);//precio
+            
+            dos.writeDouble(puntuacion);//puntuacion
 
             fos.close();
             dos.close();
@@ -257,16 +257,16 @@ public class GestorArchivos {
                 dia = dis.readInt();
                 mes = dis.readInt();
                 anio = dis.readInt();
-                puntuacion = dis.readDouble();
-                lugar = "";
-                for (int i = 0; i < 10; i++) {
-                    lugar += dis.readChar();
-                }
-                precio = dis.readDouble();
                 nombrePlato = "";
                 for (int i = 0; i < 20; i++) {
                     nombrePlato += dis.readChar();
                 }
+                lugar = "";
+                for (int i = 0; i < 20; i++) {
+                    lugar += dis.readChar();
+                }
+                precio = dis.readDouble();
+                puntuacion = dis.readDouble();
 
                 System.out.print("Indice: " + indice);
                 System.out.print(" ");
@@ -276,13 +276,14 @@ public class GestorArchivos {
                 System.out.print(" ");
                 System.out.print("año: " + anio);
                 System.out.print(" ");
-                System.out.print("punt: " + puntuacion);
+                System.out.print("nombre:" + nombrePlato);
                 System.out.print(" ");
                 System.out.print("lugar: " + lugar);
                 System.out.print(" ");
                 System.out.print("precio: " + precio);
                 System.out.print(" ");
-                System.out.print("nombre:" + nombrePlato);
+                System.out.print("punt: " + puntuacion);
+                System.out.print(" ");
                 System.out.println();
             }
             fis.close();
@@ -322,20 +323,20 @@ public class GestorArchivos {
                     dos.writeInt(Integer.parseInt(fecha[1]));
                     dos.writeInt(Integer.parseInt(fecha[2]));
                     
-                    dos.writeDouble(Double.parseDouble(linea[2]));//puntuacion
+                    buffer = new StringBuffer(linea[4]); //comida
+                    buffer.setLength(20);
+                    dos.writeChars(buffer.toString());
+                    buffer = null;
                     
                     buffer = new StringBuffer(linea[3]); //lugar
-                    buffer.setLength(10);
+                    buffer.setLength(20);
                     dos.writeChars(buffer.toString());
                     buffer = null;
                     
                     precio=linea[5].substring(0, linea[5].length()-1);
                     dos.writeDouble(Double.parseDouble(precio));//precio
                     
-                    buffer = new StringBuffer(linea[4]); //comida
-                    buffer.setLength(20);
-                    dos.writeChars(buffer.toString());
-                    buffer = null;
+                    dos.writeDouble(Double.parseDouble(linea[2]));//puntuacion
                     
                 }
                 
@@ -365,16 +366,16 @@ public class GestorArchivos {
                 int dia = archivo.readInt();
                 int mes = archivo.readInt();
                 int anio = archivo.readInt();
-                double puntuacion = archivo.readDouble();
-                String lugar = "";
-                for (int i = 0; i < 10; i++) {
-                    lugar += archivo.readChar();
-                }
-                double precio = archivo.readDouble();
                 String nombrePlato = "";
                 for (int i = 0; i < 20; i++) {
                     nombrePlato += archivo.readChar();
                 }
+                String lugar = "";
+                for (int i = 0; i < 20; i++) {
+                    lugar += archivo.readChar();
+                }
+                double precio = archivo.readDouble();
+                double puntuacion = archivo.readDouble();
 
                 if (anio == fechaBuscada && indice>0) {
                     String info = indice + " " + dia + "/" + mes + "/" + anio + " " + puntuacion + " " + lugar + " " + " " + nombrePlato + " " + precio + "€";
@@ -421,7 +422,7 @@ public class GestorArchivos {
     public static void modificar(int id, Calendar calendar, String lugar, String nombre, double precio, double calificacion){
         try {
             RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
-            int posicion=(id-1)*92;
+            int posicion=(id-1)*112;
             
             random.seek(posicion);
             
@@ -430,10 +431,10 @@ public class GestorArchivos {
             random.writeInt(calendar.get(Calendar.DAY_OF_MONTH));  //dia
             random.writeInt(calendar.get(Calendar.MONTH) + 1); //mes-1
             random.writeInt(calendar.get(Calendar.YEAR));//año
-            random.writeDouble(calificacion);
-            escibirCadena(random, lugar, 10);
-            random.writeDouble(precio);
             escibirCadena(random, nombre, 20);
+            escibirCadena(random, lugar, 20);
+            random.writeDouble(precio);
+            random.writeDouble(calificacion);
                 
         } catch (FileNotFoundException fnfe) {
             System.out.println("No se encontró el fichero");
@@ -449,7 +450,7 @@ public class GestorArchivos {
      * @return devuelve un boolean para comprobar que se hizo sin problema
      */
     public static boolean eliminarRA(int id){
-        int posicion=((id-1)*92);
+        int posicion=((id-1)*112);
         
         try {
             RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
@@ -524,7 +525,7 @@ public class GestorArchivos {
      *         False si no había registros para sobreescribir
      */
     public static boolean sobreescribirBorrado(Calendar calendar, String lugar, String nombre, double precio, double calificacion){
-        //int posicion=((id-1)*92);
+        //int posicion=((id-1)*112);
         int leido;
         int posicion = 0;
         int ident=1;
@@ -544,7 +545,7 @@ public class GestorArchivos {
                     sobreescrito=true;
                 }
                 ident++;
-                posicion += 92;
+                posicion += 112;
             }
             
             random.close();
