@@ -92,6 +92,7 @@ public class Menu extends javax.swing.JFrame {
                         calendar.setTime(fechaSeleccionada);
             
                         GestorArchivos.modificar(id, calendar, nombrePlato, lugar, precio, calificacion);
+                        GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
                     } else {
                         labelAux.setText("Precio o calificación incorrecta");
                     }

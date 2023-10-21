@@ -323,7 +323,7 @@ public class GestorArchivos {
                     dos.writeInt(Integer.parseInt(fecha[1]));
                     dos.writeInt(Integer.parseInt(fecha[2]));
                     
-                    buffer = new StringBuffer(linea[4]); //comida
+                    buffer = new StringBuffer(linea[2]); //comida
                     buffer.setLength(20);
                     dos.writeChars(buffer.toString());
                     buffer = null;
@@ -333,10 +333,10 @@ public class GestorArchivos {
                     dos.writeChars(buffer.toString());
                     buffer = null;
                     
-                    precio=linea[5].substring(0, linea[5].length()-1);
+                    precio=linea[4].substring(0, linea[4].length()-1);
                     dos.writeDouble(Double.parseDouble(precio));//precio
                     
-                    dos.writeDouble(Double.parseDouble(linea[2]));//puntuacion
+                    dos.writeDouble(Double.parseDouble(linea[5]));//puntuacion
                     
                 }
                 
@@ -421,9 +421,9 @@ public class GestorArchivos {
      * @param precio precio del plato
      * @param calificacion calificacion dada
      */
-    public static void modificar(int id, Calendar calendar, String lugar, String nombre, double precio, double calificacion){
+public static void modificar(int id, Calendar calendar, String nombre, String lugar, double precio, double calificacion){
         try {
-            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
+            RandomAccessFile random = new RandomAccessFile(".\\resources\\Comidas.bin", "rw");
             int posicion=(id-1)*112;
             
             random.seek(posicion);
