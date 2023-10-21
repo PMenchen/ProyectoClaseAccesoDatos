@@ -20,8 +20,6 @@ import javax.xml.transform.stream.StreamSource;
 public class XMLtoHTML {
     public static void convert(String ruta){
         
-        /*String estilo = ".\\recursos\\alumnosPlantilla.xsl";
-        String datosAlumnos = ".\\recursos\\alumnos.xml";*/
         
         String estilo = ruta + "plantillaXLS.xsl";
         String datosPlatos = ruta + "datos.xml";

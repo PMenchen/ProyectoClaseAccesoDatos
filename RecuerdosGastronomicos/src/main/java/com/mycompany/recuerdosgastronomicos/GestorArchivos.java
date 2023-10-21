@@ -44,7 +44,7 @@ public class GestorArchivos {
     public static void crear(String ruta, String nombre) {
 
         try {
-            File fichero = new File(ruta + "//" + nombre);
+            File fichero = new File(ruta  + nombre);
 
             if (fichero.createNewFile()) {
                 System.out.println("Fichero ya existente");
@@ -166,8 +166,8 @@ public class GestorArchivos {
      * Método que Escribirá en un archivo guardando: Fecha, puntuacion, lugar,
      * precio, nombre En ese orden
      *
-     * @param fich Fichero en el que se escribirá //@param fecha fecha en la que
-     * se ha comido el plato
+     * @param fich Fichero en el que se escribirá 
+     * @param calendar fecha en la cual se ha comido el plato
      * @param puntuacion puntuacion/estrellas dadas al plato
      * @param lugar lugar (restaurante) en donde se ha comido
      * @param precio precio
@@ -214,7 +214,7 @@ public class GestorArchivos {
      * @param nombre nombre del archivo
      */
     public static void leerSecuencial(String ruta, String nombre) {
-        File fichero = new File(ruta + "//" + nombre);
+        File fichero = new File(ruta + nombre);
         try {
             FileReader lector = new FileReader(fichero);
             BufferedReader br = new BufferedReader(lector);
@@ -240,7 +240,7 @@ public class GestorArchivos {
      * @param nombre nombre del archivo
      */
     public static void leerSecuencialBin(String ruta, String nombre) {
-        File fichero = new File(ruta + "//" + nombre);
+        File fichero = new File(ruta  + nombre);
         try (FileInputStream fis = new FileInputStream(fichero); DataInputStream dis = new DataInputStream(fis)) {
 
             int indice;
@@ -307,7 +307,7 @@ public class GestorArchivos {
             String[] fecha=linea[1].split("/");
             String precio;
 
-            String fich="Registro_del_"+fecha[2]+".bin";// creamos el fichero Registro_del_[año leido]
+            String fich=".\\resources\\Registro_del_"+fecha[2]+".bin";// creamos el fichero Registro_del_[año leido]
             
             try (FileOutputStream fos = new FileOutputStream(fich);
                     DataOutputStream dos = new DataOutputStream(fos)) {
@@ -359,7 +359,7 @@ public class GestorArchivos {
     public static ArrayList<String> recuperar(int fechaBuscada) {
         ArrayList<String> platos = new ArrayList<>();
         try {
-            RandomAccessFile archivo = new RandomAccessFile("Comidas.bin", "r");
+            RandomAccessFile archivo = new RandomAccessFile(".\\resources\\Comidas.bin", "r");
 
             while (archivo.getFilePointer() < archivo.length()) {
                 int indice = archivo.readInt();
@@ -374,11 +374,13 @@ public class GestorArchivos {
                 for (int i = 0; i < 20; i++) {
                     lugar += archivo.readChar();
                 }
+                
                 double precio = archivo.readDouble();
                 double puntuacion = archivo.readDouble();
 
                 if (anio == fechaBuscada && indice>0) {
-                    String info = indice + " " + dia + "/" + mes + "/" + anio + " " + puntuacion + " " + lugar + " " + " " + nombrePlato + " " + precio + "€";
+                    //String info = indice + " " + dia + "/" + mes + "/" + anio + " " + puntuacion + " " + lugar + " " + " " + nombrePlato + " " + precio + "€";
+                    String info = indice + " " + dia + "/" + mes + "/" + anio + " " + nombrePlato + " " + lugar + " " +  " " + precio + "€" + " " + puntuacion;
                     platos.add(info);
                 }
             }
@@ -453,7 +455,7 @@ public class GestorArchivos {
         int posicion=((id-1)*112);
         
         try {
-            RandomAccessFile random = new RandomAccessFile("Comidas.bin", "rw");
+            RandomAccessFile random = new RandomAccessFile(".\\resources\\Comidas.bin", "rw");
             random.seek(posicion);
             random.writeInt(-1);
             
@@ -471,7 +473,7 @@ public class GestorArchivos {
      * @param indice nuevo
      */
     public static void actualizarIndice() {
-        File fichero = new File(".//indice.txt");
+        File fichero = new File(".resources\\indice.txt");
         try (FileWriter escribir = new FileWriter(fichero)) {
             int newId = id++;
             escribir.write(String.valueOf(newId));
@@ -488,7 +490,7 @@ public class GestorArchivos {
      */
     public static int setIndice() {
         int indice = -1;
-        File fichero = new File(".//indice.txt");
+        File fichero = new File(".\\resources\\indice.txt");
         if (fichero.exists() && fichero.length() != 0) {
             try (BufferedReader reader = new BufferedReader(new FileReader(fichero))) {
 
@@ -511,7 +513,7 @@ public class GestorArchivos {
      */
     public static void abrirArchivo(String ruta, String nombre) {
         try {
-            File fileToOpen = new File(ruta+ "//" +nombre); // Replace with the actual file path
+            File fileToOpen = new File(ruta +nombre); // Replace with the actual file path
             Desktop.getDesktop().open(fileToOpen);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error al abrir el archivo" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -531,7 +533,7 @@ public class GestorArchivos {
         int ident=1;
         boolean sobreescrito=false;
         try {
-            File fich=new File("Comidas.bin");
+            File fich=new File(".\\resources\\Comidas.bin");
             RandomAccessFile random = new RandomAccessFile(fich, "rw");
             
             while(!sobreescrito && posicion<fich.length()) {
@@ -541,7 +543,7 @@ public class GestorArchivos {
                     random.seek(posicion);//volvemos a la posicion del id para sobreescribir
                     random.writeInt(ident);//sobreescribimos el id
                     random.getFD().sync();
-                    modificar(ident, calendar, lugar, nombre, precio, calificacion);
+                    modificar(ident, calendar, nombre, lugar, precio, calificacion);
                     sobreescrito=true;
                 }
                 ident++;
