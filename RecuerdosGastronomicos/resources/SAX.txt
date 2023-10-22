@@ -1,4 +1,105 @@
+Comienzo documento
 -Ini- Platos: 
+    -Ini- Plato: 
+        -Ini- id: 
+            1
+        -Fin- id
+        -Ini- fecha: 
+            16/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            paella
+        -Fin- nombre
+        -Ini- precio: 
+            7.0
+        -Fin- precio
+        -Ini- lugar: 
+            calle
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            2
+        -Fin- id
+        -Ini- fecha: 
+            2/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            caldereta
+        -Fin- nombre
+        -Ini- precio: 
+            5.0
+        -Fin- precio
+        -Ini- lugar: 
+            recintoFerial
+        -Fin- lugar
+        -Ini- puntuacion: 
+            4.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            3
+        -Fin- id
+        -Ini- fecha: 
+            11/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            muy-bueno
+        -Fin- nombre
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- lugar: 
+            si
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            4
+        -Fin- id
+        -Ini- fecha: 
+            11/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            extra
+        -Fin- nombre
+        -Ini- precio: 
+            1.0
+        -Fin- precio
+        -Ini- lugar: 
+            extra
+        -Fin- lugar
+        -Ini- puntuacion: 
+            5.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            5
+        -Fin- id
+        -Ini- fecha: 
+            5/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            miel
+        -Fin- nombre
+        -Ini- precio: 
+            10.0
+        -Fin- precio
+        -Ini- lugar: 
+            probandonuevo
+        -Fin- lugar
+        -Ini- puntuacion: 
+            5.0
+        -Fin- puntuacion
+    -Fin- Plato
     -Ini- Plato: 
         -Ini- id: 
             6
@@ -19,4 +120,145 @@
             2.0
         -Fin- puntuacion
     -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            7
+        -Fin- id
+        -Ini- fecha: 
+            10/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            ehe-ehe
+        -Fin- nombre
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- lugar: 
+            mas-no
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            8
+        -Fin- id
+        -Ini- fecha: 
+            3/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            comida
+        -Fin- nombre
+        -Ini- precio: 
+            2.0
+        -Fin- precio
+        -Ini- lugar: 
+            lugar
+        -Fin- lugar
+        -Ini- puntuacion: 
+            3.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            9
+        -Fin- id
+        -Ini- fecha: 
+            11/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            comida-del-pasado
+        -Fin- nombre
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- lugar: 
+            lugar-2022
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            10
+        -Fin- id
+        -Ini- fecha: 
+            11/10/2022
+        -Fin- fecha
+        -Ini- nombre: 
+            comida-del-pasado
+        -Fin- nombre
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- lugar: 
+            el-año-pasado
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            11
+        -Fin- id
+        -Ini- fecha: 
+            22/10/2022
+        -Fin- fecha
+        -Ini- nombre: 
+            ayer
+        -Fin- nombre
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- lugar: 
+            otra-comida-del-past
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            12
+        -Fin- id
+        -Ini- fecha: 
+            9/10/2024
+        -Fin- fecha
+        -Ini- nombre: 
+            mañana
+        -Fin- nombre
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- lugar: 
+            mi-futuro
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            13
+        -Fin- id
+        -Ini- fecha: 
+            16/5/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            pasado
+        -Fin- nombre
+        -Ini- precio: 
+            23.0
+        -Fin- precio
+        -Ini- lugar: 
+            ya-no
+        -Fin- lugar
+        -Ini- puntuacion: 
+            5.0
+        -Fin- puntuacion
+    -Fin- Plato
 -Fin- Platos
+Final documento

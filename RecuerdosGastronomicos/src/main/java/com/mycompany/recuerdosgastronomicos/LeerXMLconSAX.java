@@ -72,11 +72,13 @@ public class LeerXMLconSAX {
         @Override
         public void startDocument() {
             System.out.println("Comienzo documento");
+            escribirCadena(escribir, "Comienzo documento\n");
         }
         
         @Override
         public void endDocument() {
             System.out.println("Final documento");
+            escribirCadena(escribir, "Final documento\n");
         }
         
         @Override

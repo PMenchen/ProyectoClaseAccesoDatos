@@ -301,6 +301,8 @@ public class Menu extends javax.swing.JFrame {
                     LeerBinario_CrearXML.crearXML(".\\resources\\", nombreBinFiltrado);
                     XMLtoHTML.convert(".\\resources\\");
                     GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
+                    
+                    LeerXMLconSAX.leerConSAX(); //lectura con SAX
 
                 }
             }
@@ -312,6 +314,8 @@ public class Menu extends javax.swing.JFrame {
                 LeerBinario_CrearXML.crearXML(".\\resources\\", "Comidas.bin");
                 XMLtoHTML.convert(".\\resources\\");
                 GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
+                
+                LeerXMLconSAX.leerConSAX(); //lectura con SAX
             }
         });
     }
