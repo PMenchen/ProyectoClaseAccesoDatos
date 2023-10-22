@@ -95,6 +95,7 @@ public class Menu extends javax.swing.JFrame {
         jContenido.add(btnConfirmar);
 
         if (editar) { //VIENE DE EDITAR
+            /*
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
             try {
@@ -108,6 +109,7 @@ public class Menu extends javax.swing.JFrame {
             textFieldPrecio.setText(info[5].replace("€",""));
             textFieldCalificacion.setText(info[6]);
             System.out.println(info.length);
+            */
             btnConfirmar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
@@ -181,7 +183,7 @@ public class Menu extends javax.swing.JFrame {
         
         btnPrevisualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                LeerBinario_CrearXML.crearXML(".\\resources\\", "Comidas.bin");
+                //LeerBinario_CrearXML.crearXML(".\\resources\\", "Comidas.bin");
                 LeerXMLconSAX.leerConSAX(); //lectura con SAX
                 GestorArchivos.abrirArchivo(".\\resources\\", "SAX.txt");
             }
