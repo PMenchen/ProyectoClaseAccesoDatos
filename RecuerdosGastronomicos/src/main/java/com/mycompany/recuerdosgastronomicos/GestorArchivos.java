@@ -536,6 +536,7 @@ public class GestorArchivos {
                     random.writeInt(ident);//sobreescribimos el id
                     random.getFD().sync();
                     modificar(ident, calendar, nombre, lugar, precio, calificacion);
+                    OperacionesXML.addNodoExistente(".\\resources\\datosModif.xml", ident, calendar, calificacion, lugar, precio, nombre);
                     sobreescrito = true;
                 }
                 ident++;

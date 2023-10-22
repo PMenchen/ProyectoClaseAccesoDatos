@@ -63,7 +63,7 @@ public class OperacionesXML {
             Element raiz = doc.getDocumentElement();
             
             NodeList listaNodos = doc.getElementsByTagName("id");
-            int ultimoID = -1;
+            int ultimoID = 0;
             for (int i = 0; i < listaNodos.getLength(); i++) {
                 Element elem = (Element) listaNodos.item(i);
                 int id = Integer.parseInt(elem.getTextContent());
@@ -71,6 +71,28 @@ public class OperacionesXML {
                     ultimoID = id;
                 }
             }
+            
+            addNodoExistente(XML, ultimoID+1, calendar, calificacion, lugar, precio, nombrePlato);
+            
+        } catch (SAXException ex) {
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } catch (ParserConfigurationException ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    public static void addNodoExistente(String XML, int id, Calendar calendar, Double calificacion, String lugar, Double precio, String nombrePlato){
+        try {
+            File archivoXML = new File(XML);
+
+            DocumentBuilderFactory documentBF = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBF.newDocumentBuilder();
+            Document doc = documentBuilder.parse(XML);
+            Element raiz = doc.getDocumentElement();
+            
+            NodeList listaNodos = doc.getElementsByTagName("id");
             
             int day=calendar.get(Calendar.DAY_OF_MONTH);  //dia
             int month=calendar.get(Calendar.MONTH) + 1; //mes-1
@@ -80,14 +102,35 @@ public class OperacionesXML {
 
             Element nuevoPlato = doc.createElement("Plato");
             
-            LeerBinario_CrearXML.AddNodo("id", String.valueOf(ultimoID+1+1), nuevoPlato, doc);
+            LeerBinario_CrearXML.AddNodo("id", String.valueOf(id), nuevoPlato, doc);
             LeerBinario_CrearXML.AddNodo("fecha", stringFecha, nuevoPlato, doc);
             LeerBinario_CrearXML.AddNodo("nombre", nombrePlato, nuevoPlato, doc);
             LeerBinario_CrearXML.AddNodo("lugar", lugar, nuevoPlato, doc);
             LeerBinario_CrearXML.AddNodo("precio", String.valueOf(precio), nuevoPlato, doc);
             LeerBinario_CrearXML.AddNodo("puntuacion", String.valueOf(calificacion), nuevoPlato, doc);
 
-            raiz.appendChild(nuevoPlato);
+            //raiz.appendChild(nuevoPlato);
+            
+            //Colocamos el nuevo nodo en el orden corecto
+            // Find the appropriate position for insertion
+            int posicion = -1;
+            int idExtistene;
+            for (int i = 0; i < listaNodos.getLength(); i++) {
+                idExtistene = Integer.parseInt(listaNodos.item(i).getTextContent());
+                if (id < idExtistene) {
+                    posicion = i;
+                    break;
+                }
+            }
+
+            Node nodoAux;
+            if (posicion >= 0) {
+                nodoAux = listaNodos.item(posicion).getParentNode();
+                raiz.insertBefore(nuevoPlato, nodoAux);
+            } else {
+                //
+                raiz.appendChild(nuevoPlato);
+            }
             
             LeerBinario_CrearXML.EscribirArchivo(doc, XML);
         } catch (TransformerException ex) {

@@ -1,0 +1,64 @@
+Comienzo documento
+-Ini- Platos: 
+    -Ini- Plato: 
+        -Ini- id: 
+            1
+        -Fin- id
+        -Ini- fecha: 
+            5/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            uno
+        -Fin- nombre
+        -Ini- lugar: 
+            uno
+        -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            2
+        -Fin- id
+        -Ini- fecha: 
+            11/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            uno
+        -Fin- nombre
+        -Ini- lugar: 
+            dosdos
+        -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            3
+        -Fin- id
+        -Ini- fecha: 
+            10/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            234
+        -Fin- nombre
+        -Ini- lugar: 
+            32
+        -Fin- lugar
+        -Ini- precio: 
+            2.0
+        -Fin- precio
+        -Ini- puntuacion: 
+            4.0
+        -Fin- puntuacion
+    -Fin- Plato
+-Fin- Platos
+Final documento

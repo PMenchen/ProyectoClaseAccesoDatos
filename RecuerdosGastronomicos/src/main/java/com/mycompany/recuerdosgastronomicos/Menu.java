@@ -105,7 +105,7 @@ public class Menu extends javax.swing.JFrame {
             }
             textFieldNombre.setText(info[2]);
             textFieldLugar.setText(info[3]);
-            textFieldPrecio.setText(info[5]);
+            textFieldPrecio.setText(info[5].replace("€",""));
             textFieldCalificacion.setText(info[6]);
             System.out.println(info.length);
             btnConfirmar.addActionListener(new ActionListener() {
@@ -132,7 +132,7 @@ public class Menu extends javax.swing.JFrame {
 
                         GestorArchivos.modificar(id, calendar, nombrePlato, lugar, precio, calificacion);
                         GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
-                        OperacionesXML.ModificarXML(".\\resources\\datos.xml", String.valueOf(id), nombrePlato, lugar, String.valueOf(precio), String.valueOf(calificacion), stringFecha, "datosModif.xml");
+                        OperacionesXML.ModificarXML(".\\resources\\datosModif.xml", String.valueOf(id), nombrePlato, lugar, String.valueOf(precio), String.valueOf(calificacion), stringFecha, "datosModif.xml");
                     } else {
                         labelAux.setText("Precio, calificación o fecha incorrectos");
                     }
@@ -161,8 +161,9 @@ public class Menu extends javax.swing.JFrame {
                         File fich = new File(".\\resources\\Comidas.bin");
                         if (!GestorArchivos.sobreescribirBorrado(calendar, lugar, nombrePlato, precio, calificacion)) {
                             GestorArchivos.escrituraSEC(fich, calendar, calificacion, lugar, precio, nombrePlato);
+                            OperacionesXML.addNodoExistente(".\\resources\\datosModif.xml", calendar, calificacion, lugar, precio, nombrePlato);
                         }
-                        OperacionesXML.addNodoExistente(".\\resources\\datosModif.xml", calendar, calificacion, lugar, precio, nombrePlato);
+                        //OperacionesXML.addNodoExistente(".\\resources\\datosModif.xml", calendar, calificacion, lugar, precio, nombrePlato);
                         GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
                     } else {
                         labelAux.setText("Precio, calificacion o fecha incorrectos");
