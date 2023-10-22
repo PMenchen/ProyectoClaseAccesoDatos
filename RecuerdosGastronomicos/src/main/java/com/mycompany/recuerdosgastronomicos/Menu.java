@@ -216,12 +216,17 @@ public class Menu extends javax.swing.JFrame {
 
         btnConectar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
-                comboBoxFecha.removeAllItems();
+                if (esNumero(textFieldFecha.getText())) {
+                    ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
+                    comboBoxFecha.removeAllItems();
 
-                for (String i : info) {
-                    comboBoxFecha.addItem(i);
+                    for (String i : info) {
+                        comboBoxFecha.addItem(i);
+                    }
+                } else {
+                    labelAux.setText("Introduzca un año");
                 }
+                
             }
         });
 
@@ -232,10 +237,13 @@ public class Menu extends javax.swing.JFrame {
 
         btnEditar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String info = (String) comboBoxFecha.getSelectedItem();
-                String[] id = info.split(" ");
-                cambiarContenido("Añadir", true, Integer.valueOf(id[0]), id);
-                
+                if(comboBoxFecha.getSelectedItem()!=null){
+                    String info = (String) comboBoxFecha.getSelectedItem();
+                    String[] id = info.split(" ");
+                    cambiarContenido("Añadir", true, Integer.valueOf(id[0]), id);
+                }else{
+                    labelAux.setText("Elija un recuerdo a modificar");
+                }
             }
         });
     }
@@ -268,16 +276,21 @@ public class Menu extends javax.swing.JFrame {
 
         btnConectar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
-                comboBoxFecha.removeAllItems();
+                if (esNumero(textFieldFecha.getText())) {
+                    ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
+                    comboBoxFecha.removeAllItems();
 
-                GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
-                GestorArchivos.escrituraDatosRecuperadosBin(info);
-                //LeerBinario_CrearXML.crearXML(".\\recursos\\", "Registro_del_2023.bin");
+                    GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
+                    GestorArchivos.escrituraDatosRecuperadosBin(info);
+                    //LeerBinario_CrearXML.crearXML(".\\recursos\\", "Registro_del_2023.bin");
 
-                for (String i : info) {
-                    comboBoxFecha.addItem(i);
+                    for (String i : info) {
+                        comboBoxFecha.addItem(i);
+                    }
+                } else {
+                    labelAux.setText("Introduzca un año");
                 }
+                
             }
         });
 
@@ -288,13 +301,17 @@ public class Menu extends javax.swing.JFrame {
 
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String info = (String) comboBoxFecha.getSelectedItem();
-                String[] id = info.split(" ");
-                OperacionesXML.eliminarId(id[0], ".\\resources\\", "datosModif.xml");
-                if (GestorArchivos.eliminarRA(Integer.valueOf(id[0]))) {
-                    labelAux.setText("Borrado con éxito");
-                    GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");//--prueba lee cada vez que se elimina
-                    comboBoxFecha.removeAllItems();
+                if(comboBoxFecha.getSelectedItem()!=null){
+                    String info = (String) comboBoxFecha.getSelectedItem();
+                    String[] id = info.split(" ");
+                    OperacionesXML.eliminarId(id[0], ".\\resources\\", "datosModif.xml");
+                    if (GestorArchivos.eliminarRA(Integer.valueOf(id[0]))) {
+                        labelAux.setText("Borrado con éxito");
+                        GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");//--prueba lee cada vez que se elimina
+                        comboBoxFecha.removeAllItems();
+                    }
+                }else{
+                    labelAux.setText("Elija un recuerdo a modificar");
                 }
             }
         });
