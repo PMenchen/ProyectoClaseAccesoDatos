@@ -45,6 +45,7 @@ public class OperacionesXML {
     }
     
     /**
+<<<<<<< HEAD
      * Método que añade un nuevo nodo a un XML existente
      * @param XML El archivo XML
      * @param calendar La fecha
@@ -106,6 +107,16 @@ public class OperacionesXML {
      * @param nuevoPrecio Nuevo precio a insertar
      * @param nuevaPunt Nueva puntuación a insertar
      * @param nuevaFecha Nueva fecha a insertar
+=======
+     * Método para modificar los datos de un nodo buscado por id
+     * @param doc Documento XML
+     * @param idBuscar Id por el cual buscar el nodo a modificar
+     * @param nuevoNombre   Nuevo nombre a insertar
+     * @param nuevoLugar    Nuevo lugar a insertar
+     * @param nuevoPrecio   Nuevo precio a insertar
+     * @param nuevaPunt     Nueva puntuación a insertar
+     * @param nuevaFecha    Nueva fecha a insertar
+>>>>>>> main
      */
     static void Modificar(Document doc, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha){
         
@@ -129,6 +140,7 @@ public class OperacionesXML {
     }
     
     /**
+<<<<<<< HEAD
      * Método para modificar los valores de un nodo, de un archivo xml existente a un archivo destino, buscado por el id
      * @param rutaOrigen Ruta del archivo a modificar
      * @param idBuscar Id por el cual buscar el nodo a modificar
@@ -139,6 +151,19 @@ public class OperacionesXML {
      * @param nuevaFecha Nueva fecha a insertar
      * @param fichDestino Archivo destino para la modificación
      */
+=======
+     * Método para modificar los valores de un nodo, de un archivo xml existente a un archivo destino, buscando por el id
+     * @param rutaOrigen Ruta del archivo a modificar
+     * @param idBuscar Id por el cual buscar el nodo a modificar
+     * @param nuevoNombre   Nuevo nombre a insertar
+     * @param nuevoLugar    Nuevo lugar a insertar
+     * @param nuevoPrecio   Nuevo precio a insertar
+     * @param nuevaPunt     Nueva puntuación a insertar
+     * @param nuevaFecha    Nueva fecha a insertar
+     * @param fichDestino Archivo destino para la modificación
+     */
+    
+>>>>>>> main
     public static void ModificarXML(String rutaOrigen, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha, String fichDestino){
         try {
             Document doc = ParseDocumentoXML(rutaOrigen);
