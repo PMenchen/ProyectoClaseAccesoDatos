@@ -10,12 +10,12 @@ Comienzo documento
         -Ini- nombre: 
             paella
         -Fin- nombre
-        -Ini- precio: 
-            7.0
-        -Fin- precio
         -Ini- lugar: 
             calle
         -Fin- lugar
+        -Ini- precio: 
+            7.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -30,12 +30,12 @@ Comienzo documento
         -Ini- nombre: 
             caldereta
         -Fin- nombre
-        -Ini- precio: 
-            5.0
-        -Fin- precio
         -Ini- lugar: 
             recintoFerial
         -Fin- lugar
+        -Ini- precio: 
+            5.0
+        -Fin- precio
         -Ini- puntuacion: 
             4.0
         -Fin- puntuacion
@@ -50,12 +50,12 @@ Comienzo documento
         -Ini- nombre: 
             muy-bueno
         -Fin- nombre
-        -Ini- precio: 
-            3.0
-        -Fin- precio
         -Ini- lugar: 
             si
         -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -70,12 +70,12 @@ Comienzo documento
         -Ini- nombre: 
             extra
         -Fin- nombre
-        -Ini- precio: 
-            1.0
-        -Fin- precio
         -Ini- lugar: 
             extra
         -Fin- lugar
+        -Ini- precio: 
+            1.0
+        -Fin- precio
         -Ini- puntuacion: 
             5.0
         -Fin- puntuacion
@@ -90,12 +90,12 @@ Comienzo documento
         -Ini- nombre: 
             miel
         -Fin- nombre
-        -Ini- precio: 
-            10.0
-        -Fin- precio
         -Ini- lugar: 
             probandonuevo
         -Fin- lugar
+        -Ini- precio: 
+            10.0
+        -Fin- precio
         -Ini- puntuacion: 
             5.0
         -Fin- puntuacion
@@ -110,12 +110,12 @@ Comienzo documento
         -Ini- nombre: 
             plato
         -Fin- nombre
-        -Ini- precio: 
-            3.0
-        -Fin- precio
         -Ini- lugar: 
             aui
         -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -130,12 +130,12 @@ Comienzo documento
         -Ini- nombre: 
             ehe-ehe
         -Fin- nombre
-        -Ini- precio: 
-            3.0
-        -Fin- precio
         -Ini- lugar: 
             mas-no
         -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -150,12 +150,12 @@ Comienzo documento
         -Ini- nombre: 
             comida
         -Fin- nombre
-        -Ini- precio: 
-            2.0
-        -Fin- precio
         -Ini- lugar: 
             lugar
         -Fin- lugar
+        -Ini- precio: 
+            2.0
+        -Fin- precio
         -Ini- puntuacion: 
             3.0
         -Fin- puntuacion
@@ -170,12 +170,12 @@ Comienzo documento
         -Ini- nombre: 
             comida-del-pasado
         -Fin- nombre
-        -Ini- precio: 
-            3.0
-        -Fin- precio
         -Ini- lugar: 
             lugar-2022
         -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -190,12 +190,12 @@ Comienzo documento
         -Ini- nombre: 
             comida-del-pasado
         -Fin- nombre
-        -Ini- precio: 
-            3.0
-        -Fin- precio
         -Ini- lugar: 
             el-año-pasado
         -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -210,12 +210,12 @@ Comienzo documento
         -Ini- nombre: 
             ayer
         -Fin- nombre
-        -Ini- precio: 
-            3.0
-        -Fin- precio
         -Ini- lugar: 
             otra-comida-del-past
         -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -230,12 +230,12 @@ Comienzo documento
         -Ini- nombre: 
             mañana
         -Fin- nombre
-        -Ini- precio: 
-            3.0
-        -Fin- precio
         -Ini- lugar: 
             mi-futuro
         -Fin- lugar
+        -Ini- precio: 
+            3.0
+        -Fin- precio
         -Ini- puntuacion: 
             2.0
         -Fin- puntuacion
@@ -250,12 +250,12 @@ Comienzo documento
         -Ini- nombre: 
             pasado
         -Fin- nombre
-        -Ini- precio: 
-            23.0
-        -Fin- precio
         -Ini- lugar: 
             ya-no
         -Fin- lugar
+        -Ini- precio: 
+            23.0
+        -Fin- precio
         -Ini- puntuacion: 
             5.0
         -Fin- puntuacion

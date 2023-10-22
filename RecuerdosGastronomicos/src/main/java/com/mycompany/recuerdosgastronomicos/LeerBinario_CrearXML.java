@@ -51,7 +51,7 @@ public class LeerBinario_CrearXML {
      * Método para crear un nodo principal
      * @param value Valor del nombre
      * @param document Documento XML en donde se insertará el nodo principal
-     * @return 
+     * @return Devuelve el elemento raiz al cual se añadirán otros nodos
      */
     static Element CrearNodo(String value, Document document){
         Element raiz= document.createElement(value);
@@ -62,8 +62,8 @@ public class LeerBinario_CrearXML {
     
     /**
      * Método para añadir un nodo
-     * @param datoPlato
-     * @param valor
+     * @param datoPlato Nombre del nodo a añadir
+     * @param valor Valor a asignar en ese nodo
      * @param raiz La raíz de la que crece el nodo
      * @param document Documento XML
      */
@@ -75,18 +75,7 @@ public class LeerBinario_CrearXML {
         raiz.appendChild(elem); //pegamos el elemento hijo a la raiz
 
     }
-    
-     static void AddNodoFechaToNodo(String datoPlato, String valor1, String valor2, String valor3, Element raiz, Document document){
-        Element elem = document.createElement(datoPlato); //creamos el hijo
         
-        AddNodo("dia", valor1, elem, document);
-        AddNodo("mes", valor2, elem, document);
-        AddNodo("año", valor3, elem, document);
-        
-        raiz.appendChild(elem); //pegamos el elemento hijo a la raiz
-        
-    }
-    
      /**
       * Convierte registros en binario a un Nodo que se agregará a un XML
       * @param ruta Del archivo binario
@@ -123,8 +112,8 @@ public class LeerBinario_CrearXML {
                 AddNodo("id", String.valueOf(id), e, d);
                 AddNodo("fecha", stringFecha, e, d);
                 AddNodo("nombre", nombre, e, d);
-                AddNodo("precio", String.valueOf(precio), e, d);
                 AddNodo("lugar", lugar, e, d);
+                AddNodo("precio", String.valueOf(precio), e, d);
                 AddNodo("puntuacion", String.valueOf(puntuacion), e, d);
             }
             fichero.close();
@@ -133,18 +122,9 @@ public class LeerBinario_CrearXML {
                 System.out.println(ex.getCause());
                 ex.printStackTrace();
                 
-        }
-        
-        
+        }        
     }
-    
-    static void EscribirConsola(Document document) throws TransformerConfigurationException, TransformerException{
-        Source source = new DOMSource(document);
-        Result salida = new StreamResult(System.out);
-        Transformer transformer=TransformerFactory.newInstance().newTransformer();
-        transformer.transform(source,salida);
-    }
-    
+        
     /**
     * Escribe el contenido de un documento XML en un archivo en la ruta especificada.
     * @param document El documento XML
