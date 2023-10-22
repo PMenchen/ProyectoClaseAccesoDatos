@@ -23,10 +23,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
-/**
- *
- * @author stacy
- */
+
 public class LeerBinario_CrearXML {
     
     /**
@@ -107,7 +104,6 @@ public class LeerBinario_CrearXML {
                 
                 puntuacion = fichero.readDouble();
                                 
-                System.out.println("Fecha [dia: " + String.valueOf(day).trim() + " mes: "  + String.valueOf(month).trim() + " año: " + String.valueOf(year).trim() + "]\tNombre: " + nombre.trim() + "\tLugar: " + lugar.trim() + "\tPrecio: " + String.valueOf(precio).trim() + "\tpuntuacion: " + String.valueOf(puntuacion).trim());
                 
                 AddNodo("id", String.valueOf(id), e, d);
                 AddNodo("fecha", stringFecha, e, d);
