@@ -108,9 +108,15 @@ public class Menu extends javax.swing.JFrame {
                         Calendar calendar = Calendar.getInstance();
                         Date fechaSeleccionada = dateChooserFecha.getDate();
                         calendar.setTime(fechaSeleccionada);
+                        
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        int month = calendar.get(Calendar.MONTH) + 1;
+                        int year = calendar.get(Calendar.YEAR);
+                        String stringFecha = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
 
                         GestorArchivos.modificar(id, calendar, nombrePlato, lugar, precio, calificacion);
                         GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
+                        OperacionesXML.ModificarXML(".\\resources\\datos.xml", String.valueOf(id), nombrePlato, lugar, String.valueOf(precio), String.valueOf(calificacion), stringFecha, "datosModif.xml");
                     } else {
                         labelAux.setText("Precio, calificación o fecha incorrectos");
                     }
@@ -211,6 +217,7 @@ public class Menu extends javax.swing.JFrame {
                 String info = (String) comboBoxFecha.getSelectedItem();
                 String[] id = info.split(" ");
                 cambiarContenido("Añadir", true, Integer.valueOf(id[0]));
+                
             }
         });
     }
