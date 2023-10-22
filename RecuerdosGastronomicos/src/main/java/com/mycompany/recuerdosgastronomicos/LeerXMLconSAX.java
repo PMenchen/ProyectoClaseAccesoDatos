@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.recuerdosgastronomicos;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,31 +26,31 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author stacy
  */
 public class LeerXMLconSAX {
-    
+
     /**
      * Método que lee un XML utilizando SAX
      */
     public static void leerConSAX() {
         File fich = new File(".\\resources\\SAX.txt");
-        try (FileWriter ficheroOut = new FileWriter(fich);
-            BufferedWriter escribir = new BufferedWriter(ficheroOut);){
+        try (FileWriter ficheroOut = new FileWriter(fich); BufferedWriter escribir = new BufferedWriter(ficheroOut);) {
 
-        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-        SAXParser parser = parserFactory.newSAXParser();
-        XMLReader procesadorXML = parser.getXMLReader();
+            SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+            SAXParser parser = parserFactory.newSAXParser();
+            XMLReader procesadorXML = parser.getXMLReader();
 
-        GestionContenido gestor = new GestionContenido(escribir);
-        procesadorXML.setContentHandler(gestor);
-        InputSource fileXML = new InputSource(".\\resources\\datosModif.xml");
-        procesadorXML.parse(fileXML);
+            GestionContenido gestor = new GestionContenido(escribir);
+            procesadorXML.setContentHandler(gestor);
+            InputSource fileXML = new InputSource(".\\resources\\datosModif.xml");
+            procesadorXML.parse(fileXML);
 
         } catch (SAXException | IOException | ParserConfigurationException ex) {
             Logger.getLogger(LeerXMLconSAX.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Método que escribe un texto con un BufferedWriter dado
+     *
      * @param escribir El BufferedWriter
      * @param texto Texto a escribir
      */
@@ -61,64 +62,62 @@ public class LeerXMLconSAX {
         }
     }
     //--------
-    
+
     /**
      * Clase para gestionar la lectura y escribir los datos del XML en un .txt
      */
     static class GestionContenido extends DefaultHandler {
-        
+
         private BufferedWriter escribir;
-        
+
         public GestionContenido(BufferedWriter escribir) {
             super();
             this.escribir = escribir;
         }
-        
+
         @Override
         public void startDocument() {
             System.out.println("Comienzo documento");
             escribirCadena(escribir, "Comienzo documento\n");
         }
-        
+
         @Override
         public void endDocument() {
             System.out.println("Final documento");
             escribirCadena(escribir, "Final documento\n");
         }
-        
+
         @Override
         public void startElement(String uri, String nombre, String nombreC, Attributes atts) {
             System.out.printf("Comienzo elemento: %s%n", nombreC);
             if (nombreC.equalsIgnoreCase("platos")) {
-            }
-            else if (nombreC.equalsIgnoreCase("plato")) {
+            } else if (nombreC.equalsIgnoreCase("plato")) {
                 escribirCadena(escribir, "    ");
             } else {
                 escribirCadena(escribir, "        ");
             }
-            escribirCadena(escribir, "-Ini- "+nombreC + ": \n");
+            escribirCadena(escribir, "-Ini- " + nombreC + ": \n");
         }
-        
+
         @Override
         public void endElement(String uri, String nombre, String nombreC) {
             if (nombreC.equalsIgnoreCase("platos")) {
-            }
-            else if (nombreC.equalsIgnoreCase("plato")) {
+            } else if (nombreC.equalsIgnoreCase("plato")) {
                 escribirCadena(escribir, "    ");
             } else {
                 escribirCadena(escribir, "        ");
             }
-            escribirCadena(escribir, "-Fin- "+nombreC+"\n");
+            escribirCadena(escribir, "-Fin- " + nombreC + "\n");
             System.out.printf("Fin elemento: %s%n", nombreC);
         }
-        
+
         @Override
         public void characters(char[] ch, int inicio, int longitud) throws SAXException {
             String car = new String(ch, inicio, longitud);
-            car = car.replaceAll("[\t\n]","");
+            car = car.replaceAll("[\t\n]", "");
             System.out.printf("\t%s%n", car);
-            escribirCadena(escribir, "            "+car + "\n");
+            escribirCadena(escribir, "            " + car + "\n");
         }
     }
-    
+
 }

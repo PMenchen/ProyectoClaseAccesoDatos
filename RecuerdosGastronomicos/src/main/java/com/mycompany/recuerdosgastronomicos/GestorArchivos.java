@@ -510,6 +510,8 @@ public class GestorArchivos {
             Desktop.getDesktop().open(fileToOpen);
         } catch (IOException ioex) {
             System.out.println("ERROR E/S");
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 

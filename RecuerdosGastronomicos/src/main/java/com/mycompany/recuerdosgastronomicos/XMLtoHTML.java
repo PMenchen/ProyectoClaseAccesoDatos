@@ -18,31 +18,31 @@ import javax.xml.transform.stream.StreamSource;
  * @author stacy
  */
 public class XMLtoHTML {
-    
+
     /**
      * Método para crear un HTML a partir de un XML
-     * @param ruta 
+     *
+     * @param ruta
      */
-    public static void convert(String ruta){
-        
-        
+    public static void convert(String ruta) {
+
         String estilo = ruta + "plantillaXLS.xsl";
         String datosPlatos = ruta + "datos.xml";
-        
+
         File html = new File(ruta + "index.html");
-        
+
         try {
-            
+
             //crear fichero HTML
             FileOutputStream fos = new FileOutputStream(html);
             Source estilos = new StreamSource(estilo); //fuente XSL 
             Source datos = new StreamSource(datosPlatos); //fuente XML
-            
+
             Result result = new StreamResult(fos);
-            
+
             Transformer transformer = TransformerFactory.newInstance().newTransformer(estilos);
             transformer.transform(datos, result); //Se obtiene el HTML
-            
+
             fos.close();
         } catch (Exception e) {
             System.out.println(e);

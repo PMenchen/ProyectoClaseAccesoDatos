@@ -350,17 +350,23 @@ public class Menu extends javax.swing.JFrame {
         btnVisualizarFecha.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (esNumero(textFieldFecha.getText())) {
-                    labelAux.setText("Datos del año " + textFieldFecha.getText());
-                    //abre archivo html (hay que especificar cual)
+                    boolean existe = new File("ruta/del/archivo").exists();
+                    if(existe==true){
+                        labelAux.setText("Datos del año " + textFieldFecha.getText());
+                        //abre archivo html (hay que especificar cual)
 
-                    ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
-                    String nombreBinFiltrado = "Registro_del_" + textFieldFecha.getText() + ".bin";
-                    GestorArchivos.leerSecuencialBin(".\\resources\\", nombreBinFiltrado);
-                    GestorArchivos.escrituraDatosRecuperadosBin(info);
+                        ArrayList<String> info = GestorArchivos.recuperar(Integer.parseInt(textFieldFecha.getText()));
+                        String nombreBinFiltrado = "Registro_del_" + textFieldFecha.getText() + ".bin";
+                        GestorArchivos.leerSecuencialBin(".\\resources\\", nombreBinFiltrado);
+                        GestorArchivos.escrituraDatosRecuperadosBin(info);
 
-                    LeerBinario_CrearXML.crearXML(".\\resources\\", nombreBinFiltrado);
-                    XMLtoHTML.convert(".\\resources\\");
-                    GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
+                        LeerBinario_CrearXML.crearXML(".\\resources\\", nombreBinFiltrado);
+                        XMLtoHTML.convert(".\\resources\\");
+                        GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
+                    }else{
+                        labelAux.setText("No hay datos del año " + textFieldFecha.getText());
+                    }
+                    
                 }
             }
         });

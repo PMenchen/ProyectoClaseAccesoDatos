@@ -5,6 +5,7 @@
 package com.mycompany.recuerdosgastronomicos;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import javax.xml.parsers.DocumentBuilder;
@@ -127,6 +128,8 @@ public class LeerBinario_CrearXML {
 
             }
             fichero.close();
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(fnfe);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             System.out.println(ex.getCause());
@@ -147,10 +150,15 @@ public class LeerBinario_CrearXML {
      * y escritura del documento.
      */
     static void EscribirArchivo(Document document, String ruta) throws TransformerConfigurationException, TransformerException {
-        Source source = new DOMSource(document);
-        Result salida = new StreamResult(new File(ruta));
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.transform(source, salida);
+        try {
+
+            Source source = new DOMSource(document);
+            Result salida = new StreamResult(new File(ruta));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, salida);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**
