@@ -40,7 +40,7 @@ public class LeerXMLconSAX {
 
         GestionContenido gestor = new GestionContenido(escribir);
         procesadorXML.setContentHandler(gestor);
-        InputSource fileXML = new InputSource(".\\resources\\datos.xml");
+        InputSource fileXML = new InputSource(".\\resources\\datosModif.xml");
         procesadorXML.parse(fileXML);
 
         } catch (SAXException | IOException | ParserConfigurationException ex) {

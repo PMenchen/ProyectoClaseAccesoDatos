@@ -162,6 +162,7 @@ public class Menu extends javax.swing.JFrame {
                         if (!GestorArchivos.sobreescribirBorrado(calendar, lugar, nombrePlato, precio, calificacion)) {
                             GestorArchivos.escrituraSEC(fich, calendar, calificacion, lugar, precio, nombrePlato);
                         }
+                        OperacionesXML.addNodoExistente(".\\resources\\datosModif.xml", calendar, calificacion, lugar, precio, nombrePlato);
                         GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");
                     } else {
                         labelAux.setText("Precio, calificacion o fecha incorrectos");
@@ -288,6 +289,7 @@ public class Menu extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 String info = (String) comboBoxFecha.getSelectedItem();
                 String[] id = info.split(" ");
+                OperacionesXML.eliminarId(id[0], ".\\resources\\", "datosModif.xml");
                 if (GestorArchivos.eliminarRA(Integer.valueOf(id[0]))) {
                     labelAux.setText("Borrado con éxito");
                     GestorArchivos.leerSecuencialBin(".\\resources\\", "Comidas.bin");//--prueba lee cada vez que se elimina

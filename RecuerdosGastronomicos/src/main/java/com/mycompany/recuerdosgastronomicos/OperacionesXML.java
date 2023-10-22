@@ -78,13 +78,17 @@ public class OperacionesXML {
                     
             String stringFecha = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
 
-            LeerBinario_CrearXML.AddNodo("id", String.valueOf(ultimoID+1), raiz, doc);
-            LeerBinario_CrearXML.AddNodo("fecha", stringFecha, raiz, doc);
-            LeerBinario_CrearXML.AddNodo("nombre", nombrePlato, raiz, doc);
-            LeerBinario_CrearXML.AddNodo("lugar", lugar, raiz, doc);
-            LeerBinario_CrearXML.AddNodo("precio", String.valueOf(precio), raiz, doc);
-            LeerBinario_CrearXML.AddNodo("puntuacion", String.valueOf(calificacion), raiz, doc);
+            Element nuevoPlato = doc.createElement("Plato");
+            
+            LeerBinario_CrearXML.AddNodo("id", String.valueOf(ultimoID+1+1), nuevoPlato, doc);
+            LeerBinario_CrearXML.AddNodo("fecha", stringFecha, nuevoPlato, doc);
+            LeerBinario_CrearXML.AddNodo("nombre", nombrePlato, nuevoPlato, doc);
+            LeerBinario_CrearXML.AddNodo("lugar", lugar, nuevoPlato, doc);
+            LeerBinario_CrearXML.AddNodo("precio", String.valueOf(precio), nuevoPlato, doc);
+            LeerBinario_CrearXML.AddNodo("puntuacion", String.valueOf(calificacion), nuevoPlato, doc);
 
+            raiz.appendChild(nuevoPlato);
+            
             LeerBinario_CrearXML.EscribirArchivo(doc, XML);
         } catch (TransformerException ex) {
             System.out.println(ex);
@@ -203,6 +207,34 @@ public class OperacionesXML {
      */
     public static void deleteNodo(Node nodo) {
         nodo.getParentNode().removeChild( nodo );
+    }
+    
+    /**
+     * Método que inicializa el XML para previsualizar los datos
+     * @param route La ruta en donde se guardará el XML
+     * @param file El archivo
+     */
+    public static void iniciarXMLPrevisualizar (String route, String fichXML){
+        try {
+            File fich = new File(route+fichXML);
+            
+            if (!fich.exists()) {//si ya existe, no hace nada para no sobreescribirlo
+                
+                String value = "Platos";
+                Document document = LeerBinario_CrearXML.InitBuilder(value);
+
+                LeerBinario_CrearXML.EscribirArchivo(document, route+fichXML);
+                
+            }
+            
+            
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            e.getMessage();
+            System.out.println(e.getCause());
+            e.printStackTrace();
+        }
     }
     
 }
