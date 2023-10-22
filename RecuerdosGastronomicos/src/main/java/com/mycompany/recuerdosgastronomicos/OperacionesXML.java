@@ -41,7 +41,16 @@ public class OperacionesXML {
         }
     }
     
-    
+    /**
+     * Método para modificar los datos de un nodo buscado por id
+     * @param doc Documento XML
+     * @param idBuscar Id por el cual buscar el nodo a modificar
+     * @param nuevoNombre   Nuevo nombre a insertar
+     * @param nuevoLugar    Nuevo lugar a insertar
+     * @param nuevoPrecio   Nuevo precio a insertar
+     * @param nuevaPunt     Nueva puntuación a insertar
+     * @param nuevaFecha    Nueva fecha a insertar
+     */
     static void Modificar(Document doc, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha){
         
         NodeList listaPlatos = doc.getElementsByTagName("Plato");
@@ -63,7 +72,17 @@ public class OperacionesXML {
         }
     }
     
-    
+    /**
+     * Método para modificar los valores de un nodo, de un archivo xml existente a un archivo destino, buscando por el id
+     * @param rutaOrigen Ruta del archivo a modificar
+     * @param idBuscar Id por el cual buscar el nodo a modificar
+     * @param nuevoNombre   Nuevo nombre a insertar
+     * @param nuevoLugar    Nuevo lugar a insertar
+     * @param nuevoPrecio   Nuevo precio a insertar
+     * @param nuevaPunt     Nueva puntuación a insertar
+     * @param nuevaFecha    Nueva fecha a insertar
+     * @param fichDestino Archivo destino para la modificación
+     */
     
     public static void ModificarXML(String rutaOrigen, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha, String fichDestino){
         try {
