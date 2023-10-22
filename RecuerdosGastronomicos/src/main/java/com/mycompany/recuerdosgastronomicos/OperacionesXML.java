@@ -98,14 +98,14 @@ public class OperacionesXML {
     }
     
     /**
-     * Método que modifica los valores en un Nodo indicado por su Id
-     * @param doc Doc sobre el que se trabaja
-     * @param idBuscar El id del nodo a modificar
-     * @param nuevoNombre Nuevo nombre
-     * @param nuevoLugar Nuevo lugar
-     * @param nuevoPrecio Nuevo precio
-     * @param nuevaPunt Nueva puntuación
-     * @param nuevaFecha Nueva fecha
+     * Método para modificar los datos de un nodo por id
+     * @param doc Documento XML
+     * @param idBuscar Id por el cual buscar el nodo a modificar
+     * @param nuevoNombre Nuevo nombre a insertar
+     * @param nuevoLugar Nuevo lugar a insertar
+     * @param nuevoPrecio Nuevo precio a insertar
+     * @param nuevaPunt Nueva puntuación a insertar
+     * @param nuevaFecha Nueva fecha a insertar
      */
     static void Modificar(Document doc, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha){
         
@@ -129,15 +129,15 @@ public class OperacionesXML {
     }
     
     /**
-     * Método que realiza la modificación del nodo y la guarda en el XML correspondiente
-     * @param rutaOrigen Ruta del XML
-     * @param idBuscar El id del nodo a cambiar
-     * @param nuevoNombre El nuevo nombre
-     * @param nuevoLugar El nuevo lugar
-     * @param nuevoPrecio El nuevo precio
-     * @param nuevaPunt La nueva puntuación
-     * @param nuevaFecha La nueva fecha
-     * @param fichDestino El destino donde se guarda
+     * Método para modificar los valores de un nodo, de un archivo xml existente a un archivo destino, buscado por el id
+     * @param rutaOrigen Ruta del archivo a modificar
+     * @param idBuscar Id por el cual buscar el nodo a modificar
+     * @param nuevoNombre Nuevo nombre a insertar
+     * @param nuevoLugar Nuevo lugar a insertar
+     * @param nuevoPrecio Nuevo precio a insertar
+     * @param nuevaPunt Nueva puntuación a insertar
+     * @param nuevaFecha Nueva fecha a insertar
+     * @param fichDestino Archivo destino para la modificación
      */
     public static void ModificarXML(String rutaOrigen, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha, String fichDestino){
         try {
