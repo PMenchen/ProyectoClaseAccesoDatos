@@ -1,0 +1,22 @@
+-Ini- Platos: 
+    -Ini- Plato: 
+        -Ini- id: 
+            6
+        -Fin- id
+        -Ini- fecha: 
+            2/6/2028
+        -Fin- fecha
+        -Ini- nombre: 
+            plato
+        -Fin- nombre
+        -Ini- precio: 
+            3.0
+        -Fin- precio
+        -Ini- lugar: 
+            aui
+        -Fin- lugar
+        -Ini- puntuacion: 
+            2.0
+        -Fin- puntuacion
+    -Fin- Plato
+-Fin- Platos
