@@ -260,5 +260,25 @@ Comienzo documento
             5.0
         -Fin- puntuacion
     -Fin- Plato
+    -Ini- Plato: 
+        -Ini- id: 
+            14
+        -Fin- id
+        -Ini- fecha: 
+            13/10/2023
+        -Fin- fecha
+        -Ini- nombre: 
+            nombre
+        -Fin- nombre
+        -Ini- lugar: 
+            prueba-SAX
+        -Fin- lugar
+        -Ini- precio: 
+            2.0
+        -Fin- precio
+        -Ini- puntuacion: 
+            1.0
+        -Fin- puntuacion
+    -Fin- Plato
 -Fin- Platos
 Final documento

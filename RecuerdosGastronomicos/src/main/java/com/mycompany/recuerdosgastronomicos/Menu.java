@@ -147,6 +147,21 @@ public class Menu extends javax.swing.JFrame {
                 }
             });
         }
+        
+        //PREVISUALIZAR
+        JLabel labelPrevisualizar = crearLabel("Presione para comprobar sus recuerdos", 300, 270, 300, 30);
+        jContenido.add(labelPrevisualizar);
+        Button btnPrevisualizar=new Button("Previsualizar");
+        btnPrevisualizar.setBounds(300, 300, 100, 30);
+        jContenido.add(btnPrevisualizar);
+        
+        btnPrevisualizar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LeerBinario_CrearXML.crearXML(".\\resources\\", "Comidas.bin");
+                LeerXMLconSAX.leerConSAX(); //lectura con SAX
+                GestorArchivos.abrirArchivo(".\\resources\\", "SAX.txt");
+            }
+        });
     }
 
     /**
@@ -301,9 +316,6 @@ public class Menu extends javax.swing.JFrame {
                     LeerBinario_CrearXML.crearXML(".\\resources\\", nombreBinFiltrado);
                     XMLtoHTML.convert(".\\resources\\");
                     GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
-                    
-                    LeerXMLconSAX.leerConSAX(); //lectura con SAX
-
                 }
             }
         });
@@ -314,8 +326,6 @@ public class Menu extends javax.swing.JFrame {
                 LeerBinario_CrearXML.crearXML(".\\resources\\", "Comidas.bin");
                 XMLtoHTML.convert(".\\resources\\");
                 GestorArchivos.abrirArchivo(".\\resources\\", "index.html");
-                
-                LeerXMLconSAX.leerConSAX(); //lectura con SAX
             }
         });
     }
@@ -470,7 +480,7 @@ public class Menu extends javax.swing.JFrame {
      */
     private void cambiarContenido(String elegido, boolean elegir, int id) {
         jContenido.removeAll();
-        JLabel labelAux = crearLabel("", 20, 300, 300, 30);
+        JLabel labelAux = crearLabel("", 20, 300, 250, 30);
         jContenido.add(labelAux);
 
         switch (elegido) {
