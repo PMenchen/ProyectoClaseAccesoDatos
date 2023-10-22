@@ -9,6 +9,8 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,8 +36,9 @@ public class Menu extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
+                    String[] info=null;
                     String elegido = jListOpciones.getSelectedValue();
-                    cambiarContenido(elegido, false, 0);
+                    cambiarContenido(elegido, false, 0, info);
                 }
             }
         });
@@ -48,7 +51,7 @@ public class Menu extends javax.swing.JFrame {
      * @param editar boolean para indicar si lo llaman desde Editar o no
      * @param id indice para modificar un registro si el boolean es true
      */
-    private void botonAnadir(JLabel labelAux, boolean editar, int id) {
+    private void botonAnadir(JLabel labelAux, boolean editar, int id, String[] info) {
         //PRIMERA FILA
         //FECHA
         JLabel labelFecha = crearLabel("Indique la fecha de la visita", 20, 20, 200, 30);
@@ -92,6 +95,19 @@ public class Menu extends javax.swing.JFrame {
         jContenido.add(btnConfirmar);
 
         if (editar) { //VIENE DE EDITAR
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                Date date = format.parse(info[1]);
+                dateChooserFecha.setDate(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            textFieldNombre.setText(info[2]);
+            textFieldLugar.setText(info[3]);
+            textFieldPrecio.setText(info[5]);
+            textFieldCalificacion.setText(info[6]);
+            System.out.println(info.length);
             btnConfirmar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (esNumero(textFieldPrecio.getText()) && esNumero(textFieldCalificacion.getText())
@@ -216,7 +232,7 @@ public class Menu extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 String info = (String) comboBoxFecha.getSelectedItem();
                 String[] id = info.split(" ");
-                cambiarContenido("Añadir", true, Integer.valueOf(id[0]));
+                cambiarContenido("Añadir", true, Integer.valueOf(id[0]), id);
                 
             }
         });
@@ -485,14 +501,14 @@ public class Menu extends javax.swing.JFrame {
      * @param elegir boolean para comprobar si viene de Editar
      * @param id indice para modificar un registro si el boolean es true
      */
-    private void cambiarContenido(String elegido, boolean elegir, int id) {
+    private void cambiarContenido(String elegido, boolean elegir, int id, String[] info) {
         jContenido.removeAll();
         JLabel labelAux = crearLabel("", 20, 300, 250, 30);
         jContenido.add(labelAux);
 
         switch (elegido) {
             case "Añadir":
-                botonAnadir(labelAux, elegir, id);
+                botonAnadir(labelAux, elegir, id, info);
                 break;
 
             case "Editar":

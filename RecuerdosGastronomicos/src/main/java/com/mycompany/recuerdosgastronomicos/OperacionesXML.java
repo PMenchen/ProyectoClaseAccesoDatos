@@ -59,7 +59,7 @@ public class OperacionesXML {
 
             DocumentBuilderFactory documentBF = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBF.newDocumentBuilder();
-            Document doc = documentBuilder.parse(archivoXML.getName());
+            Document doc = documentBuilder.parse(XML);
             Element raiz = doc.getDocumentElement();
             
             NodeList listaNodos = doc.getElementsByTagName("id");
