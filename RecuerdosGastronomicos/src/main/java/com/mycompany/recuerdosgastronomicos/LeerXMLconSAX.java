@@ -26,12 +26,9 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class LeerXMLconSAX {
     
-    /*
-    public static void main(String[] args) {
-        leerConSAX(); //solo llamar a esta línea
-    }
-    */
-    
+    /**
+     * Método que lee un XML utilizando SAX
+     */
     public static void leerConSAX() {
         File fich = new File(".\\resources\\SAX.txt");
         try (FileWriter ficheroOut = new FileWriter(fich);
@@ -51,6 +48,11 @@ public class LeerXMLconSAX {
         }
     }
     
+    /**
+     * Método que escribe un texto con un BufferedWriter dado
+     * @param escribir El BufferedWriter
+     * @param texto Texto a escribir
+     */
     public static void escribirCadena(BufferedWriter escribir, String texto) {
         try {
             escribir.write(texto);
@@ -60,6 +62,9 @@ public class LeerXMLconSAX {
     }
     //--------
     
+    /**
+     * Clase para gestionar la lectura y escribir los datos del XML en un .txt
+     */
     static class GestionContenido extends DefaultHandler {
         
         private BufferedWriter escribir;
