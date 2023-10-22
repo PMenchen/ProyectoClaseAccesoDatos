@@ -6,6 +6,7 @@ package com.mycompany.recuerdosgastronomicos;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,6 +16,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+
 
 /**
  *
@@ -41,7 +44,69 @@ public class OperacionesXML {
         }
     }
     
+    /**
+     * Método que añade un nuevo nodo a un XML existente
+     * @param XML El archivo XML
+     * @param calendar La fecha
+     * @param calificacion La calificación
+     * @param lugar El lugar
+     * @param precio El precio
+     * @param nombrePlato El nombre del plato
+     */
+    public static void addNodoExistente(String XML, Calendar calendar, Double calificacion, String lugar, Double precio, String nombrePlato) {
+        try {
+            File archivoXML = new File(XML);
+
+            DocumentBuilderFactory documentBF = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBF.newDocumentBuilder();
+            Document doc = documentBuilder.parse(archivoXML.getName());
+            Element raiz = doc.getDocumentElement();
+            
+            NodeList listaNodos = doc.getElementsByTagName("id");
+            int ultimoID = -1;
+            for (int i = 0; i < listaNodos.getLength(); i++) {
+                Element elem = (Element) listaNodos.item(i);
+                int id = Integer.parseInt(elem.getTextContent());
+                if (id > ultimoID) {
+                    ultimoID = id;
+                }
+            }
+            
+            int day=calendar.get(Calendar.DAY_OF_MONTH);  //dia
+            int month=calendar.get(Calendar.MONTH) + 1; //mes-1
+            int year=calendar.get(Calendar.YEAR);
+                    
+            String stringFecha = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+
+            LeerBinario_CrearXML.AddNodo("id", String.valueOf(ultimoID+1), raiz, doc);
+            LeerBinario_CrearXML.AddNodo("fecha", stringFecha, raiz, doc);
+            LeerBinario_CrearXML.AddNodo("nombre", nombrePlato, raiz, doc);
+            LeerBinario_CrearXML.AddNodo("lugar", lugar, raiz, doc);
+            LeerBinario_CrearXML.AddNodo("precio", String.valueOf(precio), raiz, doc);
+            LeerBinario_CrearXML.AddNodo("puntuacion", String.valueOf(calificacion), raiz, doc);
+
+            LeerBinario_CrearXML.EscribirArchivo(doc, XML);
+        } catch (TransformerException ex) {
+            System.out.println(ex);
+        } catch (SAXException ex) {
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } catch (ParserConfigurationException ex) {
+            System.out.println(ex);
+        }
+    }
     
+    /**
+     * Método que modifica los valores en un Nodo indicado por su Id
+     * @param doc Doc sobre el que se trabaja
+     * @param idBuscar El id del nodo a modificar
+     * @param nuevoNombre Nuevo nombre
+     * @param nuevoLugar Nuevo lugar
+     * @param nuevoPrecio Nuevo precio
+     * @param nuevaPunt Nueva puntuación
+     * @param nuevaFecha Nueva fecha
+     */
     static void Modificar(Document doc, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha){
         
         NodeList listaPlatos = doc.getElementsByTagName("Plato");
@@ -63,8 +128,17 @@ public class OperacionesXML {
         }
     }
     
-    
-    
+    /**
+     * Método que realiza la modificación del nodo y la guarda en el XML correspondiente
+     * @param rutaOrigen Ruta del XML
+     * @param idBuscar El id del nodo a cambiar
+     * @param nuevoNombre El nuevo nombre
+     * @param nuevoLugar El nuevo lugar
+     * @param nuevoPrecio El nuevo precio
+     * @param nuevaPunt La nueva puntuación
+     * @param nuevaFecha La nueva fecha
+     * @param fichDestino El destino donde se guarda
+     */
     public static void ModificarXML(String rutaOrigen, String idBuscar, String nuevoNombre, String nuevoLugar, String nuevoPrecio, String nuevaPunt, String nuevaFecha, String fichDestino){
         try {
             Document doc = ParseDocumentoXML(rutaOrigen);
@@ -80,6 +154,55 @@ public class OperacionesXML {
             e.printStackTrace();
         }
         
+    }
+    
+    /**
+     * Elimina un nodo indicado por su Id
+     * @param id Id del Nodo a borrar
+     * @param ruta Ruta del XML
+     * @param fichXML Nombre del XML
+     */
+    public static void eliminarId(String id, String ruta, String fichXML) {
+        Document doc=ParseDocumentoXML(ruta+fichXML);
+        NodeList lista = doc.getElementsByTagName("Plato");//obtenemos todos los platos
+        Node nodo;
+        NodeList hijos;
+        Node hijo;
+        boolean borrado=false;
+        
+        for (int i=0; i<lista.getLength() && !borrado; i++) {
+            nodo = lista.item(i);//obtenemos el nodo actual
+            hijos = nodo.getChildNodes();//obtenemos sus hijos
+            
+            //ahora, al igual que con el padre, buscamos en los hijos
+            for (int j=0; j<hijos.getLength() && !borrado; j++) {
+                hijo = hijos.item(j);
+                if (hijo.getNodeType() == Node.ELEMENT_NODE &&  
+                    hijo.getNodeName().equalsIgnoreCase("id") && 
+                    hijo.getTextContent().equals(id)) {
+                    
+                    System.out.println(hijo.getNodeName());
+                    System.out.println(hijo.getTextContent());
+                    deleteNodo(nodo);
+                    borrado=true;
+                }
+            }
+        }
+        
+        try { 
+            LeerBinario_CrearXML.EscribirArchivo(doc, ruta+fichXML);
+        } catch (TransformerException ex) {
+            System.out.println(ex);
+        }
+        
+    }
+    
+     /**
+     * Elimina el nodo indicado
+     * @param nodo El nodo a borrar
+     */
+    public static void deleteNodo(Node nodo) {
+        nodo.getParentNode().removeChild( nodo );
     }
     
 }
